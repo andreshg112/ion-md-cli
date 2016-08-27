@@ -74,7 +74,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
         views: {
             'menuContent': {
                 templateUrl: 'templates/pedido.html',
-                controller: 'PedidosCtrl'
+                controller: 'PedidosCtrl',
+                controllerAs: 'vm'
             }
         }
     })

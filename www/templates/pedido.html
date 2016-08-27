@@ -1,33 +1,30 @@
 ﻿<ion-view view-title="Pedido">
     <ion-content>
-        <!--<div class="bar bar-subheader bar-stable static text-center">
-            <strong class="title">Pedido</strong>
-        </div>-->
         <div class="im-wrapper">
-            <form ng-submit="vm.confirmar()">
+            <form id="formPedido" name="formPedido" ng-submit="vm.confirmar()">
                 <div class="list">
-                    <label class="item item-input item-floating-label">
-                        <span class="input-label">Celular</span>
-                        <input type="number" placeholder="Celular" min="1000000" minlength="7" required>
+                    <label class="item item-input">
+                        <i class="ion-search icon placeholder-icon"></i>
+                        <input name="celular" ng-model="vm.pedido.celular" type="number" placeholder="Celular" min="1000000" max="3999999999" minlength="7" maxlength="10" required>
                     </label>
                     <label class="item item-input item-floating-label">
                         <span class="input-label">Nombres</span>
-                        <input type="text" placeholder="Nombres" required>
+                        <input id="nombres" ng-model="vm.pedido.nombres" type="text" placeholder="Nombres" required>
                     </label>
                     <label class="item item-input item-floating-label">
                         <span class="input-label">Apellidos</span>
-                        <input type="text" placeholder="Apellidos" required>
+                        <input id="apellidos" ng-model="vm.pedido.apellidos" type="text" placeholder="Apellidos" required>
                     </label>
                     <label class="item item-input item-floating-label">
                         <span class="input-label">Email</span>
-                        <input type="email" placeholder="Email">
+                        <input id="email" ng-model="vm.pedido.email" type="email" placeholder="Email">
                     </label>
                     <label class="item item-input item-floating-label">
                         <span class="input-label">Pedido</span>
-                        <textarea rows="5" placeholder="Escriba aquí su pedido" required></textarea>
+                        <textarea id="pedido" ng-model="vm.pedido.pedido" rows="5" placeholder="Escriba aquí su pedido" required></textarea>
                     </label>
                     <br />
-                    <button class="button button-block button-calm ink" data-ink-color="#9DEAFF" data-ink-opacity="1">Confirmar</button>
+                    <button class="button button-block button-calm ink" data-ink-color="#9DEAFF" data-ink-opacity="1" ng-disabled="formPedido.$invalid">Confirmar</button>
                 </div>
             </form>
         </div>

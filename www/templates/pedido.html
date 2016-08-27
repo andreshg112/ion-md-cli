@@ -4,31 +4,32 @@
             <strong class="title">Pedido</strong>
         </div>-->
         <div class="im-wrapper">
-            <form>
+            <form ng-submit="vm.confirmar()">
                 <div class="list">
                     <label class="item item-input item-floating-label">
-                    <span class="input-label">Celular</span>
-                    <input type="number" placeholder="Celular" min="1000000" minlength="7" required>
-                </label>
+                        <span class="input-label">Celular</span>
+                        <input type="number" placeholder="Celular" min="1000000" minlength="7" required>
+                    </label>
                     <label class="item item-input item-floating-label">
-                    <span class="input-label">Nombres</span>
-                    <input type="text" placeholder="Nombres" required>
-                </label>
+                        <span class="input-label">Nombres</span>
+                        <input type="text" placeholder="Nombres" required>
+                    </label>
                     <label class="item item-input item-floating-label">
-                    <span class="input-label">Apellidos</span>
-                    <input type="text" placeholder="Apellidos" required>
-                </label>
+                        <span class="input-label">Apellidos</span>
+                        <input type="text" placeholder="Apellidos" required>
+                    </label>
                     <label class="item item-input item-floating-label">
-                    <span class="input-label">Pedido</span>
-                    <textarea rows="5" placeholder="Escriba aquí su pedido" required></textarea>
-                </label>
+                        <span class="input-label">Email</span>
+                        <input type="email" placeholder="Email">
+                    </label>
+                    <label class="item item-input item-floating-label">
+                        <span class="input-label">Pedido</span>
+                        <textarea rows="5" placeholder="Escriba aquí su pedido" required></textarea>
+                    </label>
                     <br />
-                    <button class="button button-block button-calm ink" data-ink-color="#9DEAFF" data-ink-opacity="1" ng-click="vm.confirmar()">
-                    Confirmar
-                </button>
+                    <button class="button button-block button-calm ink" data-ink-color="#9DEAFF" data-ink-opacity="1">Confirmar</button>
                 </div>
             </form>
-
         </div>
     </ion-content>
 </ion-view>

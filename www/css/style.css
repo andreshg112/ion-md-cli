@@ -1,4 +1,6 @@
 /* Empty. Add your own CSS if you like */
+
+
 /* Utilities */
 
 .link {
@@ -48,10 +50,12 @@ p {
     background-color: #263238 !important;
     color: #fff;
 }
+
+
 /* Menu */
 
 .menu .bar.bar-header.expanded {
-    background-image: url('../img/material-graphite.jpg');
+    background-image: url('../img/menu-background.jpg');
     background-size: 120%;
     background-position: 0%;
     transition: all .5s ease-in-out;
@@ -133,6 +137,8 @@ p {
     opacity: 1;
     z-index: 9;
 }
+
+
 /* CODE */
 
 .code {
@@ -208,6 +214,7 @@ p {
     right: 16px !important;
     top: 16px !important;
 }
-.platform-android .popover{
-margin-top:10px;
+
+.platform-android .popover {
+    margin-top: 10px;
 }

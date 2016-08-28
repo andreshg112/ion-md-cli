@@ -5,12 +5,11 @@
         .module('starter')
         .controller('PedidosCtrl', PedidosCtrl);
 
-    PedidosCtrl.$inject = ['$stateParams', 'ionicMaterialInk', '$ionicPopup', '$timeout', 'Restangular'];
+    PedidosCtrl.$inject = ['$stateParams', 'ionicMaterialInk', '$ionicPopup', '$timeout', 'Restangular', '$ionicLoading'];
 
-    function PedidosCtrl($stateParams, ionicMaterialInk, $ionicPopup, $timeout, Restangular) {
+    function PedidosCtrl($stateParams, ionicMaterialInk, $ionicPopup, $timeout, Restangular, $ionicLoading) {
         var vm = this;
         var pedidos = Restangular.all('pedidos');
-        var clientes = Restangular.all('clientes');
         //
         vm.confirmar = confirmar;
         vm.buscarCliente = buscarCliente;
@@ -26,26 +25,56 @@
         }
 
         function confirmar() {
-            pedidos.post(vm.pedido);
-            var alertPopup = $ionicPopup.alert({
-                title: 'Tu pedido ha sido generado.',
-                template: 'Se está imprimiendo...'
-            });
-            $timeout(function() {
-                ionicMaterialInk.displayEffect();
-            }, 0);
-            activate();
+            pedidos.post(vm.pedido)
+                .then(function(data) {
+                    if (data.result) {
+                        var alertPopup = $ionicPopup.alert({
+                            title: '¡Registro exitoso!',
+                            template: 'Tu pedido se ha almacenado correctamente.'
+                        });
+                        alertPopup.then(function(option) {
+                            activate();
+                        })
+                    } else {
+                        var alertPopup = $ionicPopup.alert({
+                            title: '¡Error!',
+                            template: 'Inténtelo más tarde nuevamente.'
+                        });
+                    }
+
+                })
+                .catch(function(error) {
+                    console.log(error.statusText);
+                    var alertPopup = $ionicPopup.alert({
+                        title: 'Error: ' + error.statusText,
+                        template: 'Inténtelo más tarde nuevamente.'
+                    });
+                })
+                .finally(function() {
+                    ionicMaterialInk.displayEffect();
+                });
         }
 
         function buscarCliente(celular) {
-            console.log(celular);
+            //Al buscar nuevamente, se deben borrar los datos del cliente, pero se mantiene el celular.
+            vm.pedido.cliente = {};
+            vm.pedido.cliente.celular = celular;
             if (celular) {
+                $ionicLoading.show({
+                    template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>'
+                });
                 Restangular.one('clientes', celular).get()
                     .then(function(data) {
                         if (data) {
                             data.celular = parseInt(data.celular);
                             vm.pedido.cliente = data;
                         }
+                    })
+                    .catch(function(error) {
+                        console.log(error.statusText);
+                    })
+                    .finally(function() {
+                        $ionicLoading.hide();
                     });
             }
         }

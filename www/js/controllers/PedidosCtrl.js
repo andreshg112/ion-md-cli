@@ -5,39 +5,39 @@
         .module('starter')
         .controller('PedidosCtrl', PedidosCtrl);
 
-    PedidosCtrl.$inject = ['$stateParams', 'ionicMaterialInk', '$ionicPopup', '$timeout'];
+    PedidosCtrl.$inject = ['$stateParams', 'ionicMaterialInk', '$ionicPopup', '$timeout', 'Restangular'];
 
-    function PedidosCtrl($stateParams, ionicMaterialInk, $ionicPopup, $timeout) {
+    function PedidosCtrl($stateParams, ionicMaterialInk, $ionicPopup, $timeout, Restangular) {
         var vm = this;
+        var pedidos = Restangular.all('pedidos');
         //
         vm.confirmar = confirmar;
-        var pedidos = [];
+        vm.buscarCliente = buscarCliente;
 
         activate();
 
         ////////////////
 
-        //ionic.material.ink.displayEffect();
         ionicMaterialInk.displayEffect();
 
         function activate() {
             vm.pedido = {};
-            var formPedido = document.getElementsByName('formPedido')[0];
         }
 
         function confirmar() {
-            vm.requerido = true;
-            pedidos.push(angular.copy(vm.pedido));
+            pedidos.post(vm.pedido);
             var alertPopup = $ionicPopup.alert({
                 title: 'Tu pedido ha sido generado.' + pedidos.length,
                 template: 'Se está imprimiendo...'
             });
             $timeout(function() {
-                //ionic.material.ink.displayEffect();
                 ionicMaterialInk.displayEffect();
             }, 0);
             activate();
-            console.log(pedidos);
+        }
+
+        function buscarCliente(celular) {
+            console.log(celular);
         }
     }
 })();

@@ -3,26 +3,26 @@
         <div class="im-wrapper">
             <form id="formPedido" name="formPedido" ng-submit="vm.confirmar()">
                 <div class="list">
-                    <label class="item item-input">
-                        <i class="ion-search icon placeholder-icon"></i>
-                        <input name="celular" ng-model="vm.pedido.celular" type="number" placeholder="Celular" min="1000000" max="3999999999" minlength="7" maxlength="10" required>
-                    </label>
-                    <label class="item item-input item-floating-label">
+                    <div class="item item-icon-right">
+                        <input name="celular" ng-model="vm.pedido.cliente.celular" type="number" placeholder="Celular" min="1000000" max="3999999999" minlength="7" maxlength="10" required>
+                        <i ng-click="vm.buscarCliente(vm.pedido.cliente.celular)" class="icon ion-search"></i>
+                    </div>
+                    <div class="item item-input item-floating-label">
                         <span class="input-label">Nombres</span>
-                        <input id="nombres" ng-model="vm.pedido.nombres" type="text" placeholder="Nombres" required>
-                    </label>
-                    <label class="item item-input item-floating-label">
+                        <input id="nombres" ng-model="vm.pedido.cliente.nombres" type="text" placeholder="Nombres" required>
+                    </div>
+                    <div class="item item-input item-floating-label">
                         <span class="input-label">Apellidos</span>
-                        <input id="apellidos" ng-model="vm.pedido.apellidos" type="text" placeholder="Apellidos" required>
-                    </label>
-                    <label class="item item-input item-floating-label">
+                        <input id="apellidos" ng-model="vm.pedido.cliente.apellidos" type="text" placeholder="Apellidos" required>
+                    </div>
+                    <div class="item item-input item-floating-label">
                         <span class="input-label">Email</span>
-                        <input id="email" ng-model="vm.pedido.email" type="email" placeholder="Email">
-                    </label>
-                    <label class="item item-input item-floating-label">
+                        <input id="email" ng-model="vm.pedido.cliente.email" type="email" placeholder="Email">
+                    </div>
+                    <div class="item item-input item-floating-label">
                         <span class="input-label">Pedido</span>
-                        <textarea id="pedido" ng-model="vm.pedido.pedido" rows="5" placeholder="Escriba aquí su pedido" required></textarea>
-                    </label>
+                        <textarea id="pedido" ng-model="vm.pedido.detalles" rows="5" placeholder="Escriba aquí su pedido" required></textarea>
+                    </div>
                     <br />
                     <button class="button button-block button-calm ink" data-ink-color="#9DEAFF" data-ink-opacity="1" ng-disabled="formPedido.$invalid">Confirmar</button>
                 </div>

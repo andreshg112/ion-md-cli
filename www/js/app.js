@@ -99,5 +99,5 @@ app.config(function($stateProvider, $urlRouterProvider, RestangularProvider) {
         });
 
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/app/pedido');
+    $urlRouterProvider.otherwise('/login');
 });

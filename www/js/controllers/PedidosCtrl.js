@@ -47,7 +47,7 @@
 
                 })
                 .catch(function(error) {
-                    console.log(error.statusText);
+                    console.log(error);
                     var alertPopup = $ionicPopup.alert({
                         title: 'Error: ' + error.statusText,
                         template: 'Inténtelo más tarde nuevamente.'

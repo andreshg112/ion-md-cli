@@ -5,14 +5,17 @@
         .module('starter')
         .controller('PedidosCtrl', PedidosCtrl);
 
-    PedidosCtrl.$inject = ['$stateParams', 'ionicMaterialInk', '$ionicPopup', '$timeout', 'Restangular', '$ionicLoading'];
+    PedidosCtrl.$inject = ['$stateParams', 'ionicMaterialInk', '$ionicPopup', '$timeout', 'Restangular', '$ionicLoading', 'ionicToast'];
 
-    function PedidosCtrl($stateParams, ionicMaterialInk, $ionicPopup, $timeout, Restangular, $ionicLoading) {
+    function PedidosCtrl($stateParams, ionicMaterialInk, $ionicPopup, $timeout, Restangular, $ionicLoading, ionicToast) {
         var vm = this;
         var pedidos = Restangular.all('pedidos');
         //
         vm.confirmar = confirmar;
         vm.buscarCliente = buscarCliente;
+
+        /*ionicToast.show('This is a toast at the top.', 'top', true, 2500);
+        ionicToast.hide();*/
 
         activate();
 

@@ -53,9 +53,7 @@
                         template: 'Inténtelo más tarde nuevamente.'
                     });
                 })
-                .finally(function() {
-                    ionicMaterialInk.displayEffect();
-                });
+                .finally(function() {});
         }
 
         function buscarCliente(celular) {

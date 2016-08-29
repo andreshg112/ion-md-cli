@@ -81,6 +81,17 @@ app.config(function($stateProvider, $urlRouterProvider, RestangularProvider) {
         }
     })
 
+    .state('app.pedidos-en-cola', {
+        url: '/pedidos-en-cola',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/pedidos-en-cola.html',
+                controller: 'PedidosEnColaCtrl',
+                controllerAs: 'vm'
+            }
+        }
+    })
+
     .state('app.extensions', {
         url: '/extensions',
         views: {

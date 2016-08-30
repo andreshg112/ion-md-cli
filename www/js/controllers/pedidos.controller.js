@@ -3,11 +3,11 @@
 
     angular
         .module('starter')
-        .controller('PedidosCtrl', PedidosCtrl);
+        .controller('PedidosController', PedidosController);
 
-    PedidosCtrl.$inject = ['$stateParams', 'ionicMaterialInk', '$ionicPopup', '$timeout', 'Restangular', '$ionicLoading', 'ionicToast'];
+    PedidosController.$inject = ['$stateParams', 'ionicMaterialInk', '$ionicPopup', '$timeout', 'Restangular', '$ionicLoading', 'ionicToast'];
 
-    function PedidosCtrl($stateParams, ionicMaterialInk, $ionicPopup, $timeout, Restangular, $ionicLoading, ionicToast) {
+    function PedidosController($stateParams, ionicMaterialInk, $ionicPopup, $timeout, Restangular, $ionicLoading, ionicToast) {
         var vm = this;
         var pedidos = Restangular.all('pedidos');
         //

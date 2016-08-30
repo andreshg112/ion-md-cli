@@ -3,11 +3,11 @@
 
     angular
         .module('starter')
-        .controller('PedidosEnColaCtrl', PedidosEnColaCtrl);
+        .controller('PedidosEnColaController', PedidosEnColaController);
 
-    PedidosEnColaCtrl.$inject = ['$stateParams', 'ionicMaterialInk', '$ionicPopup', '$timeout', 'Restangular', '$ionicLoading', 'ionicToast'];
+    PedidosEnColaController.$inject = ['$stateParams', 'ionicMaterialInk', '$ionicPopup', '$timeout', 'Restangular', '$ionicLoading', 'ionicToast'];
 
-    function PedidosEnColaCtrl($stateParams, ionicMaterialInk, $ionicPopup, $timeout, Restangular, $ionicLoading, ionicToast) {
+    function PedidosEnColaController($stateParams, ionicMaterialInk, $ionicPopup, $timeout, Restangular, $ionicLoading, ionicToast) {
         var vm = this;
         var loading = {
             template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>'
@@ -36,7 +36,7 @@
                     }
                 })
                 .catch(function(error) {
-                    console.log(error.statusText);
+                    console.log(error);
                     ionicToast.show(error.statusText, 'middle', true);
                 })
                 .finally(function() {

@@ -5,9 +5,17 @@
             'ionic',
             'ionic-material',
             'restangular',
-            'ionic-toast'
+            'ionic-toast',
+            'permission',
+            'permission.ui'
         ])
-        .run(function($ionicPlatform) {
+        .value('user', {
+            rol: 'ANONIMO'
+        })
+        .run(function($ionicPlatform, PermRoleStore, user) {
+            PermRoleStore.defineRole(user.rol, function() {
+                return true;
+            });
             $ionicPlatform.ready(function() {
                 // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
                 // for form inputs)
@@ -77,6 +85,12 @@
                             controller: 'PedidosController',
                             controllerAs: 'vm'
                         }
+                    },
+                    data: {
+                        permissions: {
+                            only: 'EMPLEADO',
+                            redirectTo: 'app.components'
+                        }
                     }
                 })
                 .state('app.pedidos-en-cola', {
@@ -100,6 +114,11 @@
                 });
 
             // if none of the above states are matched, use this as the fallback
-            $urlRouterProvider.otherwise('/login');
+            //$urlRouterProvider.otherwise('/login');
+            //Error 10 $digest
+            $urlRouterProvider.otherwise(function($injector) {
+                var $state = $injector.get("$state");
+                $state.go('login');
+            });
         });;
 })();

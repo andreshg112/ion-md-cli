@@ -47,6 +47,26 @@
                     templateUrl: 'templates/menu.html',
                     controller: 'AppCtrl'
                 })
+                .state('app.pedido', {
+                    url: '/pedido',
+                    views: {
+                        'menuContent': {
+                            templateUrl: 'templates/pedido.html',
+                            controller: 'PedidosController',
+                            controllerAs: 'vm'
+                        }
+                    }
+                })
+                .state('app.pedidos-en-cola', {
+                    url: '/pedidos-en-cola',
+                    views: {
+                        'menuContent': {
+                            templateUrl: 'templates/pedidos-en-cola.html',
+                            controller: 'PedidosEnColaController',
+                            controllerAs: 'vm'
+                        }
+                    }
+                })
                 .state('app.lists', {
                     url: '/lists',
                     views: {
@@ -80,26 +100,6 @@
                         'menuContent': {
                             templateUrl: 'templates/components.html',
                             controller: 'ComponentsCtrl'
-                        }
-                    }
-                })
-                .state('app.pedido', {
-                    url: '/pedido',
-                    views: {
-                        'menuContent': {
-                            templateUrl: 'templates/pedido.html',
-                            controller: 'PedidosController',
-                            controllerAs: 'vm'
-                        }
-                    }
-                })
-                .state('app.pedidos-en-cola', {
-                    url: '/pedidos-en-cola',
-                    views: {
-                        'menuContent': {
-                            templateUrl: 'templates/pedidos-en-cola.html',
-                            controller: 'PedidosEnColaController',
-                            controllerAs: 'vm'
                         }
                     }
                 })

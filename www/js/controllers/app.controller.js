@@ -5,9 +5,9 @@
         .module('starter')
         .controller('AppCtrl', AppCtrl);
 
-    AppCtrl.$inject = ['$scope', '$ionicModal', '$ionicPopover', '$timeout'];
+    AppCtrl.$inject = ['$scope', '$ionicPopover'];
 
-    function AppCtrl($scope, $ionicModal, $ionicPopover, $timeout) {
+    function AppCtrl($scope, $ionicPopover) {
         //var vm = this;
 
         activate();

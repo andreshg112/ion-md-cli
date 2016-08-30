@@ -32,7 +32,7 @@
             authenticate.post(vm.user)
                 .then(function(data) {
                     if (data.result) {
-                        user.setUser(data.result);
+                        user.set(data.result);
                         ionicToast.show('Inicio de sesión exitoso. Será redirigido al menú principal.', 'middle', false, 2000);
                         $timeout(function() {
                             location.href = '#/app/pedido';

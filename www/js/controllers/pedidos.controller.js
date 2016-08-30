@@ -28,7 +28,7 @@
         }
 
         function confirmar() {
-            vm.pedido.establecimiento_id = user.getUser().establecimiento_id;
+            vm.pedido.establecimiento_id = user.get().establecimiento_id;
             pedidos.post(vm.pedido)
                 .then(function(data) {
                     if (data.result) {

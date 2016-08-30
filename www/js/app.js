@@ -10,11 +10,11 @@
             'permission.ui'
         ])
         .value('user', {
-            getUser: function() {
+            get: function() {
                 var basil = new window.Basil({ namespace: 'fd', storages: ['session'] });
                 return basil.get('user');
             },
-            setUser: function(user) {
+            set: function(user) {
                 var basil = new window.Basil({ namespace: 'fd', storages: ['session'] });
                 basil.set('user', user);
             }
@@ -115,7 +115,7 @@
 
             // if none of the above states are matched, use this as the fallback
             //$urlRouterProvider.otherwise('/login');
-            //Error 10 $digest
+            //Solución al error 10 $digest
             $urlRouterProvider.otherwise(function($injector) {
                 var $state = $injector.get("$state");
                 $state.go('login');

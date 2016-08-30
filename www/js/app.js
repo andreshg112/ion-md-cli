@@ -10,12 +10,16 @@
             'permission.ui'
         ])
         .value('user', {
-            rol: 'ANONIMO'
+            getUser: function() {
+                var basil = new window.Basil({ namespace: 'fd', storages: ['session'] });
+                return basil.get('user');
+            },
+            setUser: function(user) {
+                var basil = new window.Basil({ namespace: 'fd', storages: ['session'] });
+                basil.set('user', user);
+            }
         })
-        .run(function($ionicPlatform, PermRoleStore, user) {
-            PermRoleStore.defineRole(user.rol, function() {
-                return true;
-            });
+        .run(function($ionicPlatform, PermRoleStore) {
             $ionicPlatform.ready(function() {
                 // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
                 // for form inputs)
@@ -33,7 +37,9 @@
             $stateProvider
                 .state('login', {
                     url: '/login',
-                    templateUrl: 'templates/login.html'
+                    templateUrl: 'templates/login.html',
+                    controller: 'LoginController',
+                    controllerAs: 'vm'
                 })
                 .state('app', {
                     url: '/app',
@@ -84,12 +90,6 @@
                             templateUrl: 'templates/pedido.html',
                             controller: 'PedidosController',
                             controllerAs: 'vm'
-                        }
-                    },
-                    data: {
-                        permissions: {
-                            only: 'EMPLEADO',
-                            redirectTo: 'app.components'
                         }
                     }
                 })

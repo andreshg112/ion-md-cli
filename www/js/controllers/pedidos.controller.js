@@ -5,9 +5,9 @@
         .module('starter')
         .controller('PedidosController', PedidosController);
 
-    PedidosController.$inject = ['$stateParams', 'ionicMaterialInk', '$ionicPopup', '$timeout', 'Restangular', '$ionicLoading', 'ionicToast'];
+    PedidosController.$inject = ['ionicMaterialInk', '$ionicPopup', 'Restangular', '$ionicLoading', 'user'];
 
-    function PedidosController($stateParams, ionicMaterialInk, $ionicPopup, $timeout, Restangular, $ionicLoading, ionicToast) {
+    function PedidosController(ionicMaterialInk, $ionicPopup, Restangular, $ionicLoading, user) {
         var vm = this;
         var pedidos = Restangular.all('pedidos');
         //
@@ -28,6 +28,7 @@
         }
 
         function confirmar() {
+            vm.pedido.establecimiento_id = user.getUser().establecimiento_id;
             pedidos.post(vm.pedido)
                 .then(function(data) {
                     if (data.result) {

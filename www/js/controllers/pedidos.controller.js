@@ -5,15 +5,16 @@
         .module('starter')
         .controller('PedidosController', PedidosController);
 
-    PedidosController.$inject = ['ionicMaterialInk', '$ionicPopup', '$timeout', 'Restangular', '$ionicLoading', 'ionicToast', '$ionicModal', '$scope'];
+    PedidosController.$inject = ['ionicMaterialInk', '$ionicPopup', '$timeout', 'Restangular', '$ionicLoading', 'ionicToast', '$ionicModal', '$scope', 'user'];
 
-    function PedidosController(ionicMaterialInk, $ionicPopup, $timeout, Restangular, $ionicLoading, ionicToast, $ionicModal, $scope) {
+    function PedidosController(ionicMaterialInk, $ionicPopup, $timeout, Restangular, $ionicLoading, ionicToast, $ionicModal, $scope, user) {
         var vm = this;
         var loading = {
             template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>'
         };
         var pedidos = Restangular.all('pedidos');
         //
+        vm.confirmar = confirmar;
         vm.despachar = despachar;
         vm.pedidos = [];
 
@@ -76,7 +77,47 @@
                     $ionicLoading.hide();
                 });
         }
-        //
+
+        function confirmar() {
+            vm.pedido.numero = (vm.tipo_numero == 'Celular') ?
+                vm.pedido.cliente.celular : vm.pedido.cliente.telefono;
+            if (vm.tipo_direccion == 'Casa') {
+                vm.pedido.direccion = vm.pedido.cliente.direccion_casa;
+            } else if (vm.tipo_direccion == 'Oficina') {
+                vm.pedido.direccion = vm.pedido.cliente.direccion_oficina;
+            } else {
+                vm.pedido.direccion = vm.pedido.cliente.direccion_otra;
+            }
+            vm.pedido.establecimiento_id = user.get().establecimiento_id;
+            pedidos.post(vm.pedido)
+                .then(function(data) {
+                    if (data.result) {
+                        var alertPopup = $ionicPopup.alert({
+                            title: '¡Registro exitoso!',
+                            template: 'Tu pedido se ha almacenado correctamente.'
+                        });
+                        alertPopup.then(function(option) {
+                            activate();
+                        })
+                    } else {
+                        var alertPopup = $ionicPopup.alert({
+                            title: '¡Error!',
+                            template: 'Inténtelo más tarde nuevamente.'
+                        });
+                    }
+
+                })
+                .catch(function(error) {
+                    console.log(error);
+                    var alertPopup = $ionicPopup.alert({
+                        title: 'Error: ' + error.statusText,
+                        template: 'Inténtelo más tarde nuevamente.'
+                    });
+                })
+                .finally(function() {});
+        }
+
+        //Actividades de la modal de nuevo pedido
         $ionicModal.fromTemplateUrl('templates/nuevo-pedido.html', {
             scope: $scope,
             animation: 'slide-in-up',
@@ -95,9 +136,5 @@
         $scope.$on('$destroy', function() {
             vm.modal.remove();
         });
-
-        vm.hacerAlgo = function() {
-            console.log('hacer algo 2');
-        }
     }
 })();

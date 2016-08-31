@@ -20,13 +20,22 @@
                         <span class="input-label">Pedido</span>
                         <textarea id="pedido" ng-model="vm.pedido.detalles" rows="5" placeholder="Escriba aquí su pedido" required></textarea>
                     </div>
-                    <div class="item item-input item-floating-label">
-                        <span class="input-label">Celular</span>
-                        <input id="celular" ng-model="vm.pedido.cliente.celular" type="number" min="3000000000" max="3999999999" minlength="10" maxlength="10" placeholder="Celular" ng-required="!vm.pedido.cliente.telefono">
-                    </div>
-                    <div class="item item-input item-floating-label">
-                        <span class="input-label">Teléfono</span>
-                        <input id="telefono" ng-model="vm.pedido.cliente.telefono" type="number" min="1000000" max="9999999" minlength="7" maxlength="7" placeholder="Teléfono" ng-required="!vm.pedido.cliente.celular">
+                    <div class="row">
+                        <div class="item item-input item-select">
+                            <div class="input-label">Número</div>
+                            <select ng-model="vm.tipo_numero" ng-init="vm.tipo_numero = 'Celular'">
+                                <option selected>Celular</option>
+                                <option>Teléfono</option>
+                            </select>
+                        </div>
+                        <div class="item item-input item-floating-label" ng-if="vm.tipo_numero == 'Celular'">
+                            <span class="input-label">Celular</span>
+                            <input id="celular" ng-model="vm.pedido.cliente.celular" type="number" min="3000000000" max="3999999999" minlength="10" maxlength="10" placeholder="Celular" ng-required="vm.tipo_numero == 'Celular'">
+                        </div>
+                        <div class="item item-input item-floating-label" ng-if="vm.tipo_numero == 'Teléfono'">
+                            <span class="input-label">Teléfono</span>
+                            <input id="telefono" ng-model="vm.pedido.cliente.telefono" type="number" min="1000000" max="9999999" minlength="7" maxlength="7" placeholder="Teléfono" ng-required="vm.tipo_numero == 'Teléfono'">
+                        </div>
                     </div>
                     <div class="row">
                         <div class="item item-input item-select">

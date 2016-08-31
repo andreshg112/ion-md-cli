@@ -76,25 +76,28 @@
                     $ionicLoading.hide();
                 });
         }
-
+        //
         $ionicModal.fromTemplateUrl('templates/pedido.html', {
             scope: $scope,
             animation: 'slide-in-up',
             focusFirstInput: true
         }).then(function(modal) {
-            $scope.modal = modal;
+            vm.modal = modal;
         });
 
-        $scope.openModal = function() {
-            $scope.modal.show();
+        vm.openModal = function() {
+            vm.modal.show();
             /*$timeout(function() {
                 $scope.modal.hide();
             }, 2000);*/
         };
         // Cleanup the modal when we're done with it
         $scope.$on('$destroy', function() {
-            console.log('destroy');
-            $scope.modal.remove();
+            vm.modal.remove();
         });
+
+        vm.hacerAlgo = function() {
+            console.log('hacer algo 2');
+        }
     }
 })();

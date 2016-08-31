@@ -1,4 +1,7 @@
 ﻿<ion-view view-title="Pedidos">
+    <button id="fab" class="button button-balanced button-fab button-fab-bottom-right">
+        <i class="icon ion-plus"></i>
+    </button>
     <ion-content>
         <div class="bar bar-subheader bar-stable static text-center">
             <strong class="title">En cola</strong>
@@ -7,15 +10,15 @@
             <div class="list">
 
                 <div class="item row responsive-sm">
-                    <label class="col col-20">Celular</label>
+                    <label class="col col-20">Teléfono/Celular</label>
                     <label class="col col-20">Nombre completo</label>
                     <label class="col col-50">Detalles</label>
                     <label class="col col-10">Despachar</label>
                 </div>
                 <div class="item item-divider"></div>
                 <div class="item item-button-right row responsive-sm" ng-repeat="pedido in vm.pedidos track by $index">
-                    <label class="col col-20">{{pedido.cliente.celular}}</label>
-                    <label class="col col-20">{{pedido.cliente.nombres + pedido.cliente.apellidos}}</label>
+                    <label class="col col-20">{{pedido.numero}}</label>
+                    <label class="col col-20">{{pedido.cliente.nombre_completo}}</label>
                     <label class="col col-50">{{pedido.detalles}}</label>
                     <button class="button-icon ink col col-10" ng-click="vm.despachar(pedido)">
                         <i class="ion-paper-airplane icon"></i>

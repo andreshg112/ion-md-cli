@@ -5,16 +5,22 @@
         .module('starter')
         .controller('AppCtrl', AppCtrl);
 
-    AppCtrl.$inject = ['$scope', '$ionicPopover'];
+    AppCtrl.$inject = ['$scope', '$ionicPopover', 'user'];
 
-    function AppCtrl($scope, $ionicPopover) {
+    function AppCtrl($scope, $ionicPopover, user) {
         //var vm = this;
 
         activate();
 
         ////////////////
 
-        function activate() {}
+        function activate() {
+            /*if (user.get() == null) {
+                location.href = '#/login';
+            } else {
+                $scope.user = user.get();
+            }*/
+        }
 
         // Form data for the login modal
         $scope.loginData = {};

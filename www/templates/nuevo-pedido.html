@@ -6,26 +6,54 @@
         <div class="im-wrapper">
             <form id="formPedido" name="formPedido" ng-submit="vm.confirmar()">
                 <div class="list">
-                    <div class="item item-icon-right">
-                        <input name="celular" ng-model="vm.pedido.cliente.celular" type="number" placeholder="Celular" min="1000000" max="3999999999" minlength="7" maxlength="10" required>
-                        <i ng-click="vm.buscarCliente(vm.pedido.cliente.celular)" class="icon ion-search" style="cursor:pointer"></i>
-                    </div>
-                    <div class="item item-input item-floating-label">
-                        <span class="input-label">Nombres</span>
-                        <input id="nombres" ng-model="vm.pedido.cliente.nombres" type="text" placeholder="Nombres" required>
-                    </div>
-                    <div class="item item-input item-floating-label">
-                        <span class="input-label">Apellidos</span>
-                        <input id="apellidos" ng-model="vm.pedido.cliente.apellidos" type="text" placeholder="Apellidos" required>
-                    </div>
-                    <div class="item item-input item-floating-label">
+                    <!--<label class="item item-input item-floating-label">
+                        <i class="icon ion-ios-email placeholder-icon"></i>
                         <span class="input-label">Email</span>
-                        <input id="email" ng-model="vm.pedido.cliente.email" type="email" placeholder="Email">
+                        <input type="text" placeholder="email">
+                    </label>-->
+                    <div class="item item-input item-floating-label">
+                        <span class="input-label">Nombre completo</span>
+                        <!--<i class="icon ion-person placeholder-icon"></i>-->
+                        <input id="nombre_completo" ng-model="vm.pedido.cliente.nombre_completo" type="text" placeholder="Nombre completo" required>
                     </div>
                     <div class="item item-input item-floating-label">
                         <span class="input-label">Pedido</span>
                         <textarea id="pedido" ng-model="vm.pedido.detalles" rows="5" placeholder="Escriba aquí su pedido" required></textarea>
                     </div>
+                    <div class="item item-input item-floating-label">
+                        <span class="input-label">Celular</span>
+                        <input id="celular" ng-model="vm.pedido.cliente.celular" type="number" min="3000000000" max="3999999999" minlength="10" maxlength="10" placeholder="Celular" ng-required="!vm.pedido.cliente.telefono">
+                    </div>
+                    <div class="item item-input item-floating-label">
+                        <span class="input-label">Teléfono</span>
+                        <input id="telefono" ng-model="vm.pedido.cliente.telefono" type="number" min="1000000" max="9999999" minlength="7" maxlength="7" placeholder="Teléfono" ng-required="!vm.pedido.cliente.celular">
+                    </div>
+                    <div class="row">
+                        <div class="item item-input item-select">
+                            <div class="input-label">Dirección</div>
+                            <select ng-model="vm.tipo_direccion" ng-init="vm.tipo_direccion = 'Casa'">
+                                <option selected>Casa</option>
+                                <option>Oficina</option>
+                                <option>Otra</option>
+                            </select>
+                        </div>
+                        <div class="item item-input item-floating-label" ng-if="vm.tipo_direccion == 'Casa'">
+                            <span class="input-label">Dirección de la casa</span>
+                            <input id="direccion_casa" ng-model="vm.pedido.cliente.direccion_casa" type="text" placeholder="Dirección de la casa" ng-required="vm.tipo_direccion == 'Casa'">
+                        </div>
+                        <div class="item item-input item-floating-label" ng-if="vm.tipo_direccion == 'Oficina'">
+                            <span class="input-label">Dirección de la oficina</span>
+                            <input id="direccion_oficina" ng-model="vm.pedido.cliente.direccion_oficina" type="text" placeholder="Dirección de la oficina" ng-required="vm.tipo_direccion == 'Oficina'">
+                        </div>
+                        <div class="item item-input item-floating-label" ng-if="vm.tipo_direccion == 'Otra'">
+                            <span class="input-label">Otra dirección</span>
+                            <input id="direccion_otra" ng-model="vm.pedido.cliente.direccion_otra" type="text" placeholder="Otra dirección" ng-required="vm.tipo_direccion == 'Otra'">
+                        </div>
+                    </div>
+                    <!--<div class="item item-icon-right">
+                        <input name="celular" ng-model="vm.pedido.cliente.celular" type="number" placeholder="Celular" min="1000000" max="3999999999" minlength="7" maxlength="10" required>
+                        <i ng-click="vm.buscarCliente(vm.pedido.cliente.celular)" class="icon ion-search" style="cursor:pointer"></i>
+                    </div>-->
                     <br />
                     <button class="button button-block button-calm ink" data-ink-color="#9DEAFF" data-ink-opacity="1" ng-disabled="formPedido.$invalid">Confirmar</button>
                 </div>

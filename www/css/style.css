@@ -1,6 +1,18 @@
 /* Empty. Add your own CSS if you like */
 
 
+/*.item-floating-label .placeholder-icon {
+  padding-right: 18px;
+  position: absolute;
+  bottom: 9px;
+  left: 17px;
+}
+
+.item-floating-label {
+  padding-left: 40px !important;
+}*/
+
+
 /* Utilities */
 
 .link {

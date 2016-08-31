@@ -5,9 +5,9 @@
         .module('starter')
         .controller('PedidosEnColaController', PedidosEnColaController);
 
-    PedidosEnColaController.$inject = ['$stateParams', 'ionicMaterialInk', '$ionicPopup', '$timeout', 'Restangular', '$ionicLoading', 'ionicToast'];
+    PedidosEnColaController.$inject = ['ionicMaterialInk', '$ionicPopup', '$timeout', 'Restangular', '$ionicLoading', 'ionicToast', '$ionicModal', '$scope'];
 
-    function PedidosEnColaController($stateParams, ionicMaterialInk, $ionicPopup, $timeout, Restangular, $ionicLoading, ionicToast) {
+    function PedidosEnColaController(ionicMaterialInk, $ionicPopup, $timeout, Restangular, $ionicLoading, ionicToast, $ionicModal, $scope) {
         var vm = this;
         var loading = {
             template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>'
@@ -76,5 +76,25 @@
                     $ionicLoading.hide();
                 });
         }
+
+        $ionicModal.fromTemplateUrl('templates/pedido.html', {
+            scope: $scope,
+            animation: 'slide-in-up',
+            focusFirstInput: true
+        }).then(function(modal) {
+            $scope.modal = modal;
+        });
+
+        $scope.openModal = function() {
+            $scope.modal.show();
+            /*$timeout(function() {
+                $scope.modal.hide();
+            }, 2000);*/
+        };
+        // Cleanup the modal when we're done with it
+        $scope.$on('$destroy', function() {
+            console.log('destroy');
+            $scope.modal.remove();
+        });
     }
 })();

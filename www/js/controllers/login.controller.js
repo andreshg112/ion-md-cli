@@ -35,7 +35,7 @@
                         user.set(data.result);
                         ionicToast.show('Inicio de sesión exitoso. Será redirigido al menú principal.', 'middle', false, 2000);
                         $timeout(function() {
-                            location.href = '#/app/pedido';
+                            location.href = '#/app/pedidos';
                         }, 2000);
                     } else {
                         var alertPopup = $ionicPopup.alert({

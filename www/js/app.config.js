@@ -19,22 +19,12 @@
                 controller: 'AppCtrl'
                     //controllerAs: 'vm'
             })
-            .state('app.pedido', {
-                url: '/pedido',
+            .state('app.pedidos', {
+                url: '/pedidos',
                 views: {
                     'menuContent': {
-                        templateUrl: 'templates/pedido.html',
+                        templateUrl: 'templates/pedidos.html',
                         controller: 'PedidosController',
-                        controllerAs: 'vm'
-                    }
-                }
-            })
-            .state('app.pedidos-en-cola', {
-                url: '/pedidos-en-cola',
-                views: {
-                    'menuContent': {
-                        templateUrl: 'templates/pedidos-en-cola.html',
-                        controller: 'PedidosEnColaController',
                         controllerAs: 'vm'
                     }
                 }

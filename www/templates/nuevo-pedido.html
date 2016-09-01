@@ -14,7 +14,8 @@
                     <div class="item item-input item-floating-label">
                         <span class="input-label">Nombre completo</span>
                         <!--<i class="icon ion-person placeholder-icon"></i>-->
-                        <input id="nombre_completo" ng-model="vm.pedido.cliente.nombre_completo" type="text" placeholder="Nombre completo" required>
+                        <angucomplete-alt id="nombre_completo" placeholder="Nombre completo" selected-object="vm.setCliente" search-fields="nombre_completo" title-field="nombre_completo" minlength="1" match-class="highlight" text-searching="Buscando cliente..." text-no-results="No existen clientes que coincidan con el criterio de búsqueda."
+                            auto-match="true" remote-url="http://localhost/ion-md-server/public/clientes" remote-url-request-formatter="vm.formatearBusqueda" required />
                     </div>
                     <div class="item item-input item-floating-label">
                         <span class="input-label">Pedido</span>

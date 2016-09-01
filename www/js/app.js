@@ -7,6 +7,7 @@
         'restangular',
         'ionic-toast',
         'permission',
-        'permission.ui'
+        'permission.ui',
+        'angucomplete-alt'
     ])
 })();

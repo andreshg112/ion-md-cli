@@ -1,24 +1,18 @@
-﻿
-<ion-view view-title="Ionic Extensions">
+﻿<ion-view view-title="Ionic Extensions">
     <ion-content class="im-wrapper">
         Ionic extensions get materialized, with no additional code needed. View <a href="http://ionicframework.com/docs/api/" class="link" target="_blank">Ionic's Extensions API</a> for implementation details.<br /><br />
         <button class="button button-full" ng-click="loading()">Loading</button>
         <div class="code-wrapper">
             <a class="toggle">Material Loading Template</a>
             <div class="code">
-                $ionicLoading.show({
-                template: <strong class="balanced-900 bold balanced-100-bg">'&lt;div class="loader"&gt;&lt;svg class="circular"&gt;&lt;circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/&gt;&lt;/svg&gt;&lt;/div&gt;'</strong>
-                });
+                $ionicLoading.show({ template: <strong class="balanced-900 bold balanced-100-bg">'&lt;div class="loader"&gt;&lt;svg class="circular"&gt;&lt;circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/&gt;&lt;/svg&gt;&lt;/div&gt;'</strong>                });
             </div>
         </div>
         <button class="button button-full" ng-click="showPopup()">Pop-Up</button>
         <div class="code-wrapper">
             <a class="toggle">To Add Ink</a>
             <div class="code">
-                var alertPopup = $ionicPopup.alert({
-                title: 'You are now my subscribed to Cat Facts',
-                template: 'You will meow receive fun daily facts about CATS!'
-                });
+                var alertPopup = $ionicPopup.alert({ title: 'You are now my subscribed to Cat Facts', template: 'You will meow receive fun daily facts about CATS!' });
                 <strong class="balanced-900 bold balanced-100-bg">
                     // to activate ink on modal
                     $timeout(function() {

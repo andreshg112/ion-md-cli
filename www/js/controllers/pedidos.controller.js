@@ -16,7 +16,9 @@
         //
         vm.confirmar = confirmar;
         vm.despachar = despachar;
+        vm.formatearBusqueda = formatearBusqueda;
         vm.pedidos = [];
+        vm.setCliente = setCliente;
 
         activate();
 
@@ -26,6 +28,7 @@
 
         function activate() {
             vm.pedido = {};
+            $scope.$broadcast('angucomplete-alt:clearInput', 'nombre_completo');
             cargarPedidosNoEnviados();
         }
 
@@ -121,6 +124,20 @@
                 });
         }
 
+        function formatearBusqueda(str) {
+            return {
+                establecimiento_id: user.get().establecimiento_id,
+                nombre_completo: str
+                    //token: user.get().token
+            };
+        }
+
+        function setCliente($item) {
+            if ($item) {
+                vm.pedido.cliente = $item.originalObject;
+            }
+        }
+
         //Actividades de la modal de nuevo pedido
         $ionicModal.fromTemplateUrl('templates/nuevo-pedido.html', {
             scope: $scope,
@@ -140,5 +157,6 @@
         $scope.$on('$destroy', function() {
             vm.modal.remove();
         });
+
     }
 })();

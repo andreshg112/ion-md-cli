@@ -16,8 +16,8 @@
                 url: '/app',
                 abstract: true,
                 templateUrl: 'templates/menu.html',
-                controller: 'AppCtrl'
-                    //controllerAs: 'vm'
+                controller: 'AppCtrl',
+                controllerAs: 'vm'
             })
             .state('app.pedidos', {
                 url: '/pedidos',
@@ -26,6 +26,11 @@
                         templateUrl: 'templates/pedidos.html',
                         controller: 'PedidosController',
                         controllerAs: 'vm'
+                    }
+                },
+                data: {
+                    permissions: {
+                        only: ['EMPLEADO']
                     }
                 }
             })
@@ -53,6 +58,11 @@
                     'menuContent': {
                         templateUrl: 'templates/motion.html',
                         controller: 'MotionCtrl'
+                    }
+                },
+                data: {
+                    permissions: {
+                        only: ['ADMIN']
                     }
                 }
             })

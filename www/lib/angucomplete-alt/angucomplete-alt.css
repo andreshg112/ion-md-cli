@@ -11,16 +11,16 @@
     padding: 6px;
     cursor: pointer;
     z-index: 9999;
-    position: absolute;
+    /*position: absolute;*/
     /*top: 32px;
     left: 0px;
     */
     margin-top: -6px;
     background-color: #ffffff;
+    
     /*Usar scroll en la consulta*/
     overflow-y: auto;
-    max-height: 100px;
-    /*scroll - Configurar píxeles al gusto/
+    max-height: 200px;
 }
 
 .angucomplete-searching {

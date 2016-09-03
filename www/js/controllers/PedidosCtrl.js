@@ -3,11 +3,11 @@
 
     angular
         .module('starter')
-        .controller('PedidosController', PedidosController);
+        .controller('PedidosCtrl', PedidosCtrl);
 
-    PedidosController.$inject = ['ionicMaterialInk', '$ionicPopup', '$timeout', 'Restangular', '$ionicLoading', 'ionicToast', '$ionicModal', '$scope', 'user'];
+    PedidosCtrl.$inject = ['ionicMaterialInk', '$ionicPopup', '$timeout', 'Restangular', '$ionicLoading', 'ionicToast', '$ionicModal', '$scope', 'user'];
 
-    function PedidosController(ionicMaterialInk, $ionicPopup, $timeout, Restangular, $ionicLoading, ionicToast, $ionicModal, $scope, user) {
+    function PedidosCtrl(ionicMaterialInk, $ionicPopup, $timeout, Restangular, $ionicLoading, ionicToast, $ionicModal, $scope, user) {
         var vm = this;
         var loading = {
             template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>'
@@ -17,6 +17,7 @@
         vm.confirmar = confirmar;
         vm.despachar = despachar;
         vm.formatearBusqueda = formatearBusqueda;
+        vm.cambioNombre = cambioNombre
         vm.pedidos = [];
         vm.setCliente = setCliente;
 
@@ -27,13 +28,16 @@
         ionicMaterialInk.displayEffect();
 
         function activate() {
-            vm.pedido = {};
+            vm.pedido = {
+                cliente: {}
+            };
             $scope.$broadcast('angucomplete-alt:clearInput', 'nombre_completo');
             cargarPedidosNoEnviados();
         }
 
         function cargarPedidosNoEnviados() {
             $ionicLoading.show(loading);
+            vm.pedidos = [];
             pedidos.getList({ enviado: 0 })
                 .then(function(data) {
                     if (data.length > 0) {
@@ -98,8 +102,8 @@
                 .then(function(data) {
                     if (data.result) {
                         var alertPopup = $ionicPopup.alert({
-                            title: '¡Envío exitoso!',
-                            template: 'Se le ha notificado al cliente.'
+                            title: 'Se ha despachado el pedido.',
+                            template: 'Notificación al cliente: ' + data.notificacion
                         });
                         alertPopup.then(function(option) {
                             activate();
@@ -110,7 +114,6 @@
                             template: 'Inténtelo más tarde nuevamente.'
                         });
                     }
-
                 })
                 .catch(function(error) {
                     console.log(error.statusText);
@@ -130,6 +133,14 @@
                 nombre_completo: str
                     //token: user.get().token
             };
+        }
+
+        function cambioNombre(str) {
+            if (str == '') {
+                vm.pedido.cliente = {};
+            } else {
+                vm.pedido.cliente.nombre_completo = str;
+            }
         }
 
         function setCliente($item) {

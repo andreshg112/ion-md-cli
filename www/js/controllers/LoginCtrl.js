@@ -3,11 +3,11 @@
 
     angular
         .module('starter')
-        .controller('LoginController', LoginController);
+        .controller('LoginCtrl', LoginCtrl);
 
-    LoginController.$inject = ['ionicMaterialInk', '$ionicPopup', 'Restangular', '$ionicLoading', 'ionicToast', '$timeout', 'user'];
+    LoginCtrl.$inject = ['ionicMaterialInk', '$ionicPopup', 'Restangular', '$ionicLoading', 'ionicToast', '$timeout', 'user'];
 
-    function LoginController(ionicMaterialInk, $ionicPopup, Restangular, $ionicLoading, ionicToast, $timeout, user) {
+    function LoginCtrl(ionicMaterialInk, $ionicPopup, Restangular, $ionicLoading, ionicToast, $timeout, user) {
         var vm = this;
         var authenticate = Restangular.all('authenticate');
         var loading = {
@@ -45,7 +45,6 @@
                     }
                 })
                 .catch(function(error) {
-                    console.log(error);
                     var alertPopup = $ionicPopup.alert({
                         title: 'Error: ' + error.statusText,
                         template: 'Inténtelo más tarde nuevamente.'

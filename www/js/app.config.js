@@ -9,7 +9,7 @@
             .state('login', {
                 url: '/login',
                 templateUrl: 'templates/login.html',
-                controller: 'LoginController',
+                controller: 'LoginCtrl',
                 controllerAs: 'vm'
             })
             .state('app', {
@@ -24,13 +24,8 @@
                 views: {
                     'menuContent': {
                         templateUrl: 'templates/pedidos.html',
-                        controller: 'PedidosController',
+                        controller: 'PedidosCtrl',
                         controllerAs: 'vm'
-                    }
-                },
-                data: {
-                    permissions: {
-                        only: ['EMPLEADO']
                     }
                 }
             })

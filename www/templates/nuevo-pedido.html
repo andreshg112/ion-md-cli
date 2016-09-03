@@ -1,6 +1,12 @@
 ﻿<ion-modal-view style="width: 90%; height: 90%; top: 5%; left: 5%; right: 5%; bottom: 5%;">
     <ion-header-bar>
         <h1 class="title">Nuevo pedido</h1>
+        <div class="buttons">
+            <!--<button class="button-icon button-small">
+                <i class="ion-close icon"></i>
+            </button>-->
+            <button class="button-icon icon ion-close" ng-click="vm.cerrarModal()"></button>
+        </div>
     </ion-header-bar>
     <ion-content class="padding">
         <div class="im-wrapper">
@@ -12,9 +18,8 @@
                         <input type="text" placeholder="email">
                     </label>-->
                     <div class="item item-input item-floating-label">
-                        <!--<i class="icon ion-person placeholder-icon"></i>-->
                         <angucomplete-alt id="nombre_completo" placeholder="Nombre completo" selected-object="vm.setCliente" search-fields="nombre_completo" title-field="nombre_completo" minlength="1" match-class="highlight" text-searching="Buscando cliente..." text-no-results="No existen clientes que coincidan con el criterio de búsqueda."
-                            auto-match="true" remote-url="http://localhost/ion-md-server/public/clientes" remote-url-request-formatter="vm.formatearBusqueda" input-changed="vm.cambioNombre" required />
+                            auto-match="true" remote-url="http://localhost/ion-md-server/public/clientes" remote-url-request-formatter="vm.formatearBusqueda" input-changed="vm.cambioNombre" required/>
                     </div>
                     <div class="item item-input item-floating-label">
                         <span class="input-label">Pedido</span>
@@ -26,14 +31,13 @@
                             <select ng-model="vm.tipo_numero" ng-init="vm.tipo_numero = 'Celular'">
                                 <option selected>Celular</option>
                                 <option>Teléfono</option>
+                                <!--<option ng-selected="!vm.pedido.cliente.celular && !!vm.pedido.cliente.telefono">Teléfono</option>-->
                             </select>
                         </div>
-                        <div class="item item-input item-floating-label" ng-if="vm.tipo_numero == 'Celular'">
-                            <span class="input-label">Celular</span>
+                        <div class="item item-input" ng-if="vm.tipo_numero == 'Celular'">
                             <input id="celular" ng-model="vm.pedido.cliente.celular" type="number" min="3000000000" max="3999999999" minlength="10" maxlength="10" placeholder="Celular" ng-required="vm.tipo_numero == 'Celular'">
                         </div>
-                        <div class="item item-input item-floating-label" ng-if="vm.tipo_numero == 'Teléfono'">
-                            <span class="input-label">Teléfono</span>
+                        <div class="item item-input" ng-if="vm.tipo_numero == 'Teléfono'">
                             <input id="telefono" ng-model="vm.pedido.cliente.telefono" type="number" min="1000000" max="9999999" minlength="7" maxlength="7" placeholder="Teléfono" ng-required="vm.tipo_numero == 'Teléfono'">
                         </div>
                     </div>
@@ -46,16 +50,13 @@
                                 <option>Otra</option>
                             </select>
                         </div>
-                        <div class="item item-input item-floating-label" ng-if="vm.tipo_direccion == 'Casa'">
-                            <span class="input-label">Dirección de la casa</span>
+                        <div class="item item-input" ng-if="vm.tipo_direccion == 'Casa'">
                             <input id="direccion_casa" ng-model="vm.pedido.cliente.direccion_casa" type="text" placeholder="Dirección de la casa" ng-required="vm.tipo_direccion == 'Casa'">
                         </div>
-                        <div class="item item-input item-floating-label" ng-if="vm.tipo_direccion == 'Oficina'">
-                            <span class="input-label">Dirección de la oficina</span>
+                        <div class="item item-input" ng-if="vm.tipo_direccion == 'Oficina'">
                             <input id="direccion_oficina" ng-model="vm.pedido.cliente.direccion_oficina" type="text" placeholder="Dirección de la oficina" ng-required="vm.tipo_direccion == 'Oficina'">
                         </div>
-                        <div class="item item-input item-floating-label" ng-if="vm.tipo_direccion == 'Otra'">
-                            <span class="input-label">Otra dirección</span>
+                        <div class="item item-input" ng-if="vm.tipo_direccion == 'Otra'">
                             <input id="direccion_otra" ng-model="vm.pedido.cliente.direccion_otra" type="text" placeholder="Otra dirección" ng-required="vm.tipo_direccion == 'Otra'">
                         </div>
                     </div>
@@ -63,6 +64,8 @@
                         <input name="celular" ng-model="vm.pedido.cliente.celular" type="number" placeholder="Celular" min="1000000" max="3999999999" minlength="7" maxlength="10" required>
                         <i ng-click="vm.buscarCliente(vm.pedido.cliente.celular)" class="icon ion-search" style="cursor:pointer"></i>
                     </div>-->
+                    <br />
+                    <a href="javascript:;" class="balanced icon ion-navicon-round" ng-click="vm.verPedidosAnteriores(vm.pedido.cliente)" ng-if="!!vm.pedido.cliente.id">Ver pedidos anteriores</a>
                     <br />
                     <button class="button button-block button-calm ink" data-ink-color="#9DEAFF" data-ink-opacity="1" ng-disabled="formPedido.$invalid">Confirmar</button>
                 </div>

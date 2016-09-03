@@ -1,0 +1,20 @@
+﻿<ion-modal-view>
+    <ion-header-bar>
+        <h1 class="title">Pedidos anteriores</h1>
+        <div class="buttons">
+            <button class="button-icon icon ion-close" ng-click="vm.cerrarPedidosCliente()"></button>
+        </div>
+    </ion-header-bar>
+    <ion-content class="padding">
+        <div class="im-wrapper">
+            <div class="list">
+                <div class="item" ng-repeat="pedido in vm.pedidosCliente track by $index">
+                    <div class="row">
+                        <label class="col col-20">{{pedido.created_at}}</label>
+                        <label class="col col-80">{{pedido.detalles}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-modal-view>

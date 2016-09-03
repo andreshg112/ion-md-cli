@@ -17,7 +17,7 @@
                 abstract: true,
                 templateUrl: 'templates/menu.html',
                 controller: 'AppCtrl',
-                controllerAs: 'vm'
+                controllerAs: 'app'
             })
             .state('app.pedidos', {
                 url: '/pedidos',

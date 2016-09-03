@@ -14,12 +14,16 @@
         };
         var pedidos = Restangular.all('pedidos');
         //
+        vm.cerrarModal = cerrarModal;
+        vm.cerrarPedidosCliente = cerrarPedidosCliente;
         vm.confirmar = confirmar;
         vm.despachar = despachar;
         vm.formatearBusqueda = formatearBusqueda;
         vm.cambioNombre = cambioNombre
         vm.pedidos = [];
+        vm.pedidosCliente = [];
         vm.setCliente = setCliente;
+        vm.verPedidosAnteriores = verPedidosAnteriores;
 
         activate();
 
@@ -33,6 +37,31 @@
             };
             $scope.$broadcast('angucomplete-alt:clearInput', 'nombre_completo');
             cargarPedidosNoEnviados();
+        }
+
+        function cambioNombre(str) {
+            if (str == '') {
+                vm.pedido.cliente = {};
+            } else {
+                vm.pedido.cliente.nombre_completo = str;
+            }
+        }
+
+        function cargarPedidosCliente(cliente) {
+            $ionicLoading.show(loading);
+            vm.pedidosCliente = [];
+            Restangular.one('clientes', cliente.id).getList('pedidos', {
+                    establecimiento_id: user.get().establecimiento_id,
+                    enviado: 1
+                }).then(function(data) {
+                    vm.pedidosCliente = data;
+                })
+                .catch(function(error) {
+                    ionicToast.show(error, 'middle', true);
+                })
+                .finally(function() {
+                    $ionicLoading.hide();
+                });
         }
 
         function cargarPedidosNoEnviados() {
@@ -51,6 +80,10 @@
                 .finally(function() {
                     $ionicLoading.hide();
                 });
+        }
+
+        function cerrarPedidosCliente() {
+            vm.modalPedidosCliente.hide();
         }
 
         function confirmar() {
@@ -135,38 +168,42 @@
             };
         }
 
-        function cambioNombre(str) {
-            if (str == '') {
-                vm.pedido.cliente = {};
-            } else {
-                vm.pedido.cliente.nombre_completo = str;
-            }
-        }
-
         function setCliente($item) {
             if ($item) {
                 vm.pedido.cliente = $item.originalObject;
             }
         }
 
-        //Actividades de la modal de nuevo pedido
+        function verPedidosAnteriores(cliente) {
+            cargarPedidosCliente(cliente);
+            vm.modalPedidosCliente.show();
+        }
+
+        //Actividades de los modales
         $ionicModal.fromTemplateUrl('templates/nuevo-pedido.html', {
             scope: $scope,
-            animation: 'slide-in-up',
             focusFirstInput: true
         }).then(function(modal) {
             vm.modal = modal;
         });
 
+        $ionicModal.fromTemplateUrl('templates/pedidos-anteriores.html', {
+            scope: $scope
+        }).then(function(modal) {
+            vm.modalPedidosCliente = modal;
+        });
+
         vm.openModal = function() {
             vm.modal.show();
-            /*$timeout(function() {
-                $scope.modal.hide();
-            }, 2000);*/
         };
+
+        function cerrarModal() {
+            vm.modal.hide();
+        }
         // Cleanup the modal when we're done with it
         $scope.$on('$destroy', function() {
             vm.modal.remove();
+            vm.modalPedidosCliente.remove();
         });
 
     }

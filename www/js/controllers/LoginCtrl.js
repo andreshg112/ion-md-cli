@@ -5,9 +5,9 @@
         .module('starter')
         .controller('LoginCtrl', LoginCtrl);
 
-    LoginCtrl.$inject = ['ionicMaterialInk', '$ionicPopup', 'Restangular', '$ionicLoading', 'ionicToast', '$timeout', 'user'];
+    LoginCtrl.$inject = ['ionicMaterialInk', '$ionicPopup', 'Restangular', '$ionicLoading', 'ionicToast', '$timeout', 'user', '$ionicHistory'];
 
-    function LoginCtrl(ionicMaterialInk, $ionicPopup, Restangular, $ionicLoading, ionicToast, $timeout, user) {
+    function LoginCtrl(ionicMaterialInk, $ionicPopup, Restangular, $ionicLoading, ionicToast, $timeout, user, $ionicHistory) {
         var vm = this;
         var authenticate = Restangular.all('authenticate');
         var loading = {
@@ -24,6 +24,9 @@
         ionicMaterialInk.displayEffect();
 
         function activate() {
+            $ionicHistory.clearCache();
+            $ionicHistory.clearHistory();
+            $ionicHistory.nextViewOptions({ disableBack: true, historyRoot: true });
             vm.user = {};
         }
 

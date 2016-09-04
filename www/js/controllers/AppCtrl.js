@@ -5,10 +5,11 @@
         .module('starter')
         .controller('AppCtrl', AppCtrl);
 
-    AppCtrl.$inject = ['$scope', '$ionicPopover', 'user'];
+    AppCtrl.$inject = ['$scope', '$ionicPopover', 'user', '$state', '$timeout', '$ionicHistory'];
 
-    function AppCtrl($scope, $ionicPopover, user) {
+    function AppCtrl($scope, $ionicPopover, user, $state, $timeout, $ionicHistory) {
         var vm = this;
+        vm.cerrarSesion = cerrarSesion;
         vm.user = user.get();
 
         activate();
@@ -18,7 +19,18 @@
         function activate() {}
 
         // Form data for the login modal
-        $scope.loginData = {};
+        //$scope.loginData = {};
+
+        function cerrarSesion() {
+            user.set(null);
+            $timeout(function() {
+                vm.closePopover();
+                $ionicHistory.clearCache();
+                $ionicHistory.clearHistory();
+                $ionicHistory.nextViewOptions({ disableBack: true, historyRoot: true });
+            }, 30);
+            $state.go('login', null, { reload: true });
+        }
 
         var navIcons = document.getElementsByClassName('ion-navicon');
         for (var i = 0; i < navIcons.length; i++) {
@@ -27,25 +39,21 @@
             });
         }
 
-        // .fromTemplate() method
-        var template = '<ion-popover-view>' +
-            '   <ion-header-bar>' +
-            '       <h1 class="title">My Popover Title</h1>' +
-            '   </ion-header-bar>' +
-            '   <ion-content class="padding">' +
-            '       My Popover Contents' +
-            '   </ion-content>' +
-            '</ion-popover-view>';
-
-        $scope.popover = $ionicPopover.fromTemplate(template, {
+        $ionicPopover.fromTemplateUrl('templates/popover.html', {
             scope: $scope
+        }).then(function(popover) {
+            vm.popover = popover;
         });
-        $scope.closePopover = function() {
-            $scope.popover.hide();
+
+        vm.openPopover = function($event) {
+            vm.popover.show($event);
+        };
+        vm.closePopover = function() {
+            vm.popover.hide();
         };
         //Cleanup the popover when we're done with it!
         $scope.$on('$destroy', function() {
-            $scope.popover.remove();
+            vm.popover.remove();
         });
     }
 })();

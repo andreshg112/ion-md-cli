@@ -67,7 +67,7 @@
         function cargarPedidosNoEnviados() {
             $ionicLoading.show(loading);
             vm.pedidos = [];
-            pedidos.getList({ enviado: 0 })
+            pedidos.getList({ enviado: 0, establecimiento_id: user.get().establecimiento.id })
                 .then(function(data) {
                     if (data.length > 0) {
                         vm.pedidos = data;
@@ -131,6 +131,7 @@
         function despachar(pedido) {
             $ionicLoading.show(loading);
             pedido.enviado = 1;
+            pedido.establecimiento = user.get().establecimiento;
             pedido.put()
                 .then(function(data) {
                     if (data.result) {

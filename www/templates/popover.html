@@ -5,7 +5,7 @@
     <ion-content class="padding">
         <ion-list>
             <ion-item>
-                {{app.user.username}}
+                {{app.user.rol + ' ' + app.user.username}}
             </ion-item>
             <ion-item style="cursor:pointer" ng-click="app.cerrarSesion()">
                 Cerrar sesión

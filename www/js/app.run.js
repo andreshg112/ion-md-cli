@@ -4,13 +4,14 @@
     angular.module('starter').run(run);
 
     function run($ionicPlatform, PermRoleStore, AuthService) {
-        $ionicPlatform.ready(function() {
-            var roles = ['ADMIN', 'EMPLEADO'];
-            angular.forEach(roles, function(rol) {
-                PermRoleStore.defineRole(rol, function(roleName, stateParams) {
-                    return AuthService.hasPermission(roleName);
-                });
+        var roles = ['ADMIN', 'EMPLEADO'];
+        angular.forEach(roles, function(rol) {
+            PermRoleStore.defineRole(rol, function(roleName, stateParams) {
+                return AuthService.hasPermission(roleName);
             });
+        });
+        $ionicPlatform.ready(function() {
+
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
 

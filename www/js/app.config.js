@@ -17,7 +17,13 @@
                 abstract: true,
                 templateUrl: 'templates/menu.html',
                 controller: 'AppCtrl',
-                controllerAs: 'app'
+                controllerAs: 'app',
+                data: {
+                    permissions: {
+                        only: ['ADMIN', 'EMPLEADO'],
+                        redirectTo: 'login'
+                    }
+                }
             })
             .state('app.pedidos', {
                 url: '/pedidos',

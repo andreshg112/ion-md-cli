@@ -35,6 +35,22 @@
                     }
                 }
             })
+            .state('app.clientes', {
+                url: '/clientes',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/clientes.html',
+                        controller: 'ClientesCtrl',
+                        controllerAs: 'vm'
+                    }
+                },
+                data: {
+                    permissions: {
+                        only: ['ADMIN'],
+                        redirectTo: 'app.pedidos'
+                    }
+                }
+            })
             .state('app.lists', {
                 url: '/lists',
                 views: {
@@ -59,11 +75,6 @@
                     'menuContent': {
                         templateUrl: 'templates/motion.html',
                         controller: 'MotionCtrl'
-                    }
-                },
-                data: {
-                    permissions: {
-                        only: ['ADMIN']
                     }
                 }
             })

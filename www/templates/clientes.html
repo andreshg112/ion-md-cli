@@ -1,0 +1,28 @@
+﻿<ion-view view-title="Administrar clientes">
+    <ion-content>
+        <div class="bar bar-subheader bar-stable static text-center">
+            <strong class="title">Clientes</strong>
+        </div>
+        <div class="im-wrapper">
+            <div class="list">
+                <div class="item row responsive-sm">
+                    <label class="col col-20">Nombre completo</label>
+                    <label class="col col-20">Celular/Teléfono</label>
+                    <label class="col col-20">Direcciones</label>
+                    <label class="col col-20">Fecha de nacimiento</label>
+                </div>
+                <div class="item item-divider"></div>
+                <div class="item item-button-right row responsive-sm" ng-repeat="cliente in vm.clientes track by $index">
+                    <label class="col col-20">{{cliente.nombre_completo}}</label>
+                    <label class="col col-20">{{cliente.celular}}<br/>{{cliente.telefono}}</label>
+                    <label class="col col-20">{{cliente.direccion_casa}}<br/>{{cliente.direccion_oficina}}<br/>{{cliente.direccion_otra}}</label>
+                    <label class="col col-20">{{cliente.fecha_nacimiento}}</label>
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+        <br />
+        <br />
+    </ion-content>
+</ion-view>

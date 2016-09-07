@@ -8,6 +8,7 @@
         'ionic-toast',
         'permission',
         'permission.ui',
-        'angucomplete-alt'
+        'angucomplete-alt',
+        'chart.js'
     ])
 })();

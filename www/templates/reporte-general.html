@@ -1,0 +1,22 @@
+﻿<ion-view view-title="Reportes">
+    <ion-content>
+        <div class="bar bar-subheader bar-stable static text-center">
+            <strong class="title">Reporte general</strong>
+        </div>
+        <div class="im-wrapper">
+            <div class="card" style="width: 60%; height: 60%; top: 20%; left: 20%; right: 20%; bottom: 20%;">
+                <div class="item item-divider">
+                    Pedidos por día de la semana
+                </div>
+                <div class="item item-text-wrap">
+                    <canvas id="bar" class="chart chart-bar" chart-data="vm.data" chart-labels="vm.labels" chart-series="vm.series" chart-options="vm.options" chart-dataset-override="datasetOverride" chart-click="onClick">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+        <br />
+        <br />
+    </ion-content>
+</ion-view>

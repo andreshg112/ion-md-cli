@@ -5,9 +5,9 @@
         .module('starter')
         .controller('ClientesCtrl', ClientesCtrl);
 
-    ClientesCtrl.$inject = ['ionicMaterialInk', 'Restangular', '$ionicLoading', '$ionicModal', 'user'];
+    ClientesCtrl.$inject = ['ionicMaterialInk', 'Restangular', '$ionicLoading', '$ionicModal', 'user', 'ionicToast'];
 
-    function ClientesCtrl(ionicMaterialInk, Restangular, $ionicLoading, $ionicModal, user) {
+    function ClientesCtrl(ionicMaterialInk, Restangular, $ionicLoading, $ionicModal, user, ionicToast) {
         var vm = this;
         var loading = {
             template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>'
@@ -29,7 +29,7 @@
         function cargarClientes() {
             $ionicLoading.show(loading);
             vm.clientes = [];
-            clientes.getList({ establecimiento_id: user.get().establecimiento.id })
+            Restangular.one('establecimientos', user.get().establecimiento.id).customGET('clientes')
                 .then(function(data) {
                     if (data.length > 0) {
                         vm.clientes = data;

@@ -51,6 +51,22 @@
                     }
                 }
             })
+            .state('app.reporte-general', {
+                url: '/reporte-general',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/reporte-general.html',
+                        controller: 'ReporteGeneralCtrl',
+                        controllerAs: 'vm'
+                    }
+                },
+                data: {
+                    permissions: {
+                        only: ['ADMIN'],
+                        redirectTo: 'app.pedidos'
+                    }
+                }
+            })
             .state('app.lists', {
                 url: '/lists',
                 views: {

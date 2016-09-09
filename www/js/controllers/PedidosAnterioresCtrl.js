@@ -3,25 +3,30 @@
 
     angular
         .module('starter')
-        .controller('PedidosCtrl', PedidosCtrl);
+        .controller('PedidosAnterioresCtrl', PedidosAnterioresCtrl);
 
-    PedidosCtrl.$inject = ['ionicMaterialInk', '$ionicPopup', '$timeout', 'Restangular', '$ionicLoading', 'ionicToast', '$ionicModal', '$scope', 'user'];
+    PedidosAnterioresCtrl.$inject = ['ionicMaterialInk', '$ionicPopup', '$timeout', 'Restangular', '$ionicLoading', 'ionicToast', '$ionicModal', '$scope', 'user', 'ionicDatePicker'];
 
-    function PedidosCtrl(ionicMaterialInk, $ionicPopup, $timeout, Restangular, $ionicLoading, ionicToast, $ionicModal, $scope, user) {
+    function PedidosAnterioresCtrl(ionicMaterialInk, $ionicPopup, $timeout, Restangular, $ionicLoading, ionicToast, $ionicModal, $scope, user, ionicDatePicker) {
         var vm = this;
+        var fechaPedido = {
+            callback: function (val) {  //Mandatory
+                console.log('Return value from the datepicker popup is : ' + val, new Date(val));
+            }
+        };
+
+        vm.seleccionarFecha = function () {
+            ionicDatePicker.openDatePicker(fechaPedido);
+        };
         var loading = {
             template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>'
         };
         var pedidos = Restangular.all('pedidos');
         //
         vm.cambioNombre = cambioNombre
-        vm.cancelarPedido = cancelarPedido;
-        vm.cerrarModal = cerrarModal;
         vm.cerrarPedidosCliente = cerrarPedidosCliente;
         vm.confirmar = confirmar;
-        vm.despachar = despachar;
         vm.formatearBusqueda = formatearBusqueda;
-        vm.pedidos = [];
         vm.pedidosCliente = [];
         vm.setCliente = setCliente;
         vm.verPedidosAnteriores = verPedidosAnteriores;
@@ -37,10 +42,7 @@
                 cliente: {}
             };
             $scope.$broadcast('angucomplete-alt:clearInput', 'nombre_completo');
-            cargarPedidosNoEnviados();
         }
-
-
 
         function cambioNombre(str) {
             if (str == '') {
@@ -48,23 +50,6 @@
             } else {
                 vm.pedido.cliente.nombre_completo = str;
             }
-        }
-
-        function cancelarPedido(pedido) {
-            $ionicLoading.show(loading);
-            pedido.remove()
-                .then(function (data) {
-                    ionicToast.show(data.mensaje, 'bottom', false, 2000);
-                    if (data.result) {
-                        activate();
-                    }
-                })
-                .catch(function (error) {
-                    ionicToast.show('Error: ' + error.statusText + 'Inténtelo más tarde nuevamente.', 'bottom', false, 2000);
-                })
-                .finally(function () {
-                    $ionicLoading.hide();
-                });
         }
 
         function cargarPedidosCliente(cliente) {
@@ -78,24 +63,6 @@
             })
                 .catch(function (error) {
                     ionicToast.show(error, 'middle', true);
-                })
-                .finally(function () {
-                    $ionicLoading.hide();
-                });
-        }
-
-        function cargarPedidosNoEnviados() {
-            $ionicLoading.show(loading);
-            vm.pedidos = [];
-            pedidos.getList({ enviado: 0, establecimiento_id: user.get().establecimiento.id })
-                .then(function (data) {
-                    if (data.length > 0) {
-                        vm.pedidos = data;
-                    }
-                })
-                .catch(function (error) {
-                    console.log(error);
-                    ionicToast.show(error.statusText, 'middle', true);
                 })
                 .finally(function () {
                     $ionicLoading.hide();
@@ -148,39 +115,6 @@
                 });
         }
 
-        function despachar(pedido) {
-            $ionicLoading.show(loading);
-            pedido.enviado = 1;
-            pedido.establecimiento = user.get().establecimiento;
-            pedido.put()
-                .then(function (data) {
-                    if (data.result) {
-                        var alertPopup = $ionicPopup.alert({
-                            title: 'Se ha despachado el pedido.',
-                            template: 'Notificación al cliente: ' + data.notificacion
-                        });
-                        alertPopup.then(function (option) {
-                            activate();
-                        })
-                    } else {
-                        var alertPopup = $ionicPopup.alert({
-                            title: '¡Error!',
-                            template: 'Inténtelo más tarde nuevamente.'
-                        });
-                    }
-                })
-                .catch(function (error) {
-                    console.log(error.statusText);
-                    var alertPopup = $ionicPopup.alert({
-                        title: 'Error: ' + error.statusText,
-                        template: 'Inténtelo más tarde nuevamente.'
-                    });
-                })
-                .finally(function () {
-                    $ionicLoading.hide();
-                });
-        }
-
         function formatearBusqueda(str) {
             return {
                 establecimiento_id: user.get().establecimiento_id,
@@ -214,18 +148,9 @@
             vm.modalPedidosCliente = modal;
         });
 
-        vm.openModal = function () {
-            vm.modal.show();
-        };
-
-        function cerrarModal() {
-            vm.modal.hide();
-        }
         // Cleanup the modal when we're done with it
         $scope.$on('$destroy', function () {
-            vm.modal.remove();
             vm.modalPedidosCliente.remove();
         });
-
     }
 })();

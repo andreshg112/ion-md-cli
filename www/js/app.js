@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
     //
     angular.module('starter', [
@@ -9,6 +9,7 @@
         'permission',
         'permission.ui',
         'angucomplete-alt',
-        'chart.js'
+        'chart.js',
+        'ionic-datepicker'
     ])
 })();

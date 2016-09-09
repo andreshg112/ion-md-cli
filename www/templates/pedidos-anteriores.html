@@ -1,20 +1,79 @@
-﻿<ion-modal-view>
+﻿<ion-view view-title="Pedidos anteriores">
     <ion-header-bar>
-        <h1 class="title">Pedidos anteriores</h1>
-        <div class="buttons">
-            <button class="button-icon icon ion-close" ng-click="vm.cerrarPedidosCliente()"></button>
-        </div>
+        <h1 class="title">Nuevo pedido</h1>
     </ion-header-bar>
-    <ion-content class="padding">
+    <ion-content>
+        <div class="bar bar-subheader bar-stable static text-center">
+            <strong class="title">Registrar pedidos pasados</strong>
+        </div>
         <div class="im-wrapper">
-            <div class="list">
-                <div class="item" ng-repeat="pedido in vm.pedidosCliente track by $index">
-                    <div class="row">
-                        <label class="col col-30">{{pedido.created_at}}</label>
-                        <label class="col col-70">{{pedido.detalles}}</label>
+            <form id="formPedido" name="formPedido" ng-submit="vm.confirmar()">
+                <div class="list">
+                    <!--<label class="item item-input item-floating-label">
+                        <i class="icon ion-ios-email placeholder-icon"></i>
+                        <span class="input-label">Email</span>
+                        <input type="text" placeholder="email">
+                    </label>-->
+                    <div class="item item-input item-floating-label">
+                        <span class="input-label">Pedido</span>
+                        <textarea id="pedido" ng-model="vm.pedido.detalles" rows="5" placeholder="Escriba aquí su pedido" required></textarea>
                     </div>
+                    <div class="item item-input item-floating-label">
+                        <angucomplete-alt id="nombre_completo" placeholder="Nombre completo" selected-object="vm.setCliente" search-fields="nombre_completo"
+                            title-field="nombre_completo" minlength="1" match-class="highlight" text-searching="Buscando cliente..."
+                            text-no-results="No existen clientes que coincidan con el criterio de búsqueda." auto-match="true"
+                            remote-url="http://localhost/ion-md-server/public/clientes" remote-url-request-formatter="vm.formatearBusqueda"
+                            input-changed="vm.cambioNombre" required/>
+                    </div>
+                    <div class="row">
+                        <div class="item item-input item-select">
+                            <div class="input-label">Número</div>
+                            <select ng-model="vm.tipo_numero" ng-init="vm.tipo_numero = 'Celular'">
+                                <option selected>Celular</option>
+                                <option>Teléfono</option>
+                                <!--<option ng-selected="!vm.pedido.cliente.celular && !!vm.pedido.cliente.telefono">Teléfono</option>-->
+                            </select>
+                        </div>
+                        <div class="item item-input" ng-if="vm.tipo_numero == 'Celular'">
+                            <input id="celular" ng-model="vm.pedido.cliente.celular" type="number" min="3000000000" max="3999999999" minlength="10" maxlength="10"
+                                placeholder="Celular" ng-required="vm.tipo_numero == 'Celular'">
+                        </div>
+                        <div class="item item-input" ng-if="vm.tipo_numero == 'Teléfono'">
+                            <input id="telefono" ng-model="vm.pedido.cliente.telefono" type="number" min="1000000" max="9999999" minlength="7" maxlength="7"
+                                placeholder="Teléfono" ng-required="vm.tipo_numero == 'Teléfono'">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="item item-input item-select">
+                            <div class="input-label">Dirección</div>
+                            <select ng-model="vm.tipo_direccion" ng-init="vm.tipo_direccion = 'Casa'">
+                                <option selected>Casa</option>
+                                <option>Oficina</option>
+                                <option>Otra</option>
+                            </select>
+                        </div>
+                        <div class="item item-input" ng-if="vm.tipo_direccion == 'Casa'">
+                            <input id="direccion_casa" ng-model="vm.pedido.cliente.direccion_casa" type="text" placeholder="Dirección de la casa" ng-required="vm.tipo_direccion == 'Casa'">
+                        </div>
+                        <div class="item item-input" ng-if="vm.tipo_direccion == 'Oficina'">
+                            <input id="direccion_oficina" ng-model="vm.pedido.cliente.direccion_oficina" type="text" placeholder="Dirección de la oficina"
+                                ng-required="vm.tipo_direccion == 'Oficina'">
+                        </div>
+                        <div class="item item-input" ng-if="vm.tipo_direccion == 'Otra'">
+                            <input id="direccion_otra" ng-model="vm.pedido.cliente.direccion_otra" type="text" placeholder="Otra dirección" ng-required="vm.tipo_direccion == 'Otra'">
+                        </div>
+                    </div>
+                    <!--<div class="item item-icon-right">
+                        <input name="celular" ng-model="vm.pedido.cliente.celular" type="number" placeholder="Celular" min="1000000" max="3999999999" minlength="7" maxlength="10" required>
+                        <i ng-click="vm.buscarCliente(vm.pedido.cliente.celular)" class="icon ion-search" style="cursor:pointer"></i>
+                    </div>-->
+                    <br />
+                    <a href="javascript:;" class="balanced icon ion-navicon-round" ng-click="vm.verPedidosAnteriores(vm.pedido.cliente)" ng-if="!!vm.pedido.cliente.id">Ver pedidos anteriores</a>
+                    <br />
+                    <button type="button" class="button button-block button-royal ink" data-ink-color="#9DEAFF" data-ink-opacity="1" ng-click="vm.seleccionarFecha()">Fecha</button>
+                    <button class="button button-block button-calm ink" data-ink-color="#9DEAFF" data-ink-opacity="1" ng-disabled="formPedido.$invalid">Confirmar</button>
                 </div>
-            </div>
+            </form>
         </div>
     </ion-content>
-</ion-modal-view>
+</ion-view>

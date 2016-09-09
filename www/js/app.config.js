@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular.module('starter').config(config);
@@ -31,6 +31,16 @@
                     'menuContent': {
                         templateUrl: 'templates/pedidos.html',
                         controller: 'PedidosCtrl',
+                        controllerAs: 'vm'
+                    }
+                }
+            })
+            .state('app.pedidos-anteriores', {
+                url: '/pedidos-anteriores',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/pedidos-anteriores.html',
+                        controller: 'PedidosAnterioresCtrl',
                         controllerAs: 'vm'
                     }
                 }
@@ -116,7 +126,7 @@
         // if none of the above states are matched, use this as the fallback
         //$urlRouterProvider.otherwise('/login');
         //Solución al error 10 $digest
-        $urlRouterProvider.otherwise(function($injector) {
+        $urlRouterProvider.otherwise(function ($injector) {
             var $state = $injector.get("$state");
             $state.go('login');
         });

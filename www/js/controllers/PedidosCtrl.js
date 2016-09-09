@@ -1,4 +1,4 @@
-﻿(function() {
+﻿(function () {
     'use strict';
 
     angular
@@ -14,12 +14,13 @@
         };
         var pedidos = Restangular.all('pedidos');
         //
+        vm.cambioNombre = cambioNombre
+        vm.cancelarPedido = cancelarPedido;
         vm.cerrarModal = cerrarModal;
         vm.cerrarPedidosCliente = cerrarPedidosCliente;
         vm.confirmar = confirmar;
         vm.despachar = despachar;
         vm.formatearBusqueda = formatearBusqueda;
-        vm.cambioNombre = cambioNombre
         vm.pedidos = [];
         vm.pedidosCliente = [];
         vm.setCliente = setCliente;
@@ -39,6 +40,8 @@
             cargarPedidosNoEnviados();
         }
 
+
+
         function cambioNombre(str) {
             if (str == '') {
                 vm.pedido.cliente = {};
@@ -47,19 +50,36 @@
             }
         }
 
+        function cancelarPedido(pedido) {
+            $ionicLoading.show(loading);
+            pedido.remove()
+                .then(function (data) {
+                    ionicToast.show(data.mensaje, 'bottom', false, 2000);
+                    if (data.result) {
+                        activate();
+                    }
+                })
+                .catch(function (error) {
+                    ionicToast.show('Error: ' + error.statusText + 'Inténtelo más tarde nuevamente.', 'bottom', false, 2000);
+                })
+                .finally(function () {
+                    $ionicLoading.hide();
+                });
+        }
+
         function cargarPedidosCliente(cliente) {
             $ionicLoading.show(loading);
             vm.pedidosCliente = [];
             Restangular.one('clientes', cliente.id).getList('pedidos', {
-                    establecimiento_id: user.get().establecimiento_id,
-                    enviado: 1
-                }).then(function(data) {
-                    vm.pedidosCliente = data;
-                })
-                .catch(function(error) {
+                establecimiento_id: user.get().establecimiento_id,
+                enviado: 1
+            }).then(function (data) {
+                vm.pedidosCliente = data;
+            })
+                .catch(function (error) {
                     ionicToast.show(error, 'middle', true);
                 })
-                .finally(function() {
+                .finally(function () {
                     $ionicLoading.hide();
                 });
         }
@@ -68,16 +88,16 @@
             $ionicLoading.show(loading);
             vm.pedidos = [];
             pedidos.getList({ enviado: 0, establecimiento_id: user.get().establecimiento.id })
-                .then(function(data) {
+                .then(function (data) {
                     if (data.length > 0) {
                         vm.pedidos = data;
                     }
                 })
-                .catch(function(error) {
+                .catch(function (error) {
                     console.log(error);
                     ionicToast.show(error.statusText, 'middle', true);
                 })
-                .finally(function() {
+                .finally(function () {
                     $ionicLoading.hide();
                 });
         }
@@ -99,13 +119,13 @@
             }
             vm.pedido.establecimiento_id = user.get().establecimiento_id;
             pedidos.post(vm.pedido)
-                .then(function(data) {
+                .then(function (data) {
                     if (data.result) {
                         var alertPopup = $ionicPopup.alert({
                             title: '¡Registro exitoso!',
                             template: 'Tu pedido se ha almacenado correctamente.'
                         });
-                        alertPopup.then(function(option) {
+                        alertPopup.then(function (option) {
                             activate();
                         })
                     } else {
@@ -116,14 +136,14 @@
                     }
 
                 })
-                .catch(function(error) {
+                .catch(function (error) {
                     console.log(error);
                     var alertPopup = $ionicPopup.alert({
                         title: 'Error: ' + error.statusText,
                         template: 'Inténtelo más tarde nuevamente.'
                     });
                 })
-                .finally(function() {
+                .finally(function () {
                     $ionicLoading.hide();
                 });
         }
@@ -133,13 +153,13 @@
             pedido.enviado = 1;
             pedido.establecimiento = user.get().establecimiento;
             pedido.put()
-                .then(function(data) {
+                .then(function (data) {
                     if (data.result) {
                         var alertPopup = $ionicPopup.alert({
                             title: 'Se ha despachado el pedido.',
                             template: 'Notificación al cliente: ' + data.notificacion
                         });
-                        alertPopup.then(function(option) {
+                        alertPopup.then(function (option) {
                             activate();
                         })
                     } else {
@@ -149,14 +169,14 @@
                         });
                     }
                 })
-                .catch(function(error) {
+                .catch(function (error) {
                     console.log(error.statusText);
                     var alertPopup = $ionicPopup.alert({
                         title: 'Error: ' + error.statusText,
                         template: 'Inténtelo más tarde nuevamente.'
                     });
                 })
-                .finally(function() {
+                .finally(function () {
                     $ionicLoading.hide();
                 });
         }
@@ -165,7 +185,7 @@
             return {
                 establecimiento_id: user.get().establecimiento_id,
                 nombre_completo: str
-                    //token: user.get().token
+                //token: user.get().token
             };
         }
 
@@ -184,17 +204,17 @@
         $ionicModal.fromTemplateUrl('templates/nuevo-pedido.html', {
             scope: $scope,
             focusFirstInput: true
-        }).then(function(modal) {
+        }).then(function (modal) {
             vm.modal = modal;
         });
 
         $ionicModal.fromTemplateUrl('templates/pedidos-anteriores.html', {
             scope: $scope
-        }).then(function(modal) {
+        }).then(function (modal) {
             vm.modalPedidosCliente = modal;
         });
 
-        vm.openModal = function() {
+        vm.openModal = function () {
             vm.modal.show();
         };
 
@@ -202,7 +222,7 @@
             vm.modal.hide();
         }
         // Cleanup the modal when we're done with it
-        $scope.$on('$destroy', function() {
+        $scope.$on('$destroy', function () {
             vm.modal.remove();
             vm.modalPedidosCliente.remove();
         });

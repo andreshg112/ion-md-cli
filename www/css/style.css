@@ -4,6 +4,9 @@
     color: #ff0000;
 }
 
+.centered-text {
+    text-align: center;
+}
 
 /*.item-floating-label .placeholder-icon {
   padding-right: 18px;

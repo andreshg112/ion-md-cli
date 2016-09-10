@@ -1,8 +1,11 @@
 (function () {
     'use strict';
 
-    angular.module('starter').config(config);
+    angular
+        .module('starter')
+        .config(config);
 
+    /** @ngInject */
     function config($stateProvider, $urlRouterProvider, RestangularProvider, ionicDatePickerProvider) {
         RestangularProvider.setBaseUrl('http://localhost/ion-md-server/public');
         $stateProvider

@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -58,10 +58,10 @@
             var dataEncoded = codificarXWWW(data);
             return Restangular.oneUrl('apiSms', 'http://panel.smasivos.com/api.envio.new.php')
                 .customPOST(
-                    dataEncoded,
-                    undefined, // put your path here
-                    undefined, // params here, e.g. {format: "json"}
-                    { 'Content-Type': "application/x-www-form-urlencoded; charset=UTF-8" }
+                dataEncoded,
+                undefined, // put your path here
+                undefined, // params here, e.g. {format: "json"}
+                { 'Content-Type': "application/x-www-form-urlencoded; charset=UTF-8" }
                 );
         }
 

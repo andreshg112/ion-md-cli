@@ -8,15 +8,15 @@
         $stateProvider
             .state('login', {
                 url: '/login',
-                templateUrl: 'templates/login.html',
-                controller: 'LoginCtrl',
+                templateUrl: 'app/login/login.html',
+                controller: 'LoginController',
                 controllerAs: 'vm'
             })
             .state('app', {
                 url: '/app',
                 abstract: true,
-                templateUrl: 'templates/menu.html',
-                controller: 'AppCtrl',
+                templateUrl: 'app/layout/menu.html',
+                controller: 'AppController',
                 controllerAs: 'app',
                 data: {
                     permissions: {
@@ -29,8 +29,8 @@
                 url: '/pedidos',
                 views: {
                     'menuContent': {
-                        templateUrl: 'templates/pedidos.html',
-                        controller: 'PedidosCtrl',
+                        templateUrl: 'app/pedidos/pedidos.html',
+                        controller: 'PedidosController',
                         controllerAs: 'vm'
                     }
                 }
@@ -39,8 +39,8 @@
                 url: '/pedidos-anteriores',
                 views: {
                     'menuContent': {
-                        templateUrl: 'templates/pedidos-anteriores.html',
-                        controller: 'PedidosAnterioresCtrl',
+                        templateUrl: 'app/pedidos-anteriores/pedidos-anteriores.html',
+                        controller: 'PedidosAnterioresController',
                         controllerAs: 'vm'
                     }
                 }
@@ -49,8 +49,8 @@
                 url: '/clientes',
                 views: {
                     'menuContent': {
-                        templateUrl: 'templates/clientes.html',
-                        controller: 'ClientesCtrl',
+                        templateUrl: 'app/clientes/clientes.html',
+                        controller: 'ClientesController',
                         controllerAs: 'vm'
                     }
                 },
@@ -65,8 +65,8 @@
                 url: '/reporte-general',
                 views: {
                     'menuContent': {
-                        templateUrl: 'templates/reporte-general.html',
-                        controller: 'ReporteGeneralCtrl',
+                        templateUrl: 'app/reporte-general/reporte-general.html',
+                        controller: 'ReporteGeneralController',
                         controllerAs: 'vm'
                     }
                 },

@@ -3,11 +3,11 @@
 
     angular
         .module('starter')
-        .controller('ClientesCtrl', ClientesCtrl);
+        .controller('ClientesController', ClientesController);
 
-    ClientesCtrl.$inject = ['ionicMaterialInk', 'Restangular', '$ionicLoading', '$ionicModal', 'user', 'ionicToast'];
+    ClientesController.$inject = ['ionicMaterialInk', 'Restangular', '$ionicLoading', '$ionicModal', 'user', 'ionicToast'];
 
-    function ClientesCtrl(ionicMaterialInk, Restangular, $ionicLoading, $ionicModal, user, ionicToast) {
+    function ClientesController(ionicMaterialInk, Restangular, $ionicLoading, $ionicModal, user, ionicToast) {
         var vm = this;
         var loading = {
             template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>'

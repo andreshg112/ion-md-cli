@@ -3,11 +3,11 @@
 
     angular
         .module('starter')
-        .controller('PedidosAnterioresCtrl', PedidosAnterioresCtrl);
+        .controller('PedidosAnterioresController', PedidosAnterioresController);
 
-    PedidosAnterioresCtrl.$inject = ['ionicMaterialInk', '$ionicPopup', '$timeout', 'Restangular', '$ionicLoading', 'ionicToast', '$ionicModal', '$scope', 'user', 'ionicDatePicker'];
+    PedidosAnterioresController.$inject = ['ionicMaterialInk', '$ionicPopup', 'Restangular', '$ionicLoading', 'ionicToast', '$scope', 'user', 'ionicDatePicker'];
 
-    function PedidosAnterioresCtrl(ionicMaterialInk, $ionicPopup, $timeout, Restangular, $ionicLoading, ionicToast, $ionicModal, $scope, user, ionicDatePicker) {
+    function PedidosAnterioresController(ionicMaterialInk, $ionicPopup, Restangular, $ionicLoading, ionicToast, $scope, user, ionicDatePicker) {
         var vm = this;
         var fechaPedido = {
             callback: function (val) {  //Mandatory
@@ -24,12 +24,9 @@
         var pedidos = Restangular.all('pedidos');
         //
         vm.cambioNombre = cambioNombre
-        vm.cerrarPedidosCliente = cerrarPedidosCliente;
         vm.confirmar = confirmar;
         vm.formatearBusqueda = formatearBusqueda;
-        vm.pedidosCliente = [];
         vm.setCliente = setCliente;
-        vm.verPedidosAnteriores = verPedidosAnteriores;
 
         activate();
 
@@ -52,27 +49,6 @@
             }
         }
 
-        function cargarPedidosCliente(cliente) {
-            $ionicLoading.show(loading);
-            vm.pedidosCliente = [];
-            Restangular.one('clientes', cliente.id).getList('pedidos', {
-                establecimiento_id: user.get().establecimiento_id,
-                enviado: 1
-            }).then(function (data) {
-                vm.pedidosCliente = data;
-            })
-                .catch(function (error) {
-                    ionicToast.show(error, 'middle', true);
-                })
-                .finally(function () {
-                    $ionicLoading.hide();
-                });
-        }
-
-        function cerrarPedidosCliente() {
-            vm.modalPedidosCliente.hide();
-        }
-
         function confirmar() {
             $ionicLoading.show(loading);
             vm.pedido.numero = (vm.tipo_numero == 'Celular') ?
@@ -85,6 +61,7 @@
                 vm.pedido.direccion = vm.pedido.cliente.direccion_otra;
             }
             vm.pedido.establecimiento_id = user.get().establecimiento_id;
+            vm.pedido.enviado = 1;
             pedidos.post(vm.pedido)
                 .then(function (data) {
                     if (data.result) {
@@ -128,29 +105,5 @@
                 vm.pedido.cliente = $item.originalObject;
             }
         }
-
-        function verPedidosAnteriores(cliente) {
-            cargarPedidosCliente(cliente);
-            vm.modalPedidosCliente.show();
-        }
-
-        //Actividades de los modales
-        $ionicModal.fromTemplateUrl('templates/nuevo-pedido.html', {
-            scope: $scope,
-            focusFirstInput: true
-        }).then(function (modal) {
-            vm.modal = modal;
-        });
-
-        $ionicModal.fromTemplateUrl('templates/pedidos-anteriores-cliente.html', {
-            scope: $scope
-        }).then(function (modal) {
-            vm.modalPedidosCliente = modal;
-        });
-
-        // Cleanup the modal when we're done with it
-        $scope.$on('$destroy', function () {
-            vm.modalPedidosCliente.remove();
-        });
     }
 })();

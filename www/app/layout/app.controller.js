@@ -3,11 +3,11 @@
 
     angular
         .module('starter')
-        .controller('AppCtrl', AppCtrl);
+        .controller('AppController', AppController);
 
-    AppCtrl.$inject = ['$scope', '$ionicPopover', 'user', '$state', '$timeout', '$ionicHistory'];
+    AppController.$inject = ['$scope', '$ionicPopover', 'user', '$state', '$timeout', '$ionicHistory'];
 
-    function AppCtrl($scope, $ionicPopover, user, $state, $timeout, $ionicHistory) {
+    function AppController($scope, $ionicPopover, user, $state, $timeout, $ionicHistory) {
         var vm = this;
         vm.cerrarSesion = cerrarSesion;
         vm.user = user.get();
@@ -39,7 +39,7 @@
             });
         }
 
-        $ionicPopover.fromTemplateUrl('templates/popover.html', {
+        $ionicPopover.fromTemplateUrl('app/layout/popover.html', {
             scope: $scope
         }).then(function(popover) {
             vm.popover = popover;

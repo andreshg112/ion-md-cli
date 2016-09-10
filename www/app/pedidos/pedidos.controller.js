@@ -3,11 +3,11 @@
 
     angular
         .module('starter')
-        .controller('PedidosCtrl', PedidosCtrl);
+        .controller('PedidosController', PedidosController);
 
-    PedidosCtrl.$inject = ['ionicMaterialInk', '$ionicPopup', 'Restangular', '$ionicLoading', 'ionicToast', '$ionicModal', '$scope', 'user', 'ionicDatePicker'];
+    PedidosController.$inject = ['ionicMaterialInk', '$ionicPopup', 'Restangular', '$ionicLoading', 'ionicToast', '$ionicModal', '$scope', 'user', 'ionicDatePicker'];
 
-    function PedidosCtrl(ionicMaterialInk, $ionicPopup, Restangular, $ionicLoading, ionicToast, $ionicModal, $scope, user, ionicDatePicker) {
+    function PedidosController(ionicMaterialInk, $ionicPopup, Restangular, $ionicLoading, ionicToast, $ionicModal, $scope, user, ionicDatePicker) {
         var vm = this;
         var loading = {
             template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>'
@@ -213,14 +213,14 @@
         }
 
         //Actividades de los modales
-        $ionicModal.fromTemplateUrl('templates/nuevo-pedido.html', {
+        $ionicModal.fromTemplateUrl('app/pedidos/nuevo-pedido.html', {
             scope: $scope,
             focusFirstInput: true
         }).then(function (modal) {
             vm.modalNuevo = modal;
         });
 
-        $ionicModal.fromTemplateUrl('templates/pedidos-anteriores-cliente.html', {
+        $ionicModal.fromTemplateUrl('app/pedidos/pedidos-anteriores-cliente.html', {
             scope: $scope
         }).then(function (modal) {
             vm.modalPedidosCliente = modal;

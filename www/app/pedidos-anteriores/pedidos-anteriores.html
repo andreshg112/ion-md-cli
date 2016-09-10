@@ -68,8 +68,6 @@
                         <i ng-click="vm.buscarCliente(vm.pedido.cliente.celular)" class="icon ion-search" style="cursor:pointer"></i>
                     </div>-->
                     <br />
-                    <a href="javascript:;" class="balanced icon ion-navicon-round" ng-click="vm.verPedidosAnteriores(vm.pedido.cliente)" ng-if="!!vm.pedido.cliente.id">Ver pedidos anteriores</a>
-                    <br />
                     <button type="button" class="button button-block button-royal ink" data-ink-color="#9DEAFF" data-ink-opacity="1" ng-click="vm.seleccionarFecha()">Fecha</button>
                     <button class="button button-block button-calm ink" data-ink-color="#9DEAFF" data-ink-opacity="1" ng-disabled="formPedido.$invalid">Confirmar</button>
                 </div>

@@ -3,11 +3,11 @@
 
     angular
         .module('starter')
-        .controller('LoginCtrl', LoginCtrl);
+        .controller('LoginController', LoginController);
 
-    LoginCtrl.$inject = ['ionicMaterialInk', 'Restangular', '$ionicLoading', 'ionicToast', '$timeout', 'user', '$ionicHistory', '$state'];
+    LoginController.$inject = ['ionicMaterialInk', 'Restangular', '$ionicLoading', 'ionicToast', '$timeout', 'user', '$ionicHistory', '$state'];
 
-    function LoginCtrl(ionicMaterialInk, Restangular, $ionicLoading, ionicToast, $timeout, user, $ionicHistory, $state) {
+    function LoginController(ionicMaterialInk, Restangular, $ionicLoading, ionicToast, $timeout, user, $ionicHistory, $state) {
         var vm = this;
         var authenticate = Restangular.all('authenticate');
         var loading = {

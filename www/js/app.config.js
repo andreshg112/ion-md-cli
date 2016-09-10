@@ -3,7 +3,7 @@
 
     angular.module('starter').config(config);
 
-    function config($stateProvider, $urlRouterProvider, RestangularProvider) {
+    function config($stateProvider, $urlRouterProvider, RestangularProvider, ionicDatePickerProvider) {
         RestangularProvider.setBaseUrl('http://localhost/ion-md-server/public');
         $stateProvider
             .state('login', {
@@ -130,5 +130,17 @@
             var $state = $injector.get("$state");
             $state.go('login');
         });
+
+        //Configuración del Ionic Datepicker
+        var datePickerObj = {
+            inputDate: new Date(),
+            setLabel: 'Fijar',
+            closeLabel: 'Cerrar',
+            mondayFirst: true,
+            weeksList: ["D", "L", "M", "M", "J", "V", "S"],
+            monthsList: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
+            closeOnSelect: false
+        };
+        ionicDatePickerProvider.configDatePicker(datePickerObj);
     }
 })();

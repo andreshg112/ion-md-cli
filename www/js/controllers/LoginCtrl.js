@@ -5,9 +5,9 @@
         .module('starter')
         .controller('LoginCtrl', LoginCtrl);
 
-    LoginCtrl.$inject = ['ionicMaterialInk', '$ionicPopup', 'Restangular', '$ionicLoading', 'ionicToast', '$timeout', 'user', '$ionicHistory'];
+    LoginCtrl.$inject = ['ionicMaterialInk', 'Restangular', '$ionicLoading', 'ionicToast', '$timeout', 'user', '$ionicHistory', '$state'];
 
-    function LoginCtrl(ionicMaterialInk, $ionicPopup, Restangular, $ionicLoading, ionicToast, $timeout, user, $ionicHistory) {
+    function LoginCtrl(ionicMaterialInk, Restangular, $ionicLoading, ionicToast, $timeout, user, $ionicHistory, $state) {
         var vm = this;
         var authenticate = Restangular.all('authenticate');
         var loading = {
@@ -34,24 +34,21 @@
             $ionicLoading.show(loading);
             authenticate.post(vm.user)
                 .then(function(data) {
+                    var mensaje = '';
                     if (data.result) {
                         user.set(data.result);
-                        ionicToast.show('Inicio de sesión exitoso. Será redirigido al menú principal.', 'middle', false, 2000);
+                        mensaje = String.format('¡Bienvenido {0} {1}! Serás redirigido(a) al menú principal.', user.get().primer_nombre, user.get().primer_apellido);
+                        ionicToast.show(mensaje, 'bottom', false, 2000);                        
                         $timeout(function() {
-                            location.href = '#/app/pedidos';
+                            $state.go('app.pedidos');
                         }, 2000);
                     } else {
-                        var alertPopup = $ionicPopup.alert({
-                            title: '¡Error!',
-                            template: data.mensaje
-                        });
+                        mensaje = 'Error: ' + data.mensaje;
+                        ionicToast.show(mensaje, 'bottom', false, 2000);                        
                     }
                 })
                 .catch(function(error) {
-                    var alertPopup = $ionicPopup.alert({
-                        title: 'Error: ' + error.statusText,
-                        template: 'Inténtelo más tarde nuevamente.'
-                    });
+                    ionicToast.show(String.format('Error: {0}. Inténtelo más tarde nuevamente.', error.statusText), 'bottom', false, 3000);
                 })
                 .finally(function() {
                     $ionicLoading.hide();

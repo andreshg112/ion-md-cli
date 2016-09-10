@@ -5,14 +5,20 @@
         .module('starter')
         .controller('PedidosCtrl', PedidosCtrl);
 
-    PedidosCtrl.$inject = ['ionicMaterialInk', '$ionicPopup', '$timeout', 'Restangular', '$ionicLoading', 'ionicToast', '$ionicModal', '$scope', 'user'];
+    PedidosCtrl.$inject = ['ionicMaterialInk', '$ionicPopup', 'Restangular', '$ionicLoading', 'ionicToast', '$ionicModal', '$scope', 'user', 'ionicDatePicker'];
 
-    function PedidosCtrl(ionicMaterialInk, $ionicPopup, $timeout, Restangular, $ionicLoading, ionicToast, $ionicModal, $scope, user) {
+    function PedidosCtrl(ionicMaterialInk, $ionicPopup, Restangular, $ionicLoading, ionicToast, $ionicModal, $scope, user, ionicDatePicker) {
         var vm = this;
         var loading = {
             template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>'
         };
         var pedidos = Restangular.all('pedidos');
+        var fechaNacimiento = {
+            callback: function (val) {
+                vm.pedido.cliente.fecha_nacimiento = new Date(val);
+            }
+        };
+
         //
         vm.cambioNombre = cambioNombre
         vm.cancelarPedido = cancelarPedido;
@@ -23,6 +29,7 @@
         vm.formatearBusqueda = formatearBusqueda;
         vm.pedidos = [];
         vm.pedidosCliente = [];
+        vm.seleccionarFechaNacimiento = seleccionarFechaNacimiento;
         vm.setCliente = setCliente;
         vm.verPedidosAnteriores = verPedidosAnteriores;
 
@@ -39,8 +46,6 @@
             $scope.$broadcast('angucomplete-alt:clearInput', 'nombre_completo');
             cargarPedidosNoEnviados();
         }
-
-
 
         function cambioNombre(str) {
             if (str == '') {
@@ -129,10 +134,11 @@
                             activate();
                         })
                     } else {
-                        var alertPopup = $ionicPopup.alert({
-                            title: '¡Error!',
-                            template: 'Inténtelo más tarde nuevamente.'
-                        });
+                        var mensaje = data.mensaje + '<br />';
+                        if (data.validator) {
+                            mensaje += data.validator.join('.<br />');
+                        }
+                        ionicToast.show(mensaje, 'bottom', false, 3000);
                     }
 
                 })
@@ -192,8 +198,14 @@
         function setCliente($item) {
             if ($item) {
                 vm.pedido.cliente = $item.originalObject;
+                vm.pedido.cliente.fecha_nacimiento = new Date(vm.pedido.cliente.fecha_nacimiento);
             }
         }
+
+
+        function seleccionarFechaNacimiento() {
+            ionicDatePicker.openDatePicker(fechaNacimiento);
+        };
 
         function verPedidosAnteriores(cliente) {
             cargarPedidosCliente(cliente);
@@ -205,7 +217,7 @@
             scope: $scope,
             focusFirstInput: true
         }).then(function (modal) {
-            vm.modal = modal;
+            vm.modalNuevo = modal;
         });
 
         $ionicModal.fromTemplateUrl('templates/pedidos-anteriores-cliente.html', {
@@ -215,15 +227,15 @@
         });
 
         vm.openModal = function () {
-            vm.modal.show();
+            vm.modalNuevo.show();
         };
 
         function cerrarModal() {
-            vm.modal.hide();
+            vm.modalNuevo.hide();
         }
         // Cleanup the modal when we're done with it
         $scope.$on('$destroy', function () {
-            vm.modal.remove();
+            vm.modalNuevo.remove();
             vm.modalPedidosCliente.remove();
         });
 

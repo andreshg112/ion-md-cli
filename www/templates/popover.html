@@ -5,7 +5,7 @@
     <ion-content class="padding">
         <ion-list>
             <ion-item>
-                <i class="ion-person icon"></i> {{app.user.rol + ' ' + app.user.username}}
+                <i class="ion-person icon"></i> {{app.user.username + ' (' + app.user.rol + ')' }}
             </ion-item>
             <ion-item style="cursor:pointer" ng-click="app.cerrarSesion()">
                 <i class="ion-log-out icon"></i> Cerrar sesión

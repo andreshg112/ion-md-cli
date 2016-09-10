@@ -53,6 +53,6 @@ gulp.task('git-check', function(done) {
 
 gulp.task('inject', function() {
     gulp.src('./www/index.html')
-        .pipe(inject(gulp.src(['./www/js/services/*.js', './www/js/controllers/*.js'], { read: false }), { relative: true }))
+        .pipe(inject(gulp.src(['./www/js/services/*.js', './www/js/controllers/*.js', './www/app/**/*.js'], { read: false }), { relative: true }))
         .pipe(gulp.dest('./www'));
 });

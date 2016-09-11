@@ -7,6 +7,7 @@
 
     /** @ngInject */
     function config($stateProvider, $urlRouterProvider, RestangularProvider, ionicDatePickerProvider) {
+        // RestangularProvider.setBaseUrl('http://fidelivery.co/rest/ion-md-server/public');
         RestangularProvider.setBaseUrl('http://localhost/ion-md-server/public');
         $stateProvider
             .state('login', {
@@ -91,13 +92,11 @@
 
         //Configuración del Ionic Datepicker
         var datePickerObj = {
-            inputDate: new Date(),
             setLabel: 'Fijar',
             closeLabel: 'Cerrar',
             mondayFirst: true,
             weeksList: ["D", "L", "M", "M", "J", "V", "S"],
-            monthsList: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
-            closeOnSelect: false
+            monthsList: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
         };
         ionicDatePickerProvider.configDatePicker(datePickerObj);
     }

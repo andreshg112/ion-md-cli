@@ -10,13 +10,7 @@
     function PedidosAnterioresController(ionicMaterialInk, $ionicPopup, Restangular, $ionicLoading, ionicToast, $scope, user, ionicDatePicker) {
         var vm = this;
         var fechaPedido = {
-            callback: function (val) {  //Mandatory
-                console.log('Return value from the datepicker popup is : ' + val, new Date(val));
-            }
-        };
-
-        vm.seleccionarFecha = function () {
-            ionicDatePicker.openDatePicker(fechaPedido);
+            callback: function (val) { vm.pedido.created_at = fechaYYYYMMDD(new Date(val)) }
         };
         var loading = {
             template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>'
@@ -26,6 +20,7 @@
         vm.cambioNombre = cambioNombre
         vm.confirmar = confirmar;
         vm.formatearBusqueda = formatearBusqueda;
+        vm.seleccionarFechaPedido = seleccionarFechaPedido;
         vm.setCliente = setCliente;
 
         activate();
@@ -36,6 +31,7 @@
 
         function activate() {
             vm.pedido = {
+                created_at: null,
                 cliente: {}
             };
             $scope.$broadcast('angucomplete-alt:clearInput', 'nombre_completo');
@@ -81,7 +77,6 @@
 
                 })
                 .catch(function (error) {
-                    console.log(error);
                     var alertPopup = $ionicPopup.alert({
                         title: 'Error: ' + error.statusText,
                         template: 'Inténtelo más tarde nuevamente.'
@@ -98,6 +93,10 @@
                 nombre_completo: str
                 //token: user.get().token
             };
+        }
+
+        function seleccionarFechaPedido() {
+            ionicDatePicker.openDatePicker(fechaPedido);
         }
 
         function setCliente($item) {

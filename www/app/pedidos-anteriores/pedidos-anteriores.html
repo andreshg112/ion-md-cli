@@ -9,11 +9,6 @@
         <div class="im-wrapper">
             <form id="formPedido" name="formPedido" ng-submit="vm.confirmar()">
                 <div class="list">
-                    <!--<label class="item item-input item-floating-label">
-                        <i class="icon ion-ios-email placeholder-icon"></i>
-                        <span class="input-label">Email</span>
-                        <input type="text" placeholder="email">
-                    </label>-->
                     <div class="item item-input item-floating-label">
                         <span class="input-label">Pedido</span>
                         <textarea id="pedido" ng-model="vm.pedido.detalles" rows="5" placeholder="Escriba aquí su pedido" required></textarea>
@@ -31,7 +26,6 @@
                             <select ng-model="vm.tipo_numero" ng-init="vm.tipo_numero = 'Celular'">
                                 <option selected>Celular</option>
                                 <option>Teléfono</option>
-                                <!--<option ng-selected="!vm.pedido.cliente.celular && !!vm.pedido.cliente.telefono">Teléfono</option>-->
                             </select>
                         </div>
                         <div class="item item-input" ng-if="vm.tipo_numero == 'Celular'">
@@ -63,12 +57,17 @@
                             <input id="direccion_otra" ng-model="vm.pedido.cliente.direccion_otra" type="text" placeholder="Otra dirección" ng-required="vm.tipo_direccion == 'Otra'">
                         </div>
                     </div>
-                    <!--<div class="item item-icon-right">
-                        <input name="celular" ng-model="vm.pedido.cliente.celular" type="number" placeholder="Celular" min="1000000" max="3999999999" minlength="7" maxlength="10" required>
-                        <i ng-click="vm.buscarCliente(vm.pedido.cliente.celular)" class="icon ion-search" style="cursor:pointer"></i>
-                    </div>-->
+                    <div class="row">
+                        <div class="item item-input item-floating-label col-34">
+                            <span class="input-label">Email</span>
+                            <input type="email" placeholder="Email" ng-model="vm.pedido.cliente.email">
+                        </div>
+                        <div class="item item-input item-floating-label col-offset-33 col-33">
+                            <span class="input-label">Fecha del pedido</span>
+                            <input type="text" placeholder="YYYY-MM-DD" ng-click="vm.seleccionarFechaPedido()" ng-model="vm.pedido.created_at" required/>
+                        </div>
+                    </div>
                     <br />
-                    <button type="button" class="button button-block button-royal ink" data-ink-color="#9DEAFF" data-ink-opacity="1" ng-click="vm.seleccionarFecha()">Fecha</button>
                     <button class="button button-block button-calm ink" data-ink-color="#9DEAFF" data-ink-opacity="1" ng-disabled="formPedido.$invalid">Confirmar</button>
                 </div>
             </form>

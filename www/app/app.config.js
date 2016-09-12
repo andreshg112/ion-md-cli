@@ -7,8 +7,8 @@
 
     /** @ngInject */
     function config($stateProvider, $urlRouterProvider, RestangularProvider, ionicDatePickerProvider) {
-        // RestangularProvider.setBaseUrl('http://fidelivery.co/rest/ion-md-server/public');
-        RestangularProvider.setBaseUrl('http://localhost/ion-md-server/public');
+        RestangularProvider.setBaseUrl('http://fidelivery.co/rest/ion-md-server/public');
+        // RestangularProvider.setBaseUrl('http://localhost/ion-md-server/public');
         $stateProvider
             .state('login', {
                 url: '/login',

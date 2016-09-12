@@ -1,4 +1,4 @@
-﻿(function() {
+﻿(function () {
     'use strict';
 
     angular
@@ -28,29 +28,30 @@
             $ionicHistory.clearHistory();
             $ionicHistory.nextViewOptions({ disableBack: true, historyRoot: true });
             vm.user = {};
+            document.getElementById("username").focus();
         }
 
         function iniciarSesion() {
             $ionicLoading.show(loading);
             authenticate.post(vm.user)
-                .then(function(data) {
+                .then(function (data) {
                     var mensaje = '';
                     if (data.result) {
                         user.set(data.result);
                         mensaje = String.format('¡Bienvenido {0} {1}! Serás redirigido(a) al menú principal.', user.get().primer_nombre, user.get().primer_apellido);
-                        ionicToast.show(mensaje, 'bottom', false, 2000);                        
-                        $timeout(function() {
+                        ionicToast.show(mensaje, 'bottom', false, 2000);
+                        $timeout(function () {
                             $state.go('app.pedidos');
                         }, 2000);
                     } else {
                         mensaje = 'Error: ' + data.mensaje;
-                        ionicToast.show(mensaje, 'bottom', false, 2000);                        
+                        ionicToast.show(mensaje, 'bottom', false, 2000);
                     }
                 })
-                .catch(function(error) {
+                .catch(function (error) {
                     ionicToast.show(String.format('Error: {0}. Inténtelo más tarde nuevamente.', error.statusText), 'bottom', false, 3000);
                 })
-                .finally(function() {
+                .finally(function () {
                     $ionicLoading.hide();
                 });
         }

@@ -14,9 +14,7 @@
         };
         var pedidos = Restangular.all('pedidos');
         var fechaNacimiento = {
-            callback: function (val) {
-                vm.pedido.cliente.fecha_nacimiento = new Date(val);
-            }
+            callback: function (val) { vm.pedido.cliente.fecha_nacimiento = fechaYYYYMMDD(new Date(val)) }
         };
 
         //
@@ -198,7 +196,6 @@
         function setCliente($item) {
             if ($item) {
                 vm.pedido.cliente = $item.originalObject;
-                vm.pedido.cliente.fecha_nacimiento = new Date(vm.pedido.cliente.fecha_nacimiento);
             }
         }
 

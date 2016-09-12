@@ -22,8 +22,11 @@
                         <textarea id="pedido" ng-model="vm.pedido.detalles" rows="5" placeholder="Escriba aquí su pedido" required></textarea>
                     </div>
                     <div class="item item-input item-floating-label">
-                        <angucomplete-alt id="nombre_completo" placeholder="Nombre completo" selected-object="vm.setCliente" search-fields="nombre_completo" title-field="nombre_completo" minlength="1" match-class="highlight" text-searching="Buscando cliente..." text-no-results="No existen clientes que coincidan con el criterio de búsqueda."
-                            auto-match="true" remote-url="http://localhost/ion-md-server/public/clientes" remote-url-request-formatter="vm.formatearBusqueda" input-changed="vm.cambioNombre" required/>
+                        <angucomplete-alt id="nombre_completo" placeholder="Nombre completo" selected-object="vm.setCliente" search-fields="nombre_completo"
+                            title-field="nombre_completo" description-field="direccion_casa" minlength="1" match-class="highlight"
+                            text-searching="Buscando cliente..." text-no-results="No existen clientes que coincidan con el criterio de búsqueda."
+                            auto-match="true" remote-url="http://localhost/ion-md-server/public/clientes" remote-url-request-formatter="vm.formatearBusqueda"
+                            input-changed="vm.cambioNombre" required/>
                     </div>
                     <div class="row">
                         <div class="item item-input item-select">
@@ -35,10 +38,12 @@
                             </select>
                         </div>
                         <div class="item item-input" ng-if="vm.tipo_numero == 'Celular'">
-                            <input id="celular" ng-model="vm.pedido.cliente.celular" type="number" min="3000000000" max="3999999999" minlength="10" maxlength="10" placeholder="Celular" ng-required="vm.tipo_numero == 'Celular'">
+                            <input id="celular" ng-model="vm.pedido.cliente.celular" type="number" min="3000000000" max="3999999999" minlength="10" maxlength="10"
+                                placeholder="Celular" ng-required="vm.tipo_numero == 'Celular'">
                         </div>
                         <div class="item item-input" ng-if="vm.tipo_numero == 'Teléfono'">
-                            <input id="telefono" ng-model="vm.pedido.cliente.telefono" type="number" min="1000000" max="9999999" minlength="7" maxlength="7" placeholder="Teléfono" ng-required="vm.tipo_numero == 'Teléfono'">
+                            <input id="telefono" ng-model="vm.pedido.cliente.telefono" type="number" min="1000000" max="9999999" minlength="7" maxlength="7"
+                                placeholder="Teléfono" ng-required="vm.tipo_numero == 'Teléfono'">
                         </div>
                     </div>
                     <div class="row">
@@ -54,7 +59,8 @@
                             <input id="direccion_casa" ng-model="vm.pedido.cliente.direccion_casa" type="text" placeholder="Dirección de la casa" ng-required="vm.tipo_direccion == 'Casa'">
                         </div>
                         <div class="item item-input" ng-if="vm.tipo_direccion == 'Oficina'">
-                            <input id="direccion_oficina" ng-model="vm.pedido.cliente.direccion_oficina" type="text" placeholder="Dirección de la oficina" ng-required="vm.tipo_direccion == 'Oficina'">
+                            <input id="direccion_oficina" ng-model="vm.pedido.cliente.direccion_oficina" type="text" placeholder="Dirección de la oficina"
+                                ng-required="vm.tipo_direccion == 'Oficina'">
                         </div>
                         <div class="item item-input" ng-if="vm.tipo_direccion == 'Otra'">
                             <input id="direccion_otra" ng-model="vm.pedido.cliente.direccion_otra" type="text" placeholder="Otra dirección" ng-required="vm.tipo_direccion == 'Otra'">

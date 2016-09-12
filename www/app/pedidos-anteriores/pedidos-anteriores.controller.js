@@ -31,10 +31,11 @@
 
         function activate() {
             vm.pedido = {
-                created_at: null,
+                created_at: fechaYYYYMMDD(new Date()),
                 cliente: {}
             };
             $scope.$broadcast('angucomplete-alt:clearInput', 'nombre_completo');
+            document.getElementById("pedido").focus();
         }
 
         function cambioNombre(str) {

@@ -6,19 +6,21 @@
         <div class="im-wrapper">
             <div class="list">
                 <div class="item row responsive-sm">
-                    <label class="col col-20">Nombre completo</label>
-                    <label class="col col-20">Celular/Teléfono</label>
-                    <label class="col col-40">Direcciones</label>
-                    <!--<label class="col col-20">Cumpleaños</label>-->
-                    <label class="col col-20">Número de pedidos</label>
+                    <label class="col col-20 centered-text">Nombre completo</label>
+                    <label class="col col-10 centered-text">Celular/Teléfono</label>
+                    <label class="col col-40 centered-text">Direcciones</label>
+                    <label class="col col-10 centered-text">Fecha de<br/>nacimiento</label>
+                    <label class="col col-10 centered-text">Email</label>
+                    <label class="col col-10 centered-text"># de pedidos</label>
                 </div>
                 <div class="item item-divider"></div>
                 <div class="item item-button-right row responsive-sm" ng-repeat="cliente in vm.clientes track by $index">
-                    <label class="col col-20">{{cliente.nombre_completo}}</label>
-                    <label class="col col-20">{{cliente.celular}}<br/>{{cliente.telefono}}</label>
-                    <label class="col col-40">{{cliente.direccion_casa}}<br/>{{cliente.direccion_oficina}}<br/>{{cliente.direccion_otra}}</label>
-                    <!--<label class="col col-20">{{cliente.fecha_nacimiento}}</label>-->
-                    <label class="col col-20">{{cliente.total_pedidos}}</label>
+                    <label class="col col-20 centered-text">{{cliente.nombre_completo}}</label>
+                    <label class="col col-10 centered-text">{{cliente.celular}}<br/>{{cliente.telefono}}</label>
+                    <label class="col col-40 centered-text">{{cliente.direccion_casa}}<br/>{{cliente.direccion_oficina}}<br/>{{cliente.direccion_otra}}</label>
+                    <label class="col col-10 centered-text">{{cliente.fecha_nacimiento}}</label>
+                    <label class="col col-10 centered-text">{{cliente.email}}</label>
+                    <label class="col col-10 centered-text">{{cliente.total_pedidos}}</label>
                 </div>
             </div>
         </div>

@@ -8,6 +8,10 @@
     text-align: center;
 }
 
+.resumen-pedido.popup-container .popup {
+    width: 50% !important;
+}
+
 /*.item-floating-label .placeholder-icon {
   padding-right: 18px;
   position: absolute;

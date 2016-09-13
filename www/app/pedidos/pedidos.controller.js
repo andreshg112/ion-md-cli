@@ -12,10 +12,10 @@
         var loading = {
             template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>'
         };
-        var pedidos = Restangular.all('pedidos');
         var fechaNacimiento = {
             callback: function (val) { vm.pedido.cliente.fecha_nacimiento = fechaYYYYMMDD(new Date(val)) }
         };
+        var pedidos = Restangular.all('pedidos');
 
         //
         vm.cambioNombre = cambioNombre
@@ -27,6 +27,7 @@
         vm.formatearBusqueda = formatearBusqueda;
         vm.pedidos = [];
         vm.pedidosCliente = [];
+        vm.openModal = openModal;
         vm.seleccionarFechaNacimiento = seleccionarFechaNacimiento;
         vm.setCliente = setCliente;
         vm.verPedidosAnteriores = verPedidosAnteriores;
@@ -105,12 +106,15 @@
                 });
         }
 
+        function cerrarModal() {
+            vm.modalNuevo.hide();
+        }
+
         function cerrarPedidosCliente() {
             vm.modalPedidosCliente.hide();
         }
 
         function confirmar() {
-            $ionicLoading.show(loading);
             vm.pedido.numero = (vm.tipo_numero == 'Celular') ?
                 vm.pedido.cliente.celular : vm.pedido.cliente.telefono;
             if (vm.tipo_direccion == 'Casa') {
@@ -121,35 +125,19 @@
                 vm.pedido.direccion = vm.pedido.cliente.direccion_otra;
             }
             vm.pedido.establecimiento_id = user.get().establecimiento_id;
-            pedidos.post(vm.pedido)
-                .then(function (data) {
-                    if (data.result) {
-                        var alertPopup = $ionicPopup.alert({
-                            title: '¡Registro exitoso!',
-                            template: 'Tu pedido se ha almacenado correctamente.'
-                        });
-                        alertPopup.then(function (option) {
-                            activate();
-                        })
-                    } else {
-                        var mensaje = data.mensaje + '<br />';
-                        if (data.validator) {
-                            mensaje += data.validator.join('.<br />');
-                        }
-                        ionicToast.show(mensaje, 'bottom', false, 3000);
-                    }
-
-                })
-                .catch(function (error) {
-                    console.log(error);
-                    var alertPopup = $ionicPopup.alert({
-                        title: 'Error: ' + error.statusText,
-                        template: 'Inténtelo más tarde nuevamente.'
-                    });
-                })
-                .finally(function () {
-                    $ionicLoading.hide();
-                });
+            var confirmarPedido = $ionicPopup.confirm({
+                title: 'Estás a punto de registrar el siguiente pedido.',
+                cssClass: 'resumen-pedido',
+                templateUrl: 'app/pedidos/modal-resumen-pedido.html',
+                scope: $scope,
+                cancelText: 'Cancelar'
+            });
+            confirmarPedido.then(function (res) {
+                if (res) {
+                    registrarPedido();
+                    imprimirResumenPedido('popup-resumen-pedido');
+                }
+            });
         }
 
         function despachar(pedido) {
@@ -185,6 +173,16 @@
                 });
         }
 
+        function imprimirResumenPedido(muestra) {
+            var divResumenPedido = document.getElementById(muestra).innerHTML;
+            var popupWin = window.open('', '_blank');
+            popupWin.document.open();
+            var inicio = '<html><head><link rel="stylesheet" type="text/css" href="lib/ionic/css/ionic.css" /></head><body onload="window.print()">';
+            var final = '</body></html>';
+            popupWin.document.write(inicio + divResumenPedido + final);
+            popupWin.document.close();
+        }
+
         function formatearBusqueda(str) {
             return {
                 establecimiento_id: user.get().establecimiento_id,
@@ -193,12 +191,48 @@
             };
         }
 
+        function openModal() {
+            vm.modalNuevo.show();
+        }
+
+        function registrarPedido() {
+            $ionicLoading.show(loading);
+            pedidos.post(vm.pedido)
+                .then(function (data) {
+                    if (data.result) {
+                        var alertPopup = $ionicPopup.alert({
+                            title: '¡Registro exitoso!',
+                            template: 'Tu pedido se ha almacenado correctamente.'
+                        });
+                        alertPopup.then(function (option) {
+                            activate();
+                        });
+                    } else {
+                        var mensaje = data.mensaje + '<br />';
+                        if (data.validator) {
+                            mensaje += data.validator.join('.<br />');
+                        }
+                        ionicToast.show(mensaje, 'bottom', false, 3000);
+                    }
+
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    var alertPopup = $ionicPopup.alert({
+                        title: 'Error: ' + error.statusText,
+                        template: 'Inténtelo más tarde nuevamente.'
+                    });
+                })
+                .finally(function () {
+                    $ionicLoading.hide();
+                });
+        }
+
         function setCliente($item) {
             if ($item) {
                 vm.pedido.cliente = $item.originalObject;
             }
         }
-
 
         function seleccionarFechaNacimiento() {
             ionicDatePicker.openDatePicker(fechaNacimiento);
@@ -208,6 +242,10 @@
             cargarPedidosCliente(cliente);
             vm.modalPedidosCliente.show();
         }
+
+        /*function verResumenPedido() {
+            vm.modalResumenPedido.show();
+        }*/
 
         //Actividades de los modales
         $ionicModal.fromTemplateUrl('app/pedidos/nuevo-pedido.html', {
@@ -223,13 +261,12 @@
             vm.modalPedidosCliente = modal;
         });
 
-        vm.openModal = function () {
-            vm.modalNuevo.show();
-        };
+        /*$ionicModal.fromTemplateUrl('app/pedidos/modal-resumen-pedido.html', {
+            scope: $scope
+        }).then(function (modal) {
+            vm.modalResumenPedido = modal;
+        });*/
 
-        function cerrarModal() {
-            vm.modalNuevo.hide();
-        }
         // Cleanup the modal when we're done with it
         $scope.$on('$destroy', function () {
             vm.modalNuevo.remove();

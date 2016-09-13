@@ -6,7 +6,9 @@
         .config(config);
 
     /** @ngInject */
-    function config($stateProvider, $urlRouterProvider, RestangularProvider, ionicDatePickerProvider) {
+    function config($stateProvider, $urlRouterProvider, RestangularProvider, ionicDatePickerProvider, $ionicConfigProvider) {
+        $ionicConfigProvider.views.maxCache(0);
+        //$ionicConfigProvider.scrolling.jsScrolling(true);
         RestangularProvider.setBaseUrl('http://fidelivery.co/rest/ion-md-server/public');
         // RestangularProvider.setBaseUrl('http://localhost/ion-md-server/public');
         $stateProvider

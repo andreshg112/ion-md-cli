@@ -1,12 +1,22 @@
-﻿<ion-view view-title="Pedidos anteriores">
+﻿<ion-modal-view style="width: 80%; height: 80%; top: 10%; left: 10%; right: 10%; bottom: 10%;">
     <ion-header-bar>
-        <h1 class="title">Nuevo pedido</h1>
-    </ion-header-bar>
-    <ion-content>
-        <div class="bar bar-subheader bar-stable static text-center">
-            <strong class="title">Registrar pedidos pasados</strong>
+        <h1 class="title">Resumen del pedido</h1>
+        <div class="buttons">
+            <button class="button-icon icon ion-close" ng-click="vm.cerrarModal()"></button>
         </div>
+    </ion-header-bar>
+    <ion-content class="padding">
         <div class="im-wrapper">
+            <div class="list">
+                <div class="item item-input">
+                    <span class="input-label">Username</span>
+                    <input type="text">
+                </div>
+                <div class="item item-input">
+                    <span class="input-label">Password</span>
+                    <input type="password">
+                </div>
+            </div>
             <form id="formPedido" name="formPedido" ng-submit="vm.confirmar()">
                 <div class="list">
                     <div class="item item-input item-floating-label">
@@ -22,9 +32,9 @@
                     </div>
                     <!--<div class="item item-input item-floating-label">
                         <angucomplete-alt id="nombre_completo" placeholder="Nombre completo" selected-object="vm.setCliente" search-fields="nombre_completo"
-                            title-field="nombre_completo" description-field="direccion_casa" minlength="1" match-class="highlight" text-searching="Buscando cliente..."
-                            text-no-results="No existen clientes que coincidan con el criterio de búsqueda." auto-match="true"
-                            remote-url="http://localhost/ion-md-server/public/clientes" remote-url-request-formatter="vm.formatearBusqueda"
+                            title-field="nombre_completo" description-field="direccion_casa" minlength="1" match-class="highlight"
+                            text-searching="Buscando cliente..." text-no-results="No existen clientes que coincidan con el criterio de búsqueda."
+                            auto-match="true" remote-url="http://localhost/ion-md-server/public/clientes" remote-url-request-formatter="vm.formatearBusqueda"
                             input-changed="vm.cambioNombre" required/>
                     </div>-->
                     <div class="row">
@@ -33,6 +43,7 @@
                             <select ng-model="vm.tipo_numero" ng-init="vm.tipo_numero = 'Celular'">
                                 <option selected>Celular</option>
                                 <option>Teléfono</option>
+                                <!--<option ng-selected="!vm.pedido.cliente.celular && !!vm.pedido.cliente.telefono">Teléfono</option>-->
                             </select>
                         </div>
                         <div class="item item-input" ng-if="vm.tipo_numero == 'Celular'">
@@ -70,14 +81,17 @@
                             <input type="email" placeholder="Email" ng-model="vm.pedido.cliente.email">
                         </div>
                         <div class="item item-input item-floating-label col-offset-33 col-33">
-                            <span class="input-label">Fecha del pedido</span>
-                            <input type="text" placeholder="YYYY-MM-DD" ng-click="vm.seleccionarFechaPedido()" ng-model="vm.pedido.created_at" required/>
+                            <span class="input-label">Fecha de nacimiento</span>
+                            <input type="text" placeholder="YYYY-MM-DD" ng-click="vm.seleccionarFechaNacimiento()" ng-model="vm.pedido.cliente.fecha_nacimiento"
+                            />
                         </div>
                     </div>
+                    <br />
+                    <a href="javascript:;" class="balanced icon ion-navicon-round" ng-click="vm.verPedidosAnteriores(vm.pedido.cliente)" ng-if="!!vm.pedido.cliente.id">Ver pedidos anteriores</a>
                     <br />
                     <button class="button button-block button-calm ink" data-ink-color="#9DEAFF" data-ink-opacity="1" ng-disabled="formPedido.$invalid">Confirmar</button>
                 </div>
             </form>
         </div>
     </ion-content>
-</ion-view>
+</ion-modal-view>

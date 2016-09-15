@@ -25,6 +25,7 @@
         vm.confirmar = confirmar;
         vm.despachar = despachar;
         vm.formatearBusqueda = formatearBusqueda;
+        vm.imprimirPedidoEnCola = imprimirPedidoEnCola;
         vm.pedidos = [];
         vm.pedidosCliente = [];
         vm.openModal = openModal;
@@ -171,6 +172,25 @@
                 .finally(function () {
                     $ionicLoading.hide();
                 });
+        }
+
+        function imprimirPedidoEnCola(pedido) {
+            vm.pedido = pedido;
+            var confirmarPedido = $ionicPopup.confirm({
+                title: 'Imprimir pedido',
+                cssClass: 'resumen-pedido',
+                templateUrl: 'app/pedidos/modal-resumen-pedido.html',
+                scope: $scope,
+                cancelText: 'Cancelar'
+            });
+            confirmarPedido.then(function (res) {
+                if (res) {
+                    imprimirResumenPedido('popup-resumen-pedido');
+                }
+                vm.pedido = {
+                    cliente: {}
+                };
+            });
         }
 
         function imprimirResumenPedido(muestra) {

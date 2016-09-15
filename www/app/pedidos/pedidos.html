@@ -9,21 +9,24 @@
         <div class="im-wrapper">
             <div class="list">
                 <div class="item row responsive-sm">
-                    <label class="col col-10 centered-text">Contacto</label>
-                    <label class="col col-20 centered-text">Nombre completo</label>
-                    <label class="col col-30 centered-text">Detalles</label>
-                    <label class="col col-30 centered-text">Dirección</label>
-                    <label class="col col-10 centered-text">Acciones</label>
+                    <pre class="col col-10 centered-text">Contacto</pre>
+                    <pre class="col col-20 centered-text">Nombre completo</pre>
+                    <pre class="col col-30 centered-text">Detalles</pre>
+                    <pre class="col col-30 centered-text">Dirección</pre>
+                    <pre class="col col-10 centered-text">Acciones</pre>
                 </div>
                 <div class="item item-divider"></div>
                 <div class="item item-button-right row responsive-sm" ng-repeat="pedido in vm.pedidos track by $index">
-                    <label class="col col-10 centered-text">{{pedido.numero}}</label>
-                    <label class="col col-20 centered-text">{{pedido.cliente.nombre_completo}}</label>
-                    <label class="col col-30 centered-text">{{pedido.detalles}}</label>
-                    <label class="col col-30 centered-text">{{pedido.direccion}}</label>
+                    <pre class="col col-10 centered-text">{{pedido.numero}}</pre>
+                    <pre class="col col-20 centered-text">{{pedido.cliente.nombre_completo}}</pre>
+                    <pre class="col col-30 centered-text">{{pedido.detalles}}</pre>
+                    <pre class="col col-30 centered-text">{{pedido.direccion}}</pre>
                     <div class="col col-10 centered-text">
                         <button title="Despachar" class="button-icon ink" ng-click="vm.despachar(pedido)">
                             <i class="ion-paper-airplane icon"></i>
+                        </button>
+                        <button title="Imprimir" class="button-icon ink" ng-click="vm.imprimirPedidoEnCola(pedido)">
+                            <i class="ion-printer icon"></i>                            
                         </button>
                         <button title="Cancelar" class="button-icon ink" ng-click="vm.cancelarPedido(pedido)">
                             <i class="ion-close-round icon"></i>

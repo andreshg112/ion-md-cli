@@ -3,13 +3,12 @@
 
     angular
         .module('starter')
-        .config(['$stateProvider', '$urlRouterProvider', 'RestangularProvider', 'ionicDatePickerProvider', '$ionicConfigProvider', config]);
+        .config(['$stateProvider', '$urlRouterProvider', 'RestangularProvider', 'ionicDatePickerProvider', '$ionicConfigProvider', 'API', config]);
 
     /** @ngInject */
-    function config($stateProvider, $urlRouterProvider, RestangularProvider, ionicDatePickerProvider, $ionicConfigProvider) {
+    function config($stateProvider, $urlRouterProvider, RestangularProvider, ionicDatePickerProvider, $ionicConfigProvider, API) {
         $ionicConfigProvider.views.maxCache(0);
-        //RestangularProvider.setBaseUrl('http://fidelivery.co/rest/ion-md-server/public');
-        RestangularProvider.setBaseUrl('http://localhost/ion-md-server/public');
+        RestangularProvider.setBaseUrl(API);
         $stateProvider
             .state('login', {
                 url: '/login',

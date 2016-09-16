@@ -56,7 +56,7 @@ gulp.task('git-check', function (done) {
 gulp.task('inject', function () {
     var archivos = [
         './www/app/app.js',
-        './www/app/app.providers.js',
+        './www/app/values/*.js',
         './www/app/app.*.js',
         './www/app/services/*.js',
         './www/app/**/*.js',

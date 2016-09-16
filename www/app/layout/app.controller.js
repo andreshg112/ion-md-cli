@@ -5,10 +5,12 @@
         .module('starter')
         .controller('AppController', AppController);
 
-    AppController.$inject = ['$scope', '$ionicPopover', 'user', '$state', '$timeout', '$ionicHistory'];
+    AppController.$inject = ['$scope', '$ionicPopover', 'user', '$state', '$timeout', '$ionicHistory', 'API'];
 
-    function AppController($scope, $ionicPopover, user, $state, $timeout, $ionicHistory) {
+    function AppController($scope, $ionicPopover, user, $state, $timeout, $ionicHistory, API) {
         var vm = this;
+
+        vm.API = API;
         vm.cerrarSesion = cerrarSesion;
         vm.user = user.get();
 

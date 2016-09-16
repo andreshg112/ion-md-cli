@@ -8,6 +8,7 @@
     PedidosController.$inject = ['ionicMaterialInk', '$ionicPopup', 'Restangular', '$ionicLoading', 'ionicToast', '$ionicModal', '$scope', 'user', 'ionicDatePicker'];
 
     function PedidosController(ionicMaterialInk, $ionicPopup, Restangular, $ionicLoading, ionicToast, $ionicModal, $scope, user, ionicDatePicker) {
+        Restangular.setDefaultRequestParams({ token: user.get().token });
         var vm = this;
         var loading = {
             template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>'
@@ -65,7 +66,8 @@
                     }
                 })
                 .catch(function (error) {
-                    ionicToast.show('Error: ' + error.statusText + 'Inténtelo más tarde nuevamente.', 'bottom', false, 2000);
+                    var mensaje = String.format('Error: {0} {1}', error.status, error.statusText);
+                    ionicToast.show(mensaje, 'middle', true, 2000);
                 })
                 .finally(function () {
                     $ionicLoading.hide();
@@ -78,11 +80,13 @@
             Restangular.one('clientes', cliente.id).getList('pedidos', {
                 establecimiento_id: user.get().establecimiento_id,
                 enviado: 1
-            }).then(function (data) {
-                vm.pedidosCliente = data;
             })
+                .then(function (data) {
+                    vm.pedidosCliente = data;
+                })
                 .catch(function (error) {
-                    ionicToast.show(error, 'middle', true);
+                    var mensaje = String.format('Error: {0} {1}', error.status, error.statusText);
+                    ionicToast.show(mensaje, 'middle', true, 2000);
                 })
                 .finally(function () {
                     $ionicLoading.hide();
@@ -99,8 +103,8 @@
                     }
                 })
                 .catch(function (error) {
-                    console.log(error);
-                    ionicToast.show(error.statusText, 'middle', true);
+                    var mensaje = String.format('Error: {0} {1}', error.status, error.statusText);
+                    ionicToast.show(mensaje, 'middle', true, 2000);
                 })
                 .finally(function () {
                     $ionicLoading.hide();
@@ -163,11 +167,8 @@
                     }
                 })
                 .catch(function (error) {
-                    console.log(error.statusText);
-                    var alertPopup = $ionicPopup.alert({
-                        title: 'Error: ' + error.statusText,
-                        template: 'Inténtelo más tarde nuevamente.'
-                    });
+                    var mensaje = String.format('Error: {0} {1}', error.status, error.statusText);
+                    ionicToast.show(mensaje, 'middle', true, 2000);
                 })
                 .finally(function () {
                     $ionicLoading.hide();
@@ -206,8 +207,8 @@
         function formatearBusqueda(str) {
             return {
                 establecimiento_id: user.get().establecimiento_id,
-                nombre_completo: str
-                //token: user.get().token
+                nombre_completo: str,
+                token: user.get().token
             };
         }
 
@@ -237,11 +238,8 @@
 
                 })
                 .catch(function (error) {
-                    console.log(error);
-                    var alertPopup = $ionicPopup.alert({
-                        title: 'Error: ' + error.statusText,
-                        template: 'Inténtelo más tarde nuevamente.'
-                    });
+                    var mensaje = String.format('Error: {0} {1}', error.status, error.statusText);
+                    ionicToast.show(mensaje, 'middle', true, 2000);
                 })
                 .finally(function () {
                     $ionicLoading.hide();

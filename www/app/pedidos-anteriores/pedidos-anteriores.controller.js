@@ -8,6 +8,7 @@
     PedidosAnterioresController.$inject = ['ionicMaterialInk', '$ionicPopup', 'Restangular', '$ionicLoading', 'ionicToast', '$scope', 'user', 'ionicDatePicker'];
 
     function PedidosAnterioresController(ionicMaterialInk, $ionicPopup, Restangular, $ionicLoading, ionicToast, $scope, user, ionicDatePicker) {
+        Restangular.setDefaultHeaders({ token: user.get().token });
         var vm = this;
         var fechaPedido = {
             callback: function (val) { vm.pedido.created_at = fechaYYYYMMDD(new Date(val)) }
@@ -91,8 +92,8 @@
         function formatearBusqueda(str) {
             return {
                 establecimiento_id: user.get().establecimiento_id,
-                nombre_completo: str
-                //token: user.get().token
+                nombre_completo: str,
+                token: user.get().token
             };
         }
 

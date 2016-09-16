@@ -49,7 +49,7 @@
                     }
                 })
                 .catch(function (error) {
-                    ionicToast.show(String.format('Error: {0}. Inténtelo más tarde nuevamente.', error.statusText), 'bottom', false, 3000);
+                    ionicToast.show(String.format('Error: {0}. Inténtelo más tarde nuevamente.', error), 'bottom', false, 3000);
                 })
                 .finally(function () {
                     $ionicLoading.hide();

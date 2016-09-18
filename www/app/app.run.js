@@ -4,6 +4,7 @@
     angular
         .module('starter')
         .run(['$ionicPlatform', 'PermRoleStore', 'AuthService', run]);
+
     /** @ngInject */
     function run($ionicPlatform, PermRoleStore, AuthService) {
         var roles = ['ADMIN', 'EMPLEADO'];

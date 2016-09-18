@@ -1,11 +1,11 @@
-(function() {
+(function () {
     'use strict';
 
     angular
         .module('starter')
         .factory('AuthService', AuthService);
 
-    /** @ngInject **/
+    AuthService.$inject = ['$q', 'PermRoleStore', 'user'];
     function AuthService($q, PermRoleStore, user) {
 
         var service = {

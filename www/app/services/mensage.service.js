@@ -5,7 +5,7 @@
         .module('starter')
         .factory('MensageService', MensageService);
 
-    /** @ngInject **/
+    MensageService.$inject = ['$http', 'user', 'Restangular'];
     function MensageService($http, user, Restangular) {
 
         var service = {

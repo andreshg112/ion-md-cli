@@ -24,7 +24,39 @@
                 controllerAs: 'app',
                 data: {
                     permissions: {
-                        only: ['ADMIN', 'EMPLEADO'],
+                        only: ['SUPER_USER', 'ADMIN', 'VENDEDOR'],
+                        redirectTo: 'login'
+                    }
+                }
+            })
+            .state('app.users', {
+                url: '/users',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'app/users/users.html',
+                        controller: 'UsersController',
+                        controllerAs: 'vm'
+                    }
+                },
+                data: {
+                    permissions: {
+                        only: ['SUPER_USER'],
+                        redirectTo: 'login'
+                    }
+                }
+            })
+            .state('app.establecimientos', {
+                url: '/establecimientos',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'app/establecimientos/establecimientos.html',
+                        controller: 'EstablecimientosController',
+                        controllerAs: 'vm'
+                    }
+                },
+                data: {
+                    permissions: {
+                        only: ['SUPER_USER'],
                         redirectTo: 'login'
                     }
                 }

@@ -1,0 +1,32 @@
+﻿<ion-modal-view style="width: 90%; height: 90%; top: 5%; left: 5%; right: 5%; bottom: 5%;">
+    <ion-header-bar>
+        <h1 class="title">Establecimiento</h1>
+        <div class="buttons">
+            <button class="button-icon icon ion-close" ng-click="vm.cerrarNuevo()"></button>
+        </div>
+    </ion-header-bar>
+    <ion-content class="padding">
+        <div class="im-wrapper">
+            <form id="form" name="form" ng-submit="vm.confirmar()">
+                <div class="list">
+                    <div class="item item-input item-floating-label">
+                        <span class="input-label">Establecimiento</span>
+                        <input id="nombre" type="text" ng-model="vm.establecimiento.nombre" placeholder="Nombre del establecimiento" required />
+                    </div>
+                    <div class="item item-input item-floating-label">
+                        <span class="input-label">Mensaje</span>
+                        <textarea id="mensaje" placeholder="Mensaje de texto" ng-model="vm.establecimiento.mensaje" maxlength="145"></textarea>
+                    </div>
+                    <div class="item item-input item-select">
+                        <div class="input-label">Administrador</div>
+                        <select ng-model="vm.establecimiento.administrador_id" ng-options="user.administrador.id as user.username for user in vm.administradores"
+                            required>
+                        </select>
+                    </div>
+                    <br />
+                    <button class="button button-block button-calm ink" data-ink-color="#9DEAFF" data-ink-opacity="1" ng-disabled="form.$invalid">Confirmar</button>
+                </div>
+            </form>
+        </div>
+    </ion-content>
+</ion-modal-view>

@@ -7,7 +7,7 @@
 
     /** @ngInject */
     function run($ionicPlatform, PermRoleStore, AuthService) {
-        var roles = ['ADMIN', 'EMPLEADO'];
+        var roles = ['SUPER_USER', 'ADMIN', 'VENDEDOR'];
         angular.forEach(roles, function (rol) {
             PermRoleStore.defineRole(rol, function (roleName, stateParams) {
                 return AuthService.hasPermission(roleName);

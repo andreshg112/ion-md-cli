@@ -38,10 +38,14 @@
                     var mensaje = '';
                     if (data.result) {
                         user.set(data.result);
-                        mensaje = String.format('¡Bienvenido {0} {1}! Serás redirigido(a) al menú principal.', user.get().primer_nombre, user.get().primer_apellido);
+                        mensaje = String.format('¡Bienvenido(a) {0} {1}! Serás redirigido(a) al menú principal.', user.get().primer_nombre, user.get().primer_apellido);
                         ionicToast.show(mensaje, 'bottom', false, 2000);
                         $timeout(function () {
-                            $state.go('app.pedidos');
+                            if (user.get().rol == 'SUPER_USER') {
+                                $state.go('app.users');
+                            } else {
+                                $state.go('app.pedidos');
+                            }
                         }, 2000);
                     } else {
                         mensaje = 'Error: ' + data.mensaje;

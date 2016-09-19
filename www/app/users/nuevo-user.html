@@ -1,0 +1,70 @@
+﻿<ion-modal-view style="width: 90%; height: 90%; top: 5%; left: 5%; right: 5%; bottom: 5%;">
+    <ion-header-bar>
+        <h1 class="title">Nuevo usuario</h1>
+        <div class="buttons">
+            <button class="button-icon icon ion-close" ng-click="vm.cerrarNuevoUser()"></button>
+        </div>
+    </ion-header-bar>
+    <ion-content class="padding">
+        <div class="im-wrapper">
+            <form id="form" name="form" ng-submit="vm.confirmar()">
+                <div class="list">
+                    <div class="item item-input item-floating-label">
+                        <span class="input-label">Nombre de usuario</span>
+                        <input id="username" type="text" ng-model="vm.user.username" placeholder="Nombre de usuario" required />
+                    </div>
+                    <div class="item item-input item-floating-label">
+                        <span class="input-label">Email</span>
+                        <input id="email" type="email" placeholder="Email" ng-model="vm.user.email" />
+                    </div>
+                    <div class="item item-input item-floating-label">
+                        <span class="input-label">Contraseña</span>
+                        <input id="password" type="password" placeholder="Contraseña" ng-model="vm.user.password" required />
+                    </div>
+                    <div class="item item-input item-floating-label">
+                        <span class="input-label">Confirmación de la contraseña</span>
+                        <input id="password_confirmation" type="password" placeholder="Repita la contraseña" ng-model="vm.user.password_confirmation"
+                            required />
+                    </div>
+                    <div class="item item-input item-floating-label">
+                        <span class="input-label">Primer nombre</span>
+                        <input id="primer_nombre" type="text" ng-model="vm.user.primer_nombre" placeholder="Primer nombre" required />
+                    </div>
+                    <div class="item item-input item-floating-label">
+                        <span class="input-label">Segundo nombre</span>
+                        <input id="segundo_nombre" type="text" ng-model="vm.user.segundo_nombre" placeholder="Segundo nombre" />
+                    </div>
+                    <div class="item item-input item-floating-label">
+                        <span class="input-label">Primer apellido</span>
+                        <input id="primer_apellido" type="text" ng-model="vm.user.primer_apellido" placeholder="Primer apellido" required />
+                    </div>
+                    <div class="item item-input item-floating-label">
+                        <span class="input-label">Segundo apellido</span>
+                        <input id="segundo_apellido" type="text" ng-model="vm.user.segundo_apellido" placeholder="Segundo apellido" />
+                    </div>
+                    <div class="item item-input item-select">
+                        <div class="input-label">Género</div>
+                        <select ng-model="vm.user.genero" ng-init="vm.user.genero = 'masculino'">
+                            <option selected>masculino</option>
+                            <option>femenino</option>
+                        </select>
+                    </div>
+                    <div class="item item-input item-select">
+                        <div class="input-label">Rol</div>
+                        <select ng-model="vm.user.rol" ng-init="vm.user.rol = 'VENDEDOR'">
+                            <option selected>ADMIN</option>
+                            <option>VENDEDOR</option>
+                        </select>
+                    </div>
+                    <!--<div class="item item-input item-floating-label col-offset-33 col-33">
+                        <span class="input-label">Fecha de nacimiento</span>
+                        <input type="text" placeholder="YYYY-MM-DD" ng-click="vm.seleccionarFechaNacimiento()" ng-model="vm.pedido.cliente.fecha_nacimiento"
+                        />
+                    </div>-->
+                    <br />
+                    <button class="button button-block button-calm ink" data-ink-color="#9DEAFF" data-ink-opacity="1" ng-disabled="form.$invalid">Confirmar</button>
+                </div>
+            </form>
+        </div>
+    </ion-content>
+</ion-modal-view>

@@ -1,0 +1,42 @@
+﻿<ion-view view-title="Usuarios">
+    <button id="fab" class="button button-balanced button-fab button-fab-bottom-right" ng-click="vm.nuevoUser()">
+        <i class="icon ion-plus"></i>
+    </button>
+    <ion-content>
+        <div class="bar bar-subheader bar-stable static text-center">
+            <strong class="title">Listado de usuarios</strong>
+        </div>
+        <div class="im-wrapper">
+            <div class="list">
+                <div class="item row responsive-sm">
+                    <pre class="col col-20 centered-text">Usuario</pre>
+                    <pre class="col col-20 centered-text">Primer nombre</pre>
+                    <pre class="col col-20 centered-text">Primer apellido</pre>
+                    <pre class="col col-10 centered-text">Género</pre>
+                    <pre class="col col-10 centered-text">Rol</pre>
+                    <pre class="col col-20 centered-text">Acciones</pre>
+                </div>
+                <div class="item item-divider"></div>
+                <div class="item item-button-right row responsive-sm" ng-repeat="user in vm.users track by $index">
+                    <pre class="col col-20 centered-text">{{user.username}}</pre>
+                    <pre class="col col-20 centered-text">{{user.primer_nombre}}</pre>
+                    <pre class="col col-20 centered-text">{{user.primer_apellido}}</pre>
+                    <pre class="col col-10 centered-text">{{user.genero}}</pre>
+                    <pre class="col col-10 centered-text">{{user.rol}}</pre>
+                    <div class="col col-20 centered-text">
+                        <button title="Modificar" class="button-icon ink" ng-click="vm.modificarUser(user)">
+                            <i class="ion-edit icon"></i>
+                        </button>
+                        <button title="Desactivar" class="button-icon ink" ng-click="vm.desactivarUser(user)">
+                            <i class="ion-close-round icon"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+        <br />
+        <br />
+    </ion-content>
+</ion-view>

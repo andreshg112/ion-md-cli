@@ -58,7 +58,8 @@
             } else {
                 vm.pedido.direccion = vm.pedido.cliente.direccion_otra;
             }
-            vm.pedido.establecimiento_id = user.get().establecimiento_id;
+            vm.pedido.vendedor_id = user.get().vendedor.id;
+            vm.pedido.cliente.establecimiento_id = user.get().vendedor.sede.establecimiento_id;
             vm.pedido.enviado = 1;
             pedidos.post(vm.pedido)
                 .then(function (data) {
@@ -91,7 +92,7 @@
 
         function formatearBusqueda(str) {
             return {
-                establecimiento_id: user.get().establecimiento_id,
+                establecimiento_id: user.get().vendedor.sede.establecimiento_id,
                 nombre_completo: str,
                 token: user.get().token
             };

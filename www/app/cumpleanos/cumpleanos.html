@@ -5,28 +5,19 @@
         </div>
         <div class="im-wrapper">
             <div class="list">
-                <div class="row">
-                    <div class="item item-input item-select">
-                        <div class="input-label">Establecimiento</div>
-                        <select id="establecimientoSeleccionado" ng-model="vm.establecimientoSeleccionado" ng-options="establecimiento as establecimiento.nombre for establecimiento in vm.establecimientos"
-                            ng-change="vm.cargarClientes()">
-                            <option value="" selected>Todos</option>
-                        </select>
-                    </div>
-                </div>
                 <div class="item row responsive-sm">
                     <pre class="col col-20 centered-text">Nombre completo</pre>
                     <pre class="col col-10 centered-text">Celular<br/>Teléfono</pre>
-                    <pre class="col col-40 centered-text">Direcciones</pre>
+                    <pre class="col col-30 centered-text">Direcciones</pre>
                     <pre class="col col-10 centered-text">Fecha de<br/>nacimiento</pre>
                     <pre class="col col-10 centered-text">Email</pre>
                     <pre class="col col-10 centered-text"># de pedidos</pre>
                 </div>
                 <div class="item item-divider"></div>
-                <div class="item item-button-right row responsive-sm" ng-repeat="cliente in vm.clientes track by $index">
+                <div class="item item-button-right row responsive-sm" ng-repeat="cliente in app.clientesCumpliendo track by $index">
                     <pre class="col col-20 centered-text">{{cliente.nombre_completo}}</pre>
                     <pre class="col col-10 centered-text">{{cliente.celular}}<br/>{{cliente.telefono}}</pre>
-                    <pre class="col col-40 centered-text">{{cliente.direccion_casa}}<br/>{{cliente.direccion_oficina}}<br/>{{cliente.direccion_otra}}</pre>
+                    <pre class="col col-30 centered-text">{{cliente.direccion_casa}}<br/>{{cliente.direccion_oficina}}<br/>{{cliente.direccion_otra}}</pre>
                     <pre class="col col-10 centered-text">{{cliente.fecha_nacimiento}}</pre>
                     <pre class="col col-10 centered-text">{{cliente.email}}</pre>
                     <pre class="col col-10 centered-text">{{cliente.total_pedidos}}</pre>

@@ -43,9 +43,12 @@
                         $timeout(function () {
                             if (user.get().rol == 'SUPER_USER') {
                                 $state.go('app.users');
-                            } else {
+                            } else if (user.get().rol == 'VENDEDOR') {
                                 $state.go('app.pedidos');
+                            } else {
+                                $state.go('app.reporte-general');
                             }
+
                         }, 2000);
                     } else {
                         mensaje = 'Error: ' + data.mensaje;

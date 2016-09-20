@@ -25,14 +25,25 @@
         <ion-content class="stable-bg has-expanded-header">
             <ion-list>
                 <!-- SUPER_USER -->
-                <ion-item nav-clear menu-close href="#/app/users" permission permission-only="['SUPER_USER']"><i class="ion-ios-people icon"></i> Usuarios</ion-item>
-                <ion-item nav-clear menu-close href="#/app/establecimientos" permission permission-only="['SUPER_USER']"><i class="ion-android-restaurant icon"></i> Establecimientos</ion-item>
+                <div permission permission-only="['SUPER_USER']">
+                    <ion-item nav-clear menu-close href="#/app/users"><i class="ion-ios-people icon"></i> Usuarios</ion-item>
+                    <ion-item nav-clear menu-close href="#/app/establecimientos"><i class="ion-android-restaurant icon"></i> Establecimientos</ion-item>
+                    <ion-item nav-clear menu-close href="#/app/sedes"><i class="ion-android-restaurant icon"></i> Sedes</ion-item>
+                    <ion-item nav-clear menu-close href="#/app/vendedores"><i class="ion-ios-telephone icon"></i> Vendedores</ion-item>
+                </div>
 
-                <!--  -->
-                <ion-item nav-clear menu-close href="#/app/pedidos" permission permission-only="['EMPLEADO', 'ADMIN']"><i class="ion-compose icon"></i> Pedidos</ion-item>
-                <ion-item nav-clear menu-close href="#/app/pedidos-anteriores" permission permission-only="['EMPLEADO', 'ADMIN']"><i class="ion-clipboard icon"></i> Registro de pedidos anteriores</ion-item>
-                <ion-item nav-clear menu-close href="#/app/clientes" permission permission-only="['ADMIN']"><i class="ion-person-stalker icon"></i> Administrar clientes</ion-item>
-                <ion-item nav-clear menu-close href="#/app/reporte-general" permission permission-only="['ADMIN']"><i class="ion-stats-bars icon"></i> Reporte general</ion-item>
+                <!-- ADMIN -->
+                <div permission permission-only="['ADMIN']">
+                    <ion-item nav-clear menu-close href="#/app/reporte-general"><i class="ion-stats-bars icon"></i> Reporte general</ion-item>
+                    <ion-item nav-clear menu-close href="#/app/clientes"><i class="ion-person-stalker icon"></i> Ver clientes</ion-item>
+                    <ion-item nav-clear menu-close href="#/app/cumpleanos"><i class="ion-happy-outline icon"></i> Cumpleaños ({{app.clientesCumpliendo.length}})</ion-item>
+                </div>
+
+                <!-- VENDEDOR -->
+                <div permission permission-only="['VENDEDOR']">
+                    <ion-item nav-clear menu-close href="#/app/pedidos"><i class="ion-compose icon"></i> Pedidos</ion-item>
+                    <ion-item nav-clear menu-close href="#/app/pedidos-anteriores"><i class="ion-clipboard icon"></i> Registro de pedidos anteriores</ion-item>
+                </div>
             </ion-list>
         </ion-content>
     </ion-side-menu>

@@ -61,6 +61,38 @@
                     }
                 }
             })
+            .state('app.sedes', {
+                url: '/sedes',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'app/sedes/sedes.html',
+                        controller: 'SedesController',
+                        controllerAs: 'vm'
+                    }
+                },
+                data: {
+                    permissions: {
+                        only: ['SUPER_USER'],
+                        redirectTo: 'login'
+                    }
+                }
+            })
+            .state('app.vendedores', {
+                url: '/vendedores',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'app/vendedores/vendedores.html',
+                        controller: 'VendedoresController',
+                        controllerAs: 'vm'
+                    }
+                },
+                data: {
+                    permissions: {
+                        only: ['SUPER_USER'],
+                        redirectTo: 'login'
+                    }
+                }
+            })
             .state('app.pedidos', {
                 url: '/pedidos',
                 views: {
@@ -68,6 +100,12 @@
                         templateUrl: 'app/pedidos/pedidos.html',
                         controller: 'PedidosController',
                         controllerAs: 'vm'
+                    }
+                },
+                data: {
+                    permissions: {
+                        only: ['VENDEDOR'],
+                        redirectTo: 'login'
                     }
                 }
             })
@@ -78,6 +116,12 @@
                         templateUrl: 'app/pedidos-anteriores/pedidos-anteriores.html',
                         controller: 'PedidosAnterioresController',
                         controllerAs: 'vm'
+                    }
+                },
+                data: {
+                    permissions: {
+                        only: ['VENDEDOR'],
+                        redirectTo: 'login'
                     }
                 }
             })
@@ -93,7 +137,7 @@
                 data: {
                     permissions: {
                         only: ['ADMIN'],
-                        redirectTo: 'app.pedidos'
+                        redirectTo: 'login'
                     }
                 }
             })
@@ -109,7 +153,21 @@
                 data: {
                     permissions: {
                         only: ['ADMIN'],
-                        redirectTo: 'app.pedidos'
+                        redirectTo: 'login'
+                    }
+                }
+            })
+            .state('app.cumpleanos', {
+                url: '/cumpleanos',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'app/cumpleanos/cumpleanos.html'
+                    }
+                },
+                data: {
+                    permissions: {
+                        only: ['ADMIN'],
+                        redirectTo: 'login'
                     }
                 }
             });

@@ -5,12 +5,14 @@
         .module('starter')
         .controller('AppController', AppController);
 
-    AppController.$inject = ['$scope', '$ionicPopover', 'user', '$state', '$timeout', '$ionicHistory', 'API'];
+    AppController.$inject = ['$scope', '$ionicPopover', 'user', '$state', '$timeout', '$ionicHistory', 'API', 'Restangular', 'ionicToast'];
 
-    function AppController($scope, $ionicPopover, user, $state, $timeout, $ionicHistory, API) {
+    function AppController($scope, $ionicPopover, user, $state, $timeout, $ionicHistory, API, Restangular, ionicToast) {
+        Restangular.setDefaultRequestParams({ token: user.get().token });
         var vm = this;
 
         vm.API = API;
+        vm.clientesCumpliendo = [];
         vm.cerrarSesion = cerrarSesion;
         vm.user = user.get();
 
@@ -18,10 +20,25 @@
 
         ////////////////
 
-        function activate() { }
+        function activate() {
+            cargarClientes();
+        }
 
-        // Form data for the login modal
-        //$scope.loginData = {};
+        function cargarClientes() {
+            Restangular.one('administradores', user.get().administrador.id)
+                .customGET('clientes', { cumpleanos: true })
+                .then(function (data) {
+                    if (data.length > 0) {
+                        vm.clientesCumpliendo = data;
+                    }
+                })
+                .catch(function (error) {
+                    var mensaje = String.format('Error: {0} {1}', error.status, error.statusText);
+                    ionicToast.show(mensaje, 'middle', true, 2000);
+                })
+                .finally(function () {
+                });
+        }
 
         function cerrarSesion() {
             user.set(null);

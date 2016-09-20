@@ -11,21 +11,18 @@
         Restangular.setDefaultRequestParams({ token: user.get().token });
         var vm = this;
         var establecimientos = Restangular.all('establecimientos');
-        var fechaNacimiento = {
-            callback: function (val) { vm.user.fecha_nacimiento = fechaYYYYMMDD(new Date(val)) }
-        };
         var loading = {
             template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>'
         };
-        var users = Restangular.all('users');
+        var sedes = Restangular.all('sedes');
 
         //
-        vm.desactivar = desactivar;
         vm.cerrarNuevo = cerrarNuevo;
         vm.confirmar = confirmar;
+        vm.desactivar = desactivar;
         vm.modificar = modificar;
         vm.nuevo = nuevo;
-        vm.establecimientos = [];
+        vm.sedes = [];
 
         activate();
 
@@ -34,28 +31,8 @@
         ionicMaterialInk.displayEffect();
 
         function activate() {
-            vm.establecimiento = { mensaje: 'Su pedido va en camino.' };
-            $scope.$broadcast('angucomplete-alt:clearInput', 'nombre_completo');
             cargarEstablecimientos();
-            cargarAdministradores();
-        }
-
-        function cargarAdministradores() {
-            $ionicLoading.show(loading);
-            vm.administradores = [];
-            users.getList({ rol: 'ADMIN' })
-                .then(function (data) {
-                    if (data.length > 0) {
-                        vm.administradores = data;
-                    }
-                })
-                .catch(function (error) {
-                    var mensaje = String.format('Error: {0} {1}', error.status, error.statusText);
-                    ionicToast.show(mensaje, 'middle', true, 2000);
-                })
-                .finally(function () {
-                    $ionicLoading.hide();
-                });
+            cargarSedes();
         }
 
         function cargarEstablecimientos() {
@@ -76,14 +53,32 @@
                 });
         }
 
+        function cargarSedes() {
+            $ionicLoading.show(loading);
+            vm.sedes = [];
+            sedes.getList()
+                .then(function (data) {
+                    if (data.length > 0) {
+                        vm.sedes = data;
+                    }
+                })
+                .catch(function (error) {
+                    var mensaje = String.format('Error: {0} {1}', error.status, error.statusText);
+                    ionicToast.show(mensaje, 'middle', true, 2000);
+                })
+                .finally(function () {
+                    $ionicLoading.hide();
+                });
+        }
+
         function cerrarNuevo() {
             vm.modalNuevo.hide();
         }
 
         function confirmar() {
-            var template = (!vm.establecimiento.id) ?
-                '¿Estás seguro que deseas registrar el establecimiento?' :
-                '¿Estás seguro que deseas modificar la información del establecimiento?';
+            var template = (!vm.sede.id) ?
+                '¿Estás seguro que deseas registrar la sede?' :
+                '¿Estás seguro que deseas modificar la información de la sede?';
             var confirmarPedido = $ionicPopup.confirm({
                 title: 'Confirmación de registro',
                 template: template,
@@ -96,9 +91,9 @@
             });
         }
 
-        function desactivar(establecimiento) {
+        function desactivar(sede) {
             $ionicLoading.show(loading);
-            establecimiento.remove()
+            sede.remove()
                 .then(function (data) {
                     ionicToast.show(data.mensaje, 'bottom', false, 2000);
                     if (data.result) {
@@ -114,23 +109,23 @@
                 });
         }
 
-        function modificar(establecimiento) {
-            vm.establecimiento = establecimiento;
+        function modificar(sede) {
+            vm.sede = sede;
             vm.modalNuevo.show();
         }
 
         function nuevo() {
-            vm.establecimiento = { mensaje: 'Su pedido va en camino.' };
+            vm.sede = {};
             vm.modalNuevo.show();
         }
 
         function registrar() {
             $ionicLoading.show(loading);
             var promesa;
-            if (!vm.establecimiento.id) {
-                promesa = establecimientos.post(vm.establecimiento);
+            if (!vm.sede.id) {
+                promesa = sedes.post(vm.sede);
             } else {
-                promesa = vm.establecimiento.put();
+                promesa = vm.sede.put();
             }
             promesa
                 .then(function (data) {
@@ -156,7 +151,7 @@
                 });
         }
 
-        $ionicModal.fromTemplateUrl('app/establecimientos/nuevo-establecimiento.html', {
+        $ionicModal.fromTemplateUrl('app/sedes/nuevo-sede.html', {
             scope: $scope,
             focusFirstInput: true
         }).then(function (modal) {

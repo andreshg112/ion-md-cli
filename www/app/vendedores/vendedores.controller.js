@@ -3,26 +3,26 @@
 
     angular
         .module('starter')
-        .controller('EstablecimientosController', EstablecimientosController);
+        .controller('VendedoresController', VendedoresController);
 
-    EstablecimientosController.$inject = ['ionicMaterialInk', '$ionicPopup', 'Restangular', '$ionicLoading', 'ionicToast', '$ionicModal', '$scope', 'user'];
+    VendedoresController.$inject = ['ionicMaterialInk', '$ionicPopup', 'Restangular', '$ionicLoading', 'ionicToast', '$ionicModal', '$scope', 'user'];
 
-    function EstablecimientosController(ionicMaterialInk, $ionicPopup, Restangular, $ionicLoading, ionicToast, $ionicModal, $scope, user) {
+    function VendedoresController(ionicMaterialInk, $ionicPopup, Restangular, $ionicLoading, ionicToast, $ionicModal, $scope, user) {
         Restangular.setDefaultRequestParams({ token: user.get().token });
         var vm = this;
         var establecimientos = Restangular.all('establecimientos');
         var loading = {
             template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>'
         };
+        var sedes = Restangular.all('sedes');
         var users = Restangular.all('users');
+        var vendedores = Restangular.all('vendedores');
 
         //
-        vm.desactivar = desactivar;
-        vm.cerrarNuevo = cerrarNuevo;
         vm.confirmar = confirmar;
-        vm.modificar = modificar;
-        vm.nuevo = nuevo;
-        vm.establecimientos = [];
+        vm.desactivar = desactivar;
+        vm.sedes = [];
+        vm.users = [];
 
         activate();
 
@@ -31,19 +31,18 @@
         ionicMaterialInk.displayEffect();
 
         function activate() {
-            vm.establecimiento = { mensaje: 'Su pedido va en camino.' };
-            $scope.$broadcast('angucomplete-alt:clearInput', 'nombre_completo');
-            cargarEstablecimientos();
-            cargarAdministradores();
+            cargarSedes();
+            cargarUsuarios();
+            cargarVendedores();
         }
 
-        function cargarAdministradores() {
+        function cargarSedes() {
             $ionicLoading.show(loading);
-            vm.administradores = [];
-            users.getList({ rol: 'ADMIN' })
+            vm.sedes = [];
+            sedes.getList()
                 .then(function (data) {
                     if (data.length > 0) {
-                        vm.administradores = data;
+                        vm.sedes = data;
                     }
                 })
                 .catch(function (error) {
@@ -55,13 +54,13 @@
                 });
         }
 
-        function cargarEstablecimientos() {
+        function cargarUsuarios() {
             $ionicLoading.show(loading);
-            vm.establecimientos = [];
-            establecimientos.getList()
+            vm.users = [];
+            users.getList({ rol: 'VENDEDOR', sin_sede: true })
                 .then(function (data) {
                     if (data.length > 0) {
-                        vm.establecimientos = data;
+                        vm.users = data;
                     }
                 })
                 .catch(function (error) {
@@ -73,29 +72,41 @@
                 });
         }
 
-        function cerrarNuevo() {
-            vm.modalNuevo.hide();
+        function cargarVendedores() {
+            $ionicLoading.show(loading);
+            vm.vendedores = [];
+            vendedores.getList()
+                .then(function (data) {
+                    if (data.length > 0) {
+                        vm.vendedores = data;
+                    }
+                })
+                .catch(function (error) {
+                    var mensaje = String.format('Error: {0} {1}', error.status, error.statusText);
+                    ionicToast.show(mensaje, 'middle', true, 2000);
+                })
+                .finally(function () {
+                    $ionicLoading.hide();
+                });
         }
 
         function confirmar() {
-            var template = (!vm.establecimiento.id) ?
-                '¿Estás seguro que deseas registrar el establecimiento?' :
-                '¿Estás seguro que deseas modificar la información del establecimiento?';
-            var confirmarPedido = $ionicPopup.confirm({
+            var template = '¿Estás seguro que deseas asignar el usuario a la sede seleccionada?';
+            var confirmarPopup = $ionicPopup.confirm({
                 title: 'Confirmación de registro',
                 template: template,
                 scope: $scope
             });
-            confirmarPedido.then(function (res) {
+            confirmarPopup.then(function (res) {
                 if (res) {
                     registrar();
                 }
             });
         }
 
-        function desactivar(establecimiento) {
+        function desactivar(vendedor) {
             $ionicLoading.show(loading);
-            establecimiento.remove()
+            vendedor.remove()
                 .then(function (data) {
                     ionicToast.show(data.mensaje, 'bottom', false, 2000);
                     if (data.result) {
@@ -111,24 +122,9 @@
                 });
         }
 
-        function modificar(establecimiento) {
-            vm.establecimiento = establecimiento;
-            vm.modalNuevo.show();
-        }
-
-        function nuevo() {
-            vm.establecimiento = { mensaje: 'Su pedido va en camino.' };
-            vm.modalNuevo.show();
-        }
-
         function registrar() {
             $ionicLoading.show(loading);
-            var promesa;
-            if (!vm.establecimiento.id) {
-                promesa = establecimientos.post(vm.establecimiento);
-            } else {
-                promesa = vm.establecimiento.put();
-            }
+            var promesa = vendedores.post(vm.vendedor);
             promesa
                 .then(function (data) {
                     if (data.result) {
@@ -152,18 +148,5 @@
                     $ionicLoading.hide();
                 });
         }
-
-        $ionicModal.fromTemplateUrl('app/establecimientos/nuevo-establecimiento.html', {
-            scope: $scope,
-            focusFirstInput: true
-        }).then(function (modal) {
-            vm.modalNuevo = modal;
-        });
-
-        // Cleanup the modal when we're done with it
-        $scope.$on('$destroy', function () {
-            vm.modalNuevo.remove();
-        });
-
     }
 })();

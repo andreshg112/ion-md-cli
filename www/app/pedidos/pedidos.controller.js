@@ -78,7 +78,7 @@
             $ionicLoading.show(loading);
             vm.pedidosCliente = [];
             Restangular.one('clientes', cliente.id).getList('pedidos', {
-                establecimiento_id: user.get().establecimiento_id,
+                establecimiento_id: user.get().vendedor.sede.establecimiento_id,
                 enviado: 1
             })
                 .then(function (data) {
@@ -96,7 +96,7 @@
         function cargarPedidosNoEnviados() {
             $ionicLoading.show(loading);
             vm.pedidos = [];
-            pedidos.getList({ enviado: 0, establecimiento_id: user.get().establecimiento.id })
+            pedidos.getList({ enviado: 0, sede_id: user.get().vendedor.sede_id })
                 .then(function (data) {
                     if (data.length > 0) {
                         vm.pedidos = data;
@@ -129,7 +129,8 @@
             } else {
                 vm.pedido.direccion = vm.pedido.cliente.direccion_otra;
             }
-            vm.pedido.establecimiento_id = user.get().establecimiento_id;
+            vm.pedido.vendedor_id = user.get().vendedor.id;
+            vm.pedido.cliente.establecimiento_id = user.get().vendedor.sede.establecimiento_id;
             var confirmarPedido = $ionicPopup.confirm({
                 title: 'Estás a punto de registrar el siguiente pedido.',
                 cssClass: 'resumen-pedido',
@@ -148,7 +149,7 @@
         function despachar(pedido) {
             $ionicLoading.show(loading);
             pedido.enviado = 1;
-            pedido.establecimiento = user.get().establecimiento;
+            pedido.establecimiento = user.get().vendedor.sede.establecimiento;
             pedido.put()
                 .then(function (data) {
                     if (data.result) {
@@ -206,7 +207,7 @@
 
         function formatearBusqueda(str) {
             return {
-                establecimiento_id: user.get().establecimiento_id,
+                establecimiento_id: user.get().vendedor.sede.establecimiento_id,
                 nombre_completo: str,
                 token: user.get().token
             };

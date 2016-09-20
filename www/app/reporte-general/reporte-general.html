@@ -4,19 +4,36 @@
             <strong class="title">Reporte general</strong>
         </div>
         <div class="im-wrapper">
-            <div class="card" style="width: 60%; height: 60%; top: 20%; left: 20%; right: 20%; bottom: 20%;">
-                <div class="item item-divider">
-                    Pedidos por día de la semana
+            <div class="list">
+                <div class="row">
+                    <div class="item item-input item-select col-50">
+                        <div class="input-label">Establecimiento</div>
+                        <select id="establecimientoSeleccionado" ng-model="vm.establecimientoSeleccionado" ng-options="establecimiento as establecimiento.nombre for establecimiento in vm.establecimientos"
+                            ng-change="vm.cargarDatos()">
+                            <option value="" selected>Todos</option>
+                        </select>
+                    </div>
+                    <div class="item item-input item-select col-50">
+                        <div class="input-label">Sedes</div>
+                        <select id="sedeSeleccionada" ng-model="vm.sedeSeleccionada" ng-options="sede as sede.nombre for sede in vm.establecimientoSeleccionado.sedes"
+                            ng-change="vm.cargarDatos()" ng-disabled="!vm.establecimientoSeleccionado">
+                            <option value="" selected>Todas</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="item item-text-wrap">
-                    <canvas id="bar" class="chart chart-bar" chart-data="vm.data" chart-labels="vm.labels" chart-series="vm.series" chart-options="vm.options" chart-dataset-override="datasetOverride" chart-click="onClick">
-                    </canvas>
+                <div class="row">
+                    <div class="card" style="width: 60%; height: 60%; top: 20%; left: 20%; right: 20%; bottom: 20%;">
+                        <div class="item item-divider">
+                            Pedidos por día de la semana
+                        </div>
+                        <div class="item item-text-wrap">
+                            <canvas id="bar" class="chart chart-bar" chart-data="vm.data" chart-labels="vm.labels" chart-series="vm.series" chart-options="vm.options"
+                                chart-dataset-override="datasetOverride" chart-click="onClick">
+                            </canvas>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <br />
-        <br />
-        <br />
-        <br />
     </ion-content>
 </ion-view>

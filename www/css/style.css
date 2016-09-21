@@ -8,8 +8,14 @@
     text-align: center;
 }
 
+/* Clase del resumen del pedido */
 .resumen-pedido.popup-container .popup {
     width: 50% !important;
+}
+
+/* Felicitacion */
+.felicitacion.popup-container .popup {
+    width: 30% !important;
 }
 
 /* Responsive table */

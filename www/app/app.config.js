@@ -161,7 +161,9 @@
                 url: '/cumpleanos',
                 views: {
                     'menuContent': {
-                        templateUrl: 'app/cumpleanos/cumpleanos.html'
+                        templateUrl: 'app/cumpleanos/cumpleanos.html',
+                        controller: 'CumpleanosController',
+                        controllerAs: 'vm'
                     }
                 },
                 data: {

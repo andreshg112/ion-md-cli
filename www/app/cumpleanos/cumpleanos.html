@@ -8,19 +8,27 @@
                 <div class="item row responsive-sm">
                     <pre class="col col-20 centered-text">Nombre completo</pre>
                     <pre class="col col-10 centered-text">Celular<br/>Teléfono</pre>
-                    <pre class="col col-30 centered-text">Direcciones</pre>
+                    <pre class="col col-20 centered-text">Direcciones</pre>
                     <pre class="col col-10 centered-text">Fecha de<br/>nacimiento</pre>
                     <pre class="col col-10 centered-text">Email</pre>
+                    <pre class="col col-10 centered-text">Cliente de</pre>
                     <pre class="col col-10 centered-text"># de pedidos</pre>
+                    <pre class="col col-10 centered-text">Felicitar</pre>
                 </div>
                 <div class="item item-divider"></div>
                 <div class="item item-button-right row responsive-sm" ng-repeat="cliente in app.clientesCumpliendo track by $index">
                     <pre class="col col-20 centered-text">{{cliente.nombre_completo}}</pre>
                     <pre class="col col-10 centered-text">{{cliente.celular}}<br/>{{cliente.telefono}}</pre>
-                    <pre class="col col-30 centered-text">{{cliente.direccion_casa}}<br/>{{cliente.direccion_oficina}}<br/>{{cliente.direccion_otra}}</pre>
+                    <pre class="col col-20 centered-text">{{cliente.direccion_casa}}<br/>{{cliente.direccion_oficina}}<br/>{{cliente.direccion_otra}}</pre>
                     <pre class="col col-10 centered-text">{{cliente.fecha_nacimiento}}</pre>
                     <pre class="col col-10 centered-text">{{cliente.email}}</pre>
+                    <pre class="col col-10 centered-text">{{cliente.establecimiento.nombre}}</pre>
                     <pre class="col col-10 centered-text">{{cliente.total_pedidos}}</pre>
+                    <div class="col col-10 centered-text">
+                        <button title="Despachar" class="button-icon ink" ng-click="vm.escribirMensaje(cliente)">
+                            <i class="ion-android-textsms icon"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
 

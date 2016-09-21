@@ -32,7 +32,6 @@
 
         function activate() {
             vm.establecimiento = { mensaje: 'Su pedido va en camino.' };
-            $scope.$broadcast('angucomplete-alt:clearInput', 'nombre_completo');
             cargarEstablecimientos();
             cargarAdministradores();
         }

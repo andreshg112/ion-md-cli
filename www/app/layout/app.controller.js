@@ -21,7 +21,9 @@
         ////////////////
 
         function activate() {
-            cargarClientes();
+            if (user.get().rol == 'ADMIN') {
+                cargarClientes();
+            }
         }
 
         function cargarClientes() {

@@ -59,14 +59,13 @@
 
         function felicitar(cliente, mensaje) {
             $ionicLoading.show(loading);
-            //account.customPOST({ name: "My Message" }, "messages", { param: "myParam" }, {})
             Restangular.one('administradores', user.get().administrador.id)
                 .customPOST({ cliente: cliente, mensaje: normalize(mensaje) }, 'felicitaciones')
                 .then(function (data) {
                     if (data.result) {
                         var alertPopup = $ionicPopup.alert({
                             title: 'Felicitación enviada',
-                            template: 'Respuesta del servidor: ' + data.notificacion
+                            template: 'Informe al cliente: ' + data.notificacion
                         });
                     } else {
                         var mensaje = data.mensaje + '<br />';

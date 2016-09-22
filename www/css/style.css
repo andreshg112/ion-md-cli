@@ -1,9 +1,14 @@
 /* Empty. Add your own CSS if you like */
+body {
+  cursor: url('../img/finger.png'), auto;
+}
 
+/* Resaltar las coincidencias en el filtro de clientes */
 .highlight {
     color: #ff0000;
 }
 
+/* Centrar el texto de los datos en las tablas */
 .centered-text {
     text-align: center;
 }
@@ -17,6 +22,11 @@
 .felicitacion.popup-container .popup {
     width: 30% !important;
 }
+
+/* Seleccion de clientes */
+/*.active {
+    background-color: lightslategray;
+}*/
 
 /* Responsive table */
 /** For the task list header columns and tasks **/
@@ -125,7 +135,6 @@
 }
 /* End Responsive table
 
-
 /*.item-floating-label .placeholder-icon {
   padding-right: 18px;
   position: absolute;
@@ -136,7 +145,6 @@
 .item-floating-label {
   padding-left: 40px !important;
 }*/
-
 
 /* Utilities */
 

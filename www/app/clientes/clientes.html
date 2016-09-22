@@ -1,4 +1,7 @@
 ﻿<ion-view view-title="Administrar clientes">
+    <button id="fab-oferta" title="Ofertar" class="button button-balanced button-fab button-fab-bottom-left" ng-click="vm.escribirOferta()">
+        <i class="icon ion-speakerphone"></i>
+    </button>
     <ion-content>
         <div class="bar bar-subheader bar-stable static text-center">
             <strong class="title">Clientes</strong>
@@ -17,19 +20,25 @@
                 <div class="item row responsive-sm">
                     <pre class="col col-20 centered-text">Nombre completo</pre>
                     <pre class="col col-10 centered-text">Celular<br/>Teléfono</pre>
-                    <pre class="col col-40 centered-text">Direcciones</pre>
+                    <pre class="col col-30 centered-text">Direcciones</pre>
                     <pre class="col col-10 centered-text">Fecha de<br/>nacimiento</pre>
                     <pre class="col col-10 centered-text">Email</pre>
                     <pre class="col col-10 centered-text"># de pedidos</pre>
+                    <div class="col col-10 centered-text"></div>
                 </div>
                 <div class="item item-divider"></div>
-                <div class="item item-button-right row responsive-sm" ng-repeat="cliente in vm.clientes track by $index">
+                <div class="item item-button-right row responsive-sm" ng-repeat="cliente in vm.clientes track by $index" ng-click="vm.itemClicked(cliente)">
                     <pre class="col col-20 centered-text">{{cliente.nombre_completo}}</pre>
                     <pre class="col col-10 centered-text">{{cliente.celular}}<br/>{{cliente.telefono}}</pre>
-                    <pre class="col col-40 centered-text">{{cliente.direccion_casa}}<br/>{{cliente.direccion_oficina}}<br/>{{cliente.direccion_otra}}</pre>
+                    <pre class="col col-30 centered-text">{{cliente.direccion_casa}}<br/>{{cliente.direccion_oficina}}<br/>{{cliente.direccion_otra}}</pre>
                     <pre class="col col-10 centered-text">{{cliente.fecha_nacimiento}}</pre>
                     <pre class="col col-10 centered-text">{{cliente.email}}</pre>
                     <pre class="col col-10 centered-text">{{cliente.total_pedidos}}</pre>
+                    <div class="col col-10 centered-text">
+                        <button title="Seleccionar" class="button-icon ink" ng-show="cliente.selected">
+                            <i class="ion-checkmark-round icon"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
 

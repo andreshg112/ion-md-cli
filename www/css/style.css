@@ -23,6 +23,11 @@ body {
     width: 30% !important;
 }
 
+/* Capitalizar texto en registro de pedidos */
+.capitalize {
+    text-transform: capitalize;
+}
+
 /* Seleccion de clientes */
 /*.active {
     background-color: lightslategray;

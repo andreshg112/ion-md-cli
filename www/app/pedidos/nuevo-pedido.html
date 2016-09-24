@@ -18,7 +18,7 @@
                             title-field="nombre_completo" description-field="direccion_casa" minlength="1" match-class="highlight"
                             text-searching="Buscando cliente..." text-no-results="No existen clientes que coincidan con el criterio de búsqueda."
                             auto-match="true" remote-url="{{app.API + '/clientes'}}" remote-url-request-formatter="vm.formatearBusqueda"
-                            input-changed="vm.cambioNombre" required/>
+                            input-changed="vm.cambioNombre" input-class="capitalize" required/>
                     </div>
                     <div class="row">
                         <div class="item item-input item-select">
@@ -48,14 +48,16 @@
                             </select>
                         </div>
                         <div class="item item-input" ng-if="vm.tipo_direccion == 'Casa'">
-                            <input id="direccion_casa" ng-model="vm.pedido.cliente.direccion_casa" type="text" placeholder="Dirección de la casa" ng-required="vm.tipo_direccion == 'Casa'">
+                            <input id="direccion_casa" ng-model="vm.pedido.cliente.direccion_casa" type="text" placeholder="Dirección de la casa" ng-required="vm.tipo_direccion == 'Casa'"
+                                class="capitalize" />
                         </div>
                         <div class="item item-input" ng-if="vm.tipo_direccion == 'Oficina'">
                             <input id="direccion_oficina" ng-model="vm.pedido.cliente.direccion_oficina" type="text" placeholder="Dirección de la oficina"
-                                ng-required="vm.tipo_direccion == 'Oficina'">
+                                ng-required="vm.tipo_direccion == 'Oficina'" class="capitalize" />
                         </div>
                         <div class="item item-input" ng-if="vm.tipo_direccion == 'Otra'">
-                            <input id="direccion_otra" ng-model="vm.pedido.cliente.direccion_otra" type="text" placeholder="Otra dirección" ng-required="vm.tipo_direccion == 'Otra'">
+                            <input id="direccion_otra" ng-model="vm.pedido.cliente.direccion_otra" type="text" placeholder="Otra dirección" ng-required="vm.tipo_direccion == 'Otra'"
+                                class="capitalize" />
                         </div>
                     </div>
                     <div class="row">

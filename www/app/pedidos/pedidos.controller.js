@@ -5,9 +5,9 @@
         .module('starter')
         .controller('PedidosController', PedidosController);
 
-    PedidosController.$inject = ['ionicMaterialInk', '$ionicPopup', 'Restangular', '$ionicLoading', 'ionicToast', '$ionicModal', '$scope', 'user', 'ionicDatePicker'];
+    PedidosController.$inject = ['ionicMaterialInk', '$ionicPopup', 'Restangular', '$ionicLoading', 'ionicToast', '$ionicModal', '$scope', 'user', 'ionicDatePicker', '$timeout'];
 
-    function PedidosController(ionicMaterialInk, $ionicPopup, Restangular, $ionicLoading, ionicToast, $ionicModal, $scope, user, ionicDatePicker) {
+    function PedidosController(ionicMaterialInk, $ionicPopup, Restangular, $ionicLoading, ionicToast, $ionicModal, $scope, user, ionicDatePicker, $timeout) {
         Restangular.setDefaultRequestParams({ token: user.get().token });
         var vm = this;
         var loading = {
@@ -131,6 +131,7 @@
             }
             vm.pedido.vendedor_id = user.get().vendedor.id;
             vm.pedido.cliente.establecimiento_id = user.get().vendedor.sede.establecimiento_id;
+            vm.pedido.cliente.nombre_completo = vm.pedido.cliente.nombre_completo.capitalize();
             var confirmarPedido = $ionicPopup.confirm({
                 title: 'Estás a punto de registrar el siguiente pedido.',
                 cssClass: 'resumen-pedido',
@@ -153,18 +154,11 @@
             pedido.put()
                 .then(function (data) {
                     if (data.result) {
-                        var alertPopup = $ionicPopup.alert({
-                            title: 'Se ha despachado el pedido.',
-                            template: 'Notificación al cliente: ' + data.notificacion
-                        });
-                        alertPopup.then(function (option) {
-                            activate();
-                        })
+                        ionicToast.show('Se ha despachado el pedido.', 'middle', false, 1000);
+                        activate();
                     } else {
-                        var alertPopup = $ionicPopup.alert({
-                            title: '¡Error!',
-                            template: 'Inténtelo más tarde nuevamente.'
-                        });
+                        var mensaje = String.format('Error: {0}', data.mensaje);
+                        ionicToast.show(mensaje, 'middle', true, 2000);
                     }
                 })
                 .catch(function (error) {
@@ -222,21 +216,16 @@
             pedidos.post(vm.pedido)
                 .then(function (data) {
                     if (data.result) {
-                        var alertPopup = $ionicPopup.alert({
-                            title: '¡Registro exitoso!',
-                            template: 'Tu pedido se ha almacenado correctamente.'
-                        });
-                        alertPopup.then(function (option) {
-                            activate();
-                        });
+                        var mensaje = data.mensaje;
+                        ionicToast.show(mensaje, 'bottom', false, 5000);
+                        activate();
                     } else {
                         var mensaje = data.mensaje + '<br />';
                         if (data.validator) {
                             mensaje += data.validator.join('.<br />');
                         }
-                        ionicToast.show(mensaje, 'bottom', false, 3000);
+                        ionicToast.show(mensaje, 'bottom', true, 2000);
                     }
-
                 })
                 .catch(function (error) {
                     var mensaje = String.format('Error: {0} {1}', error.status, error.statusText);

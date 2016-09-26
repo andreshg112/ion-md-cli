@@ -28,6 +28,10 @@ body {
     text-transform: capitalize;
 }
 
+.chart {
+    cursor: default;
+}
+
 /* Seleccion de clientes */
 /*.active {
     background-color: lightslategray;

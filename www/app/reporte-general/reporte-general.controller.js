@@ -11,14 +11,12 @@
         Restangular.setDefaultRequestParams({ token: user.get().token });
         var vm = this;
         var establecimientos = Restangular.all('establecimientos');
-        var loading = {
-            template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>'
-        };
+        var loading = { template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>' };
 
         vm.cargarDatos = cargarDatos;
-        vm.data = [];
-        vm.labels = [];
-        vm.series = ['Domicilios'];
+        vm.getTotalClientesPorGenero = getTotalClientesPorGenero;
+        vm.getTotalPedidosDiaSemana = getTotalPedidosDiaSemana;
+        vm.getTotalPedidosDiaLapso = getTotalPedidosDiaLapso;
 
         activate();
 
@@ -27,22 +25,73 @@
         ionicMaterialInk.displayEffect();
 
         function activate() {
-            cargarDatos();
             cargarEstablecimientos();
+            cargarDatos();
         }
 
         function cargarDatos() {
+            cargarPedidosDiaSemana();
+            cargarPedidosDiaLapso();
+            cargarClientesPorGenero();
+            inicializarCharts();
+        }
+
+        function cargarClientesPorGenero() {
+            $ionicLoading.show(loading);
+            var establecimientoId = (!vm.establecimientoSeleccionado) ? null : vm.establecimientoSeleccionado.id;
+            var sedeId = (!vm.sedeSeleccionada) ? null : vm.sedeSeleccionada.id;
+            Restangular.one('administradores', user.get().administrador.id)
+                .customGET('clientes-por-genero', { establecimiento_id: establecimientoId, sede_id: sedeId })
+                .then(function (data) {
+                    if (data.length > 0) {
+                        vm.clientesPorGenero.labels = getPropertyInArrayObject(data, 'genero');
+                        vm.clientesPorGenero.data = getPropertyInArrayObject(data, 'cantidad');
+                    }
+                })
+                .catch(function (error) {
+                    var mensaje = (!error.status) ? error :
+                        String.format('Error: {0} {1}', error.status, error.statusText);
+                    ionicToast.show(mensaje, 'middle', true, 2000);
+                })
+                .finally(function () {
+                    $ionicLoading.hide();
+                });
+        }
+
+        function cargarPedidosDiaSemana() {
             $ionicLoading.show(loading);
             var establecimientoId = (!vm.establecimientoSeleccionado) ? null : vm.establecimientoSeleccionado.id;
             var sedeId = (!vm.sedeSeleccionada) ? null : vm.sedeSeleccionada.id;
             Restangular.one('administradores', user.get().administrador.id)
                 .customGET('pedidos-dia-semana', { establecimiento_id: establecimientoId, sede_id: sedeId })
                 .then(function (data) {
-                    vm.labels = Object.keys(data.result);
-                    vm.data = getObjectValues(data.result);
+                    vm.pedidosDiaSemana.labels = Object.keys(data.result);
+                    vm.pedidosDiaSemana.data = getObjectValues(data.result);
                 })
                 .catch(function (error) {
-                    var mensaje = String.format('Error: {0} {1}', error.status, error.statusText);
+                    var mensaje = (!error.status) ? error :
+                        String.format('Error: {0} {1}', error.status, error.statusText);
+                })
+                .finally(function () {
+                    $ionicLoading.hide();
+                });
+        }
+
+        function cargarPedidosDiaLapso() {
+            $ionicLoading.show(loading);
+            var establecimientoId = (!vm.establecimientoSeleccionado) ? null : vm.establecimientoSeleccionado.id;
+            var sedeId = (!vm.sedeSeleccionada) ? null : vm.sedeSeleccionada.id;
+            Restangular.one('administradores', user.get().administrador.id)
+                .customGET('pedidos-por-dia-en-lapso', { establecimiento_id: establecimientoId, sede_id: sedeId })
+                .then(function (data) {
+                    if (data.length > 0) {
+                        vm.pedidosDiaLapso.labels = getPropertyInArrayObject(data, 'fecha');
+                        vm.pedidosDiaLapso.data = [getPropertyInArrayObject(data, 'pedidos_enviados')];
+                    }
+                })
+                .catch(function (error) {
+                    var mensaje = (!error.status) ? error :
+                        String.format('Error: {0} {1}', error.status, error.statusText);
                     ionicToast.show(mensaje, 'middle', true, 2000);
                 })
                 .finally(function () {
@@ -54,12 +103,47 @@
             vm.establecimientos = user.get().administrador.establecimientos;
         }
 
-        function getObjectValues(object) {
-            var values = [];
-            for (var key in object) {
-                values.push(object[key]);
-            }
-            return values;
+        function getTotalPedidosDiaSemana() {
+            return sumarElementosArray(vm.pedidosDiaSemana.data);
+        }
+
+        function getTotalPedidosDiaLapso() {
+            return sumarElementosArray(vm.pedidosDiaLapso.data[0]);
+        }
+
+        function getTotalClientesPorGenero() {
+            return sumarElementosArray(vm.clientesPorGenero.data);
+        }
+
+        function inicializarCharts() {
+            vm.clientesPorGenero = {
+                data: [],
+                labels: []
+            };
+            vm.pedidosDiaLapso = {
+                data: [],
+                labels: [],
+                series: ['Domicilios'],
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: { beginAtZero: true, stepSize: 1 }
+                        }]
+                    }
+                }
+            };
+            vm.pedidosDiaSemana = {
+                data: [],
+                labels: [],
+                series: ['Domicilios'],
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: { beginAtZero: true, stepSize: 1 }
+                        }]
+                    }
+                }
+            };
         }
     }
 })();

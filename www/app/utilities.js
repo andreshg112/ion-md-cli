@@ -79,7 +79,7 @@ function fechaYYYYMMDD(fecha) {
 /**
  * Retorna una cadena sin tildes ni eñes.
  * @param {String} cadena
- * @returns String
+ * @returns {String}
  */
 var normalize = (function () {
     var from = "ÃÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛãàáäâèéëêìíïîòóöôùúüûÑñÇç",
@@ -126,4 +126,44 @@ function occurrences(string, subString, allowOverlapping) {
         } else break;
     }
     return n;
+}
+
+/**
+ * Retorna un array con los valores de una propiedad que los objetos del array tengan.
+ * @param {Array} array El array para recorrer.
+ * @param {String} property La propiedad que se necesita para extraer los valores del array.
+ * @returns {Array}
+ */
+function getPropertyInArrayObject(array, property) {
+    var values = [];
+    array.forEach(function (element) {
+        if (element.hasOwnProperty(property)) {
+            values.push(element[property]);
+        }
+    }, this);
+    return values;
+}
+
+/**
+ * Retorna un array con los valores de un objeto y no sus claves/keys.
+ * @param {Object} object El objeto a recorrer.
+ * @returns {Array}
+ */
+function getObjectValues(object) {
+    var values = [];
+    for (var key in object) {
+        values.push(object[key]);
+    }
+    return values;
+}
+
+/**
+ * Suma los elementos de un array de valores, no de objetos.
+ * @param {array} array El array para sumar sus elementos.
+ * @returns {number}
+ */
+function sumarElementosArray(array) {
+    return array.reduce(function (previousValue, currentValue) {
+        return currentValue + previousValue;
+    });
 }

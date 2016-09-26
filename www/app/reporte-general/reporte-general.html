@@ -21,16 +21,48 @@
                         </select>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="card" style="width: 60%; height: 60%; top: 20%; left: 20%; right: 20%; bottom: 20%;">
-                        <div class="item item-divider">
-                            Pedidos por día de la semana
-                        </div>
-                        <div class="item item-text-wrap">
-                            <canvas id="bar" class="chart chart-bar" chart-data="vm.data" chart-labels="vm.labels" chart-series="vm.series" chart-options="vm.options"
-                                chart-dataset-override="datasetOverride" chart-click="onClick">
-                            </canvas>
-                        </div>
+            </div>
+            <div class="row responsive-md">
+                <!--<div class="card" style="width: 60%; height: 60%; top: 20%; left: 20%; right: 20%; bottom: 20%;">-->
+                <div class="card col-50">
+                    <div class="item item-divider">
+                        Pedidos por día de la semana
+                    </div>
+                    <div class="item item-text-wrap">
+                        <canvas id="pedidos-dia-semana" class="chart chart-bar" chart-data="vm.pedidosDiaSemana.data" chart-labels="vm.pedidosDiaSemana.labels"
+                            chart-options="vm.pedidosDiaSemana.options" chart-series="vm.pedidosDiaSemana.series">
+                        </canvas>
+                    </div>
+                    <div class="item item-divider">
+                        Total: {{vm.getTotalPedidosDiaSemana()}}
+                    </div>
+                </div>
+                <div class="card col-50">
+                    <div class="item item-divider">
+                        Pedidos por día en el último mes
+                    </div>
+                    <div class="item item-text-wrap">
+                        <canvas id="pedidos-por-dia-en-lapso" class="chart chart-line" chart-data="vm.pedidosDiaLapso.data" chart-labels="vm.pedidosDiaLapso.labels"
+                            chart-options="vm.pedidosDiaLapso.options" chart-series="vm.pedidosDiaLapso.series">
+                        </canvas>
+                    </div>
+                    <div class="item item-divider">
+                        Total: {{vm.getTotalPedidosDiaLapso()}}
+                    </div>
+                </div>
+            </div>
+            <div class="row responsive-md">
+                <div class="card col-50">
+                    <div class="item item-divider">
+                        Clientes por género
+                    </div>
+                    <div class="item item-text-wrap">
+                        <canvas id="clientes-por-genero" class="chart chart-pie" chart-data="vm.clientesPorGenero.data" chart-labels="vm.clientesPorGenero.labels"
+                            chart-options="vm.clientesPorGenero.options">
+                        </canvas>
+                    </div>
+                    <div class="item item-divider">
+                        Total: {{vm.getTotalClientesPorGenero()}}
                     </div>
                 </div>
             </div>

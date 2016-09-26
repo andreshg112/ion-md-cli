@@ -3,12 +3,10 @@
 
     angular
         .module('starter')
-        .config(['$stateProvider', '$urlRouterProvider', 'RestangularProvider', 'ionicDatePickerProvider', '$ionicConfigProvider', 'API', config]);
+        .config(['$stateProvider', '$urlRouterProvider', routes]);
 
     /** @ngInject */
-    function config($stateProvider, $urlRouterProvider, RestangularProvider, ionicDatePickerProvider, $ionicConfigProvider, API) {
-        $ionicConfigProvider.views.maxCache(0);
-        RestangularProvider.setBaseUrl(API);
+    function routes($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('login', {
                 url: '/login',
@@ -181,15 +179,5 @@
             var $state = $injector.get("$state");
             $state.go('login');
         });
-
-        //Configuración del Ionic Datepicker
-        var datePickerObj = {
-            setLabel: 'Fijar',
-            closeLabel: 'Cerrar',
-            mondayFirst: true,
-            weeksList: ["D", "L", "M", "M", "J", "V", "S"],
-            monthsList: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
-        };
-        ionicDatePickerProvider.configDatePicker(datePickerObj);
     }
 })();

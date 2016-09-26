@@ -14,6 +14,10 @@
                         <textarea id="pedido" ng-model="vm.pedido.detalles" rows="5" placeholder="Escriba aquí su pedido" required></textarea>
                     </div>
                     <div class="item item-input item-floating-label">
+                        <span class="input-label">Total a pagar</span>
+                        <input id="total" type="number" ng-model="vm.pedido.total" placeholder="Total a pagar" required/>
+                    </div>
+                    <div class="item item-input item-floating-label">
                         <angucomplete-alt id="nombre_completo" placeholder="Nombre completo" selected-object="vm.setCliente" search-fields="nombre_completo"
                             title-field="nombre_completo" description-field="direccion_casa" minlength="1" match-class="highlight"
                             text-searching="Buscando cliente..." text-no-results="No existen clientes que coincidan con el criterio de búsqueda."
@@ -61,11 +65,18 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="item item-input item-floating-label col-34">
+                        <div class="item item-input item-select col-33">
+                            <div class="input-label">Género</div>
+                            <select ng-model="vm.pedido.cliente.genero" required>
+                                <option selected>femenino</option>
+                                <option>masculino</option>
+                            </select>
+                        </div>
+                        <div class="item item-input item-floating-label col-33">
                             <span class="input-label">Email</span>
                             <input type="email" placeholder="Email" ng-model="vm.pedido.cliente.email">
                         </div>
-                        <div class="item item-input item-floating-label col-offset-33 col-33">
+                        <div class="item item-input item-floating-label col-33">
                             <span class="input-label">Fecha de nacimiento</span>
                             <input type="text" placeholder="YYYY-MM-DD" ng-click="vm.seleccionarFechaNacimiento()" ng-model="vm.pedido.cliente.fecha_nacimiento"
                             />

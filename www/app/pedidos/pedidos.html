@@ -6,27 +6,27 @@
         <div class="bar bar-subheader bar-stable static text-center">
             <strong class="title">En cola</strong>
         </div>
-        <div class="im-wrapper">
-            <div class="list">
+        <div class="im-wrapper margin-list">
+            <div class="list bordered-list">
                 <div class="item row responsive-sm">
-                    <pre class="col col-10 centered-text">Contacto</pre>
-                    <pre class="col col-20 centered-text">Nombre completo</pre>
-                    <pre class="col col-30 centered-text">Detalles</pre>
-                    <pre class="col col-30 centered-text">Dirección</pre>
-                    <pre class="col col-10 centered-text">Acciones</pre>
+                    <pre class="col col-10">Contacto</pre>
+                    <pre class="col col-20">Nombre completo</pre>
+                    <pre class="col col-30">Detalles</pre>
+                    <pre class="col col-30">Dirección</pre>
+                    <pre class="col col-10">Acciones</pre>
                 </div>
                 <div class="item item-divider"></div>
                 <div class="item item-button-right row responsive-sm" ng-repeat="pedido in vm.pedidos track by $index">
-                    <pre class="col col-10 centered-text">{{pedido.numero}}</pre>
-                    <pre class="col col-20 centered-text">{{pedido.cliente.nombre_completo}}</pre>
-                    <pre class="col col-30 centered-text">{{pedido.detalles}}</pre>
-                    <pre class="col col-30 centered-text">{{pedido.direccion}}</pre>
-                    <div class="col col-10 centered-text">
+                    <pre class="col col-10">{{pedido.numero}}</pre>
+                    <pre class="col col-20">{{pedido.cliente.nombre_completo}}</pre>
+                    <pre class="col col-30">{{pedido.detalles}}</pre>
+                    <pre class="col col-30">{{pedido.direccion}}</pre>
+                    <div class="col col-10" style="margin-right: 5px;">
                         <button title="Despachar" class="button-icon ink" ng-click="vm.despachar(pedido)">
                             <i class="ion-paper-airplane icon"></i>
                         </button>
                         <button title="Imprimir" class="button-icon ink" ng-click="vm.imprimirPedidoEnCola(pedido)">
-                            <i class="ion-printer icon"></i>                            
+                            <i class="ion-printer icon"></i>
                         </button>
                         <button title="Cancelar" class="button-icon ink" ng-click="vm.cancelarPedido(pedido)">
                             <i class="ion-close-round icon"></i>
@@ -35,9 +35,6 @@
                 </div>
             </div>
         </div>
-        <br />
-        <br />
-        <br />
-        <br />
+        <!--<i class="material-icons">3d_rotation</i>-->
     </ion-content>
 </ion-view>

@@ -33,6 +33,7 @@
             cargarPedidosDiaSemana();
             cargarPedidosDiaLapso();
             cargarClientesPorGenero();
+            cargarValorPorDia();
             inicializarCharts();
         }
 
@@ -46,6 +47,32 @@
                     if (data.length > 0) {
                         vm.clientesPorGenero.labels = getPropertyInArrayObject(data, 'genero');
                         vm.clientesPorGenero.data = getPropertyInArrayObject(data, 'cantidad');
+                    }
+                })
+                .catch(function (error) {
+                    var mensaje = (!error.status) ? error :
+                        String.format('Error: {0} {1}', error.status, error.statusText);
+                    ionicToast.show(mensaje, 'middle', true, 2000);
+                })
+                .finally(function () {
+                    $ionicLoading.hide();
+                });
+        }
+
+        function cargarEstablecimientos() {
+            vm.establecimientos = user.get().administrador.establecimientos;
+        }
+
+        function cargarPedidosDiaLapso() {
+            $ionicLoading.show(loading);
+            var establecimientoId = (!vm.establecimientoSeleccionado) ? null : vm.establecimientoSeleccionado.id;
+            var sedeId = (!vm.sedeSeleccionada) ? null : vm.sedeSeleccionada.id;
+            Restangular.one('administradores', user.get().administrador.id)
+                .customGET('pedidos-por-dia-en-lapso', { establecimiento_id: establecimientoId, sede_id: sedeId })
+                .then(function (data) {
+                    if (data.length > 0) {
+                        vm.pedidosDiaLapso.labels = getPropertyInArrayObject(data, 'fecha');
+                        vm.pedidosDiaLapso.data = [getPropertyInArrayObject(data, 'pedidos_enviados')];
                     }
                 })
                 .catch(function (error) {
@@ -77,16 +104,16 @@
                 });
         }
 
-        function cargarPedidosDiaLapso() {
+        function cargarValorPorDia() {
             $ionicLoading.show(loading);
             var establecimientoId = (!vm.establecimientoSeleccionado) ? null : vm.establecimientoSeleccionado.id;
             var sedeId = (!vm.sedeSeleccionada) ? null : vm.sedeSeleccionada.id;
             Restangular.one('administradores', user.get().administrador.id)
-                .customGET('pedidos-por-dia-en-lapso', { establecimiento_id: establecimientoId, sede_id: sedeId })
+                .customGET('valor-pedidos-por-dia', { establecimiento_id: establecimientoId, sede_id: sedeId })
                 .then(function (data) {
                     if (data.length > 0) {
-                        vm.pedidosDiaLapso.labels = getPropertyInArrayObject(data, 'fecha');
-                        vm.pedidosDiaLapso.data = [getPropertyInArrayObject(data, 'pedidos_enviados')];
+                        vm.valorPorDia.labels = getPropertyInArrayObject(data, 'fecha');
+                        vm.valorPorDia.data = [parseIntArray(getPropertyInArrayObject(data, 'valor'))];
                     }
                 })
                 .catch(function (error) {
@@ -97,10 +124,6 @@
                 .finally(function () {
                     $ionicLoading.hide();
                 });
-        }
-
-        function cargarEstablecimientos() {
-            vm.establecimientos = user.get().administrador.establecimientos;
         }
 
         function getTotalPedidosDiaSemana() {
@@ -140,6 +163,23 @@
                     scales: {
                         yAxes: [{
                             ticks: { beginAtZero: true, stepSize: 1 }
+                        }]
+                    }
+                }
+            };
+            vm.valorPorDia = {
+                data: [],
+                labels: [],
+                series: ['Domicilios'],
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+                                /*stepSize: function () {
+                                    return vm.valorPorDia.data / 10;
+                                }*/
+                            }
                         }]
                     }
                 }

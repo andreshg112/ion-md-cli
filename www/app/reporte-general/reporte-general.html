@@ -23,7 +23,6 @@
                 </div>
             </div>
             <div class="row responsive-md">
-                <!--<div class="card" style="width: 60%; height: 60%; top: 20%; left: 20%; right: 20%; bottom: 20%;">-->
                 <div class="card col-50">
                     <div class="item item-divider">
                         Pedidos por día de la semana
@@ -63,6 +62,19 @@
                     </div>
                     <div class="item item-divider">
                         Total: {{vm.getTotalClientesPorGenero()}}
+                    </div>
+                </div>
+                <div class="card col-50">
+                    <div class="item item-divider">
+                        Pedidos por día en el último mes
+                    </div>
+                    <div class="item item-text-wrap">
+                        <canvas id="valor-por-dia" class="chart chart-line" chart-data="vm.valorPorDia.data" chart-labels="vm.valorPorDia.labels"
+                            chart-options="vm.valorPorDia.options" chart-series="vm.valorPorDia.series">
+                        </canvas>
+                    </div>
+                    <div class="item item-divider">
+                        <!--Total: {{vm.getTotalPedidosDiaLapso()}}-->
                     </div>
                 </div>
             </div>

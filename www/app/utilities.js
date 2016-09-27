@@ -136,6 +136,7 @@ function occurrences(string, subString, allowOverlapping) {
  */
 function getPropertyInArrayObject(array, property) {
     var values = [];
+    array = (!array) ? [] : array;
     array.forEach(function (element) {
         if (element.hasOwnProperty(property)) {
             values.push(element[property]);
@@ -163,7 +164,20 @@ function getObjectValues(object) {
  * @returns {number}
  */
 function sumarElementosArray(array) {
+    array = (!array) ? [] : array;
     return array.reduce(function (previousValue, currentValue) {
-        return currentValue + previousValue;
-    });
+        return Number(currentValue) + Number(previousValue);
+    }, 0);
+}
+
+/**
+ * Retorna un array de enteros que estaban formateados como string.
+ * Ejemplo: ['1', '2'] => [1, 2]
+ * @param {array} array
+ * @param {number} base
+ * @returns {number}
+ */
+function parseIntArray(array, base) {
+    base = (!base) ? 10 : base;
+    return array.map(function (x) { return parseInt(x, base); });
 }

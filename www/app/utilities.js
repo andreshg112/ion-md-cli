@@ -173,11 +173,26 @@ function sumarElementosArray(array) {
 /**
  * Retorna un array de enteros que estaban formateados como string.
  * Ejemplo: ['1', '2'] => [1, 2]
+ * Si un elemento es null, retorna 0.
  * @param {array} array
  * @param {number} base
  * @returns {number}
  */
 function parseIntArray(array, base) {
     base = (!base) ? 10 : base;
-    return array.map(function (x) { return parseInt(x, base); });
+    return array.map(function (x) { return parseInt(x || 0, base); });
+}
+
+/**
+ * Función para validar si una tecla presionada es numérica o no.
+ * @param {event} evt
+ * @returns {boolean}
+ */
+function isNumberKey(evt) {
+    var event = (!event) ? {} : event;
+    var charCode = (evt.which) ? evt.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
 }

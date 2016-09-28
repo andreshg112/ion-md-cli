@@ -4,22 +4,22 @@
         <h1 class="title">Iniciar sesión</h1>
     </ion-header-bar>-->
     <ion-content>
-        <form ng-submit="vm.iniciarSesion()" class="center-block form-login">
+        <form name="formLogin" ng-submit="vm.iniciarSesion()" class="center-block form-login">
             <div class="list" style="">
                 <img src="img/fd-logotipo.png" alt="Logotipo de Fidelivery" style="width: 80%;" class="img-responsive center-block" />
                 <div class="item item-input margin-form">
                     <span class="input-label">Usuario</span>
-                    <input type="text" id="username" ng-model="vm.user.username" required>
+                    <input type="text" id="username" ng-model="vm.user.username" style="margin-right: 20px;" required />
                 </div>
                 <div class="item item-input margin-form">
                     <span class="input-label">Contraseña</span>
-                    <input type="password" ng-model="vm.user.password" required>
+                    <input type="password" ng-model="vm.user.password" style="margin-right: 20px;" required />
                 </div>
-                <div class="item item-input margin-form">
+                <!--<div class="item item-input margin-form">
                     <ion-checkbox class="checkbox-assertive" ng-model="isChecked">Recordar contraseña</ion-checkbox>
-                </div>
+                </div>-->
                 <div class="item">
-                    <button class="button button-block button-balanced button-login margin-form" type="submit"><b>¡Comencemos!</b></button>
+                    <button class="button button-block button-balanced button-login margin-form" type="submit" ng-disabled="formLogin.$invalid"><b>¡Comencemos!</b></button>
                 </div>
             </div>
         </form>

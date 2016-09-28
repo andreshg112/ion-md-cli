@@ -5,15 +5,15 @@
         </div>
         <div class="im-wrapper">
             <div class="list">
-                <div class="row">
-                    <div class="item item-input item-select col-50">
+                <div class="row responsive-md">
+                    <div class="item item-input item-select col col-50">
                         <div class="input-label">Establecimiento</div>
                         <select id="establecimientoSeleccionado" ng-model="vm.establecimientoSeleccionado" ng-options="establecimiento as establecimiento.nombre for establecimiento in vm.establecimientos"
                             ng-change="vm.cargarDatos()">
                             <option value="" selected>Todos</option>
                         </select>
                     </div>
-                    <div class="item item-input item-select col-50">
+                    <div class="item item-input item-select col col-50">
                         <div class="input-label">Sedes</div>
                         <select id="sedeSeleccionada" ng-model="vm.sedeSeleccionada" ng-options="sede as sede.nombre for sede in vm.establecimientoSeleccionado.sedes"
                             ng-change="vm.cargarDatos()" ng-disabled="!vm.establecimientoSeleccionado">
@@ -23,7 +23,7 @@
                 </div>
             </div>
             <div class="row responsive-md">
-                <div class="card col-50">
+                <div class="card col col-50">
                     <div class="item item-divider">
                         Pedidos por día de la semana
                     </div>
@@ -36,7 +36,7 @@
                         Total: {{vm.getTotalPedidosDiaSemana()}}
                     </div>
                 </div>
-                <div class="card col-50">
+                <div class="card col col-50">
                     <div class="item item-divider">
                         Pedidos por día en el último mes
                     </div>
@@ -51,7 +51,7 @@
                 </div>
             </div>
             <div class="row responsive-md">
-                <div class="card col-50">
+                <div class="card col col-50">
                     <div class="item item-divider">
                         Clientes por género
                     </div>
@@ -64,9 +64,9 @@
                         Total: {{vm.getTotalClientesPorGenero()}}
                     </div>
                 </div>
-                <div class="card col-50">
+                <div class="card col col-50">
                     <div class="item item-divider">
-                        Pedidos por día en el último mes
+                        Valor de por día en el último mes
                     </div>
                     <div class="item item-text-wrap">
                         <canvas id="valor-por-dia" class="chart chart-line" chart-data="vm.valorPorDia.data" chart-labels="vm.valorPorDia.labels"
@@ -74,7 +74,7 @@
                         </canvas>
                     </div>
                     <div class="item item-divider">
-                        <!--Total: {{vm.getTotalPedidosDiaLapso()}}-->
+                        Total: {{vm.getTotalValorPorDia() || 0}}
                     </div>
                 </div>
             </div>

@@ -29,6 +29,7 @@
         vm.imprimirPedidoEnCola = imprimirPedidoEnCola;
         vm.pedidos = [];
         vm.pedidosCliente = [];
+        vm.onlyNumbers = /^[0-9]+$/;
         vm.openModal = openModal;
         vm.seleccionarFechaNacimiento = seleccionarFechaNacimiento;
         vm.setCliente = setCliente;
@@ -209,6 +210,7 @@
 
         function openModal() {
             vm.modalNuevo.show();
+            document.getElementById("nombre_completo_value").required = true;
         }
 
         function registrarPedido() {

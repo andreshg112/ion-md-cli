@@ -17,6 +17,7 @@
         vm.getTotalClientesPorGenero = getTotalClientesPorGenero;
         vm.getTotalPedidosDiaSemana = getTotalPedidosDiaSemana;
         vm.getTotalPedidosDiaLapso = getTotalPedidosDiaLapso;
+        vm.getTotalValorPorDia = getTotalValorPorDia;
 
         activate();
 
@@ -126,16 +127,20 @@
                 });
         }
 
-        function getTotalPedidosDiaSemana() {
-            return sumarElementosArray(vm.pedidosDiaSemana.data);
+        function getTotalClientesPorGenero() {
+            return sumarElementosArray(vm.clientesPorGenero.data);
         }
 
         function getTotalPedidosDiaLapso() {
             return sumarElementosArray(vm.pedidosDiaLapso.data[0]);
         }
 
-        function getTotalClientesPorGenero() {
-            return sumarElementosArray(vm.clientesPorGenero.data);
+        function getTotalPedidosDiaSemana() {
+            return sumarElementosArray(vm.pedidosDiaSemana.data);
+        }
+
+        function getTotalValorPorDia(params) {
+            return sumarElementosArray(vm.valorPorDia.data[0]);
         }
 
         function inicializarCharts() {
@@ -150,7 +155,7 @@
                 options: {
                     scales: {
                         yAxes: [{
-                            ticks: { beginAtZero: true, stepSize: 1 }
+                            ticks: { beginAtZero: true }
                         }]
                     }
                 }
@@ -162,7 +167,7 @@
                 options: {
                     scales: {
                         yAxes: [{
-                            ticks: { beginAtZero: true, stepSize: 1 }
+                            ticks: { beginAtZero: true }
                         }]
                     }
                 }
@@ -174,12 +179,7 @@
                 options: {
                     scales: {
                         yAxes: [{
-                            ticks: {
-                                beginAtZero: true,
-                                /*stepSize: function () {
-                                    return vm.valorPorDia.data / 10;
-                                }*/
-                            }
+                            ticks: { beginAtZero: true }
                         }]
                     }
                 }

@@ -74,8 +74,19 @@ pre {
     font-family: inherit;
 }
 
+#popup-resumen-pedido pre {
+    padding-right: 10%;
+    width: 100%;
+}
+
 .bordered-list {
     border-style: solid;
+    border-width: 1px;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+.bordered-list-no-solid {
     border-width: 1px;
     border-radius: 15px;
     padding: 10px;

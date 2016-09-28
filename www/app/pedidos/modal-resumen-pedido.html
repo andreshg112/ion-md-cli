@@ -1,26 +1,28 @@
-﻿<div class="list" id="popup-resumen-pedido">
-    <div class="item item-input">
-        <span class="input-label">Pedido</span>
-        <pre>{{vm.pedido.detalles}}</pre>
-    </div>
-    <div class="item item-input">
-        <span class="input-label">Total a pagar</span>
-        <pre>{{vm.pedido.total | currency : '$ ' : 0}}</pre>
-    </div>
-    <div class="item item-input">
-        <span class="input-label">Cliente</span>
-        <pre class="capitalize">{{vm.pedido.cliente.nombre_completo}}</pre>
-    </div>
-    <div class="item item-input">
-        <span class="input-label">Número</span>
-        <pre>{{vm.pedido.numero}}</pre>
-    </div>
-    <div class="item item-input">
-        <span class="input-label">Dirección</span>
-        <pre class="capitalize">{{vm.pedido.direccion}}</pre>
-    </div>
-    <div class="item item-input">
-        <span class="input-label">Establecimiento</span>
-        <pre>{{app.user.vendedor.sede.establecimiento.nombre}}</pre>
+﻿<div id="popup-resumen-pedido">
+    <div class="list">
+        <div class="item item-input">
+            <span class="input-label">Pedido</span>
+            <pre>{{vm.pedido.detalles}}</pre>
+        </div>
+        <div class="item item-input">
+            <span class="input-label">Total a pagar</span>
+            <pre>{{vm.pedido.total | currency : '$ ' : 0}}</pre>
+        </div>
+        <div class="item item-input">
+            <span class="input-label">Cliente</span>
+            <pre class="capitalize">{{vm.pedido.cliente.nombre_completo}}</pre>
+        </div>
+        <div class="item item-input">
+            <span class="input-label">Número</span>
+            <pre>{{vm.pedido.numero}}</pre>
+        </div>
+        <div class="item item-input">
+            <span class="input-label">Dirección</span>
+            <pre class="capitalize">{{vm.pedido.direccion}}</pre>
+        </div>
+        <div class="item item-input">
+            <span class="input-label">Establecimiento</span>
+            <pre>{{app.user.vendedor.sede.establecimiento.nombre}}</pre>
+        </div>
     </div>
 </div>

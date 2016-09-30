@@ -283,12 +283,6 @@
             vm.modalPedidosCliente = modal;
         });
 
-        /*$ionicModal.fromTemplateUrl('app/pedidos/modal-resumen-pedido.html', {
-            scope: $scope
-        }).then(function (modal) {
-            vm.modalResumenPedido = modal;
-        });*/
-
         // Cleanup the modal when we're done with it
         $scope.$on('$destroy', function () {
             vm.modalNuevo.remove();

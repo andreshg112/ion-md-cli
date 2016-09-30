@@ -14,6 +14,7 @@
         var loading = {
             template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>'
         };
+        var planes = Restangular.all('planes');
         var users = Restangular.all('users');
 
         //
@@ -34,6 +35,7 @@
             vm.establecimiento = { mensaje: 'Su pedido va en camino.' };
             cargarEstablecimientos();
             cargarAdministradores();
+            cargarPlanes();
         }
 
         function cargarAdministradores() {
@@ -43,6 +45,24 @@
                 .then(function (data) {
                     if (data.length > 0) {
                         vm.administradores = data;
+                    }
+                })
+                .catch(function (error) {
+                    var mensaje = String.format('Error: {0} {1}', error.status, error.statusText);
+                    ionicToast.show(mensaje, 'middle', true, 2000);
+                })
+                .finally(function () {
+                    $ionicLoading.hide();
+                });
+        }
+
+        function cargarPlanes() {
+            $ionicLoading.show(loading);
+            vm.planes = [];
+            planes.getList()
+                .then(function (data) {
+                    if (data.length > 0) {
+                        vm.planes = data;
                     }
                 })
                 .catch(function (error) {

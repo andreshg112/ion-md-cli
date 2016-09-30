@@ -23,6 +23,11 @@
                             required>
                         </select>
                     </div>
+                    <div class="item item-input item-select">
+                        <div class="input-label">Plan</div>
+                        <select ng-model="vm.establecimiento.plan_id" ng-options="plan.id as plan.nombre for plan in vm.planes" required>
+                        </select>
+                    </div>
                     <br />
                     <button class="button button-block button-calm ink" data-ink-color="#9DEAFF" data-ink-opacity="1" ng-disabled="form.$invalid">Confirmar</button>
                 </div>

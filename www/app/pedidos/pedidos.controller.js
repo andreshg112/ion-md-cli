@@ -5,10 +5,15 @@
         .module('starter')
         .controller('PedidosController', PedidosController);
 
-    PedidosController.$inject = ['ionicMaterialInk', '$ionicPopup', 'Restangular', '$ionicLoading', 'ionicToast', '$ionicModal', '$scope', 'user', 'ionicDatePicker', '$timeout'];
+    PedidosController.$inject = ['ionicMaterialInk', '$ionicPopup', 'Restangular', '$ionicLoading', 'ionicToast', '$ionicModal', '$scope', 'user', 'ionicDatePicker', '$timeout', 'alertify'];
 
-    function PedidosController(ionicMaterialInk, $ionicPopup, Restangular, $ionicLoading, ionicToast, $ionicModal, $scope, user, ionicDatePicker, $timeout) {
+    function PedidosController(ionicMaterialInk, $ionicPopup, Restangular, $ionicLoading, ionicToast, $ionicModal, $scope, user, ionicDatePicker, $timeout, alertify) {
+        //Configuraciones iniciales
+        var elem = document.getElementById("pedidos");
+        alertify.parent(elem);
+        alertify.maxLogItems(1);
         Restangular.setDefaultRequestParams({ token: user.get().token });
+
         var vm = this;
         var loading = {
             template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>'
@@ -58,12 +63,15 @@
         }
 
         function cancelarPedido(pedido) {
-            $ionicLoading.show(loading);
+            alertify.delay(0).log('Cancelando pedido...');
             pedido.remove()
                 .then(function (data) {
                     ionicToast.show(data.mensaje, 'bottom', false, 2000);
                     if (data.result) {
+                        alertify.success(data.mensaje);
                         activate();
+                    } else {
+                        alertify.error(data.mensaje);
                     }
                 })
                 .catch(function (error) {
@@ -214,12 +222,16 @@
         }
 
         function registrarPedido() {
-            $ionicLoading.show(loading);
+            //$ionicLoading.show(loading);
+            var nuevoPedido = document.getElementById('nuevo-pedido');
+            alertify.parent(nuevoPedido);
+            alertify.delay(0).log('Registrando...');
             pedidos.post(vm.pedido)
                 .then(function (data) {
                     if (data.result) {
                         var mensaje = data.mensaje;
-                        ionicToast.show(mensaje, 'bottom', false, 5000);
+                        //ionicToast.show(mensaje, 'bottom', false, 5000);
+                        alertify.success(mensaje);
                         activate();
                     } else {
                         var mensaje = data.mensaje + '<br />';
@@ -234,7 +246,7 @@
                     ionicToast.show(mensaje, 'middle', true, 2000);
                 })
                 .finally(function () {
-                    $ionicLoading.hide();
+                    //$ionicLoading.hide();
                 });
         }
 

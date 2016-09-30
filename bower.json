@@ -16,6 +16,7 @@
     "angular-chart.js": "^1.0.2",
     "chart.js": "npm:chart.js#^2.2.2",
     "ionic-datepicker": "^1.2.1",
-    "ionic-timepicker": "^0.6.0"
+    "ionic-timepicker": "^0.6.0",
+    "alertifyjs": "^1.0.11"
   }
 }

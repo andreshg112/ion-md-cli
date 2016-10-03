@@ -13,10 +13,10 @@
                             <option value="" selected>Todos</option>
                         </select>
                     </div>
-                    <div class="item item-input item-select col col-50">
+                    <div class="item item-input item-select col col-50" ng-hide="!vm.establecimientoSeleccionado">
                         <div class="input-label">Sedes</div>
                         <select id="sedeSeleccionada" ng-model="vm.sedeSeleccionada" ng-options="sede as sede.nombre for sede in vm.establecimientoSeleccionado.sedes"
-                            ng-change="vm.cargarDatos()" ng-disabled="!vm.establecimientoSeleccionado">
+                            ng-change="vm.cargarDatos()">
                             <option value="" selected>Todas</option>
                         </select>
                     </div>

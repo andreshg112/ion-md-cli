@@ -54,15 +54,29 @@ body {
 }
 
 .form-login {
-    margin-top: 200px;
-    width: 30%;
-    height: 30%;
-    top: 35%;
-    left: 35%;
-    right: 35%;
-    bottom: 35%;
+    width: 384px;
     background-color: white;
     border-radius: 20px;
+}
+
+@media only screen and (max-width: 384px) {
+    .form-login {
+        width: 100%;
+    }
+}
+
+.input-login {
+    margin-right: 20px !important;
+    border-style: solid !important;
+    border-width: 1px !important;
+    border-radius: 5px !important;
+    border-color: lightgray !important;
+}
+
+.contenedor {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .margin-list {
@@ -92,10 +106,12 @@ pre {
     padding: 10px;
 }
 
-/* Seleccion de clientes */
-/*.active {
-    background-color: lightslategray;
-}*/
+.vista-login {
+    background-image: url('../img/mas-cerca-de-tus-clientes.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    
+}
 
 /* Responsive table */
 /** For the task list header columns and tasks **/

@@ -265,10 +265,6 @@
             vm.modalPedidosCliente.show();
         }
 
-        /*function verResumenPedido() {
-            vm.modalResumenPedido.show();
-        }*/
-
         //Actividades de los modales
         $ionicModal.fromTemplateUrl('app/pedidos/nuevo-pedido.html', {
             scope: $scope,
@@ -288,6 +284,5 @@
             vm.modalNuevo.remove();
             vm.modalPedidosCliente.remove();
         });
-
     }
 })();

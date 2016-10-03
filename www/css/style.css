@@ -93,16 +93,34 @@ pre {
     width: 100%;
 }
 
-.bordered-list {
+.table-bordered {
+    border-color: lightgray;
     border-style: solid;
-    border-width: 1px;
     border-radius: 15px;
+    border-width: 1px;
     padding: 10px;
+    
+}
+
+.table-header {
+    font-weight: bold;
+}
+
+.table-bordered .row {
+    border-bottom-style: solid;
+    border-color: lightgray;
+    border-width: 1px;
+    align-items: center;
+    justify-content: center;
+}
+
+.table-bordered .row:last-child {
+    border-bottom-style: none;
 }
 
 .bordered-list-no-solid {
-    border-width: 1px;
     border-radius: 15px;
+    border-width: 1px;
     padding: 10px;
 }
 
@@ -113,123 +131,7 @@ pre {
     
 }
 
-/* Responsive table */
-/** For the task list header columns and tasks **/
-.flex-container {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    border: none;
-    -ms-box-orient: horizontal;
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -moz-flex;
-    display: -webkit-flex;
-    display: flex;
-}
-
-.wrap    {
-    -webkit-flex-wrap: wrap;
-    flex-wrap: wrap;
-}
-
-@media (max-width: 320px) {
-
-    .flex-container.wrap > div{
-        width: 50%;
-        max-width: 50%;
-        text-overflow: '';
-        white-space:nowrap;
-        overflow: hidden;
-    }
-
-}
-
-@media (min-width: 321px) {
-    .flex-container.wrap > div{
-        width: 33%;
-        max-width: 33%;
-        text-overflow: '';
-        white-space:nowrap;
-        overflow: hidden;
-    }
-}
-
-@media (min-width: 480px) {
-    .flex-container.wrap > div{
-        width: 25%;
-        max-width: 25%;
-        text-overflow: '';
-        white-space:nowrap;
-        overflow: hidden;
-    }
-}
-
-@media (min-width: 640px) {
-    .flex-container.wrap > div{
-        width: 20%;
-        max-width: 20%;
-        text-overflow: '';
-        white-space:nowrap;
-        overflow: hidden;
-    }
-}
-
-@media (min-width: 960px) {
-    .flex-container.wrap > div{
-        width: 15%;
-        max-width: 15%;
-        text-overflow: '';
-        white-space:nowrap;
-        overflow: hidden;
-    }
-}
-
-.low-pad-item {
-    padding: 0;
-    margin: 0;
-}
-
-.col-header {
-    font-weight: bold;
-}
-
-.column {
-    text-overflow: '';
-    white-space:nowrap;
-    overflow: hidden;
-    max-width: 87%;
-    float: left;
-    padding: 2px 5px;
-}
-
-.col-header > .column {
-    padding: 5px 5px;
-}
-
-.underlined {
-    text-decoration: underline;
-}
-
-.column-sort {
-    min-width:13%;
-    float: right;
-    text-align: right;
-    padding-right: 2px;
-}
-/* End Responsive table
-
-/*.item-floating-label .placeholder-icon {
-  padding-right: 18px;
-  position: absolute;
-  bottom: 9px;
-  left: 17px;
-}
-
-.item-floating-label {
-  padding-left: 40px !important;
-}*/
+/* Fin CSS personal */
 
 /* Utilities */
 

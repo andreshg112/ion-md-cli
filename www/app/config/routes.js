@@ -123,6 +123,22 @@
                     }
                 }
             })
+            .state('app.registrar-clientes', {
+                url: '/registrar-clientes',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'app/registrar-clientes/registrar-clientes.html',
+                        controller: 'RegistrarClientesController',
+                        controllerAs: 'vm'
+                    }
+                },
+                data: {
+                    permissions: {
+                        only: ['VENDEDOR'],
+                        redirectTo: 'login'
+                    }
+                }
+            })
             .state('app.clientes', {
                 url: '/clientes',
                 views: {

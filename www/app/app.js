@@ -10,7 +10,6 @@
         'permission.ui',
         'angucomplete-alt',
         'chart.js',
-        'ionic-datepicker',
-        'ngAlertify'
+        'ionic-datepicker'
     ])
 })();

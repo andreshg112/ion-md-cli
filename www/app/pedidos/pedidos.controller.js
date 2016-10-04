@@ -5,13 +5,9 @@
         .module('starter')
         .controller('PedidosController', PedidosController);
 
-    PedidosController.$inject = ['ionicMaterialInk', '$ionicPopup', 'Restangular', '$ionicLoading', 'ionicToast', '$ionicModal', '$scope', 'user', 'ionicDatePicker', '$timeout', 'alertify'];
+    PedidosController.$inject = ['ionicMaterialInk', '$ionicPopup', 'Restangular', '$ionicLoading', 'ionicToast', '$ionicModal', '$scope', 'user', 'ionicDatePicker', '$timeout'];
 
-    function PedidosController(ionicMaterialInk, $ionicPopup, Restangular, $ionicLoading, ionicToast, $ionicModal, $scope, user, ionicDatePicker, $timeout, alertify) {
-        //Configuraciones iniciales
-        var elem = document.getElementById("pedidos");
-        alertify.parent(elem);
-        alertify.maxLogItems(1);
+    function PedidosController(ionicMaterialInk, $ionicPopup, Restangular, $ionicLoading, ionicToast, $ionicModal, $scope, user, ionicDatePicker, $timeout) {
         Restangular.setDefaultRequestParams({ token: user.get().token });
 
         var vm = this;
@@ -19,7 +15,9 @@
             template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>'
         };
         var fechaNacimiento = {
-            callback: function (val) { vm.pedido.cliente.fecha_nacimiento = fechaYYYYMMDD(new Date(val)) }
+            callback: function (val) {
+                vm.pedido.cliente.fecha_nacimiento = fechaYYYYMMDD(new Date(val))
+            }
         };
         var pedidos = Restangular.all('pedidos');
 
@@ -34,7 +32,6 @@
         vm.imprimirPedidoEnCola = imprimirPedidoEnCola;
         vm.pedidos = [];
         vm.pedidosCliente = [];
-        vm.onlyNumbers = /^[0-9]+$/;
         vm.openModal = openModal;
         vm.seleccionarFechaNacimiento = seleccionarFechaNacimiento;
         vm.setCliente = setCliente;
@@ -63,23 +60,20 @@
         }
 
         function cancelarPedido(pedido) {
-            alertify.delay(0).log('Cancelando pedido...');
+            ionicToast.show('Cancelando pedido...', 'top', true, 3000);
             pedido.remove()
                 .then(function (data) {
-                    ionicToast.show(data.mensaje, 'bottom', false, 2000);
                     if (data.result) {
-                        alertify.success(data.mensaje);
-                        activate();
+                        vm.pedidos.splice(vm.pedidos.indexOf(pedido), 1);
+                        ionicToast.show(data.mensaje, 'top', false, 3000);
                     } else {
-                        alertify.error(data.mensaje);
+                        ionicToast.show(data.mensaje, 'top', true, 3000);
                     }
                 })
                 .catch(function (error) {
-                    var mensaje = String.format('Error: {0} {1}', error.status, error.statusText);
-                    ionicToast.show(mensaje, 'middle', true, 2000);
-                })
-                .finally(function () {
-                    $ionicLoading.hide();
+                    var mensaje = (!error.status) ? error :
+                        String.format('Error: {0} {1}', error.status, error.statusText);
+                    ionicToast.show(mensaje, 'top', true, 3000);
                 });
         }
 
@@ -95,7 +89,7 @@
                 })
                 .catch(function (error) {
                     var mensaje = String.format('Error: {0} {1}', error.status, error.statusText);
-                    ionicToast.show(mensaje, 'middle', true, 2000);
+                    ionicToast.show(mensaje, 'top', true, 3000);
                 })
                 .finally(function () {
                     $ionicLoading.hide();
@@ -113,7 +107,7 @@
                 })
                 .catch(function (error) {
                     var mensaje = String.format('Error: {0} {1}', error.status, error.statusText);
-                    ionicToast.show(mensaje, 'middle', true, 2000);
+                    ionicToast.show(mensaje, 'top', true, 3000);
                 })
                 .finally(function () {
                     $ionicLoading.hide();
@@ -157,22 +151,26 @@
         }
 
         function despachar(pedido) {
-            $ionicLoading.show(loading);
+            ionicToast.show('Despachando...', 'top', true, 3000);
             pedido.enviado = 1;
             pedido.establecimiento = user.get().vendedor.sede.establecimiento;
             pedido.put()
                 .then(function (data) {
                     if (data.result) {
-                        ionicToast.show('Se ha despachado el pedido.', 'middle', false, 1000);
-                        activate();
+                        vm.pedidos.splice(vm.pedidos.indexOf(pedido), 1);
+                        ionicToast.show('Se ha despachado el pedido.', 'top', false, 3000);
                     } else {
-                        var mensaje = String.format('Error: {0}', data.mensaje);
-                        ionicToast.show(mensaje, 'middle', true, 2000);
+                        var mensaje = data.mensaje + '<br />';
+                        if (data.validator) {
+                            mensaje += data.validator.join('.<br />');
+                        }
+                        ionicToast.show(mensaje, 'top', true, 3000);
                     }
                 })
                 .catch(function (error) {
-                    var mensaje = String.format('Error: {0} {1}', error.status, error.statusText);
-                    ionicToast.show(mensaje, 'middle', true, 2000);
+                    var mensaje = (!error.status) ? error :
+                        String.format('Error: {0} {1}', error.status, error.statusText);
+                    ionicToast.show(mensaje, 'top', true, 2000);
                 })
                 .finally(function () {
                     $ionicLoading.hide();
@@ -222,31 +220,24 @@
         }
 
         function registrarPedido() {
-            //$ionicLoading.show(loading);
-            var nuevoPedido = document.getElementById('nuevo-pedido');
-            alertify.parent(nuevoPedido);
-            alertify.delay(0).log('Registrando...');
+            ionicToast.show('Registrando...', 'top', true, 3000);
             pedidos.post(vm.pedido)
                 .then(function (data) {
                     if (data.result) {
-                        var mensaje = data.mensaje;
-                        //ionicToast.show(mensaje, 'bottom', false, 5000);
-                        alertify.success(mensaje);
+                        ionicToast.show(data.mensaje, 'top', false, 3000);
                         activate();
                     } else {
                         var mensaje = data.mensaje + '<br />';
                         if (data.validator) {
                             mensaje += data.validator.join('.<br />');
                         }
-                        ionicToast.show(mensaje, 'bottom', true, 2000);
+                        ionicToast.show(mensaje, 'top', true, 3000);
                     }
                 })
                 .catch(function (error) {
-                    var mensaje = String.format('Error: {0} {1}', error.status, error.statusText);
-                    ionicToast.show(mensaje, 'middle', true, 2000);
-                })
-                .finally(function () {
-                    //$ionicLoading.hide();
+                    var mensaje = (!error.status) ? error :
+                        String.format('Error: {0} {1}', error.status, error.statusText);
+                    ionicToast.show(mensaje, 'top', true, 3000);
                 });
         }
 

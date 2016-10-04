@@ -1,5 +1,9 @@
-//Formatea un String como en C# o VB.NET: String.format(Hola {0}, 'Andres') = 'Hola Andres'
 if (!String.format) {
+    /**
+     * Formatea un String como en C# o VB.NET: String.format(Hola {0}, 'Andres') = 'Hola Andres' 
+     * @param {array} format
+     * @returns {string}
+     */
     String.format = function (format) {
         var args = Array.prototype.slice.call(arguments, 1);
         return format.replace(/{(\d+)}/g, function (match, number) {
@@ -11,52 +15,14 @@ if (!String.format) {
     };
 }
 
+/**
+ * Capitaliza una cadena: Convierte en mayúscula la primera letra de cada palabra.
+ * @returns {string}
+ */
 String.prototype.capitalize = function () {
     return this.replace(/(?:^|\s)\S/g, function (a) {
         return a.toUpperCase();
     });
-};
-
-/**
- * Retorna el día de la semana (en letras y en español) correspondiente a una fecha. (Beta)
- * 
- * @param fecha_recibida La fecha a evaluar.
- * @returns El día de la semana correspondiente a la fecha recibida. 
- */
-function getDiaSemana(fecha_recibida) {
-    var dias = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
-    return dias[fecha_recibida.getDay()];
-}
-
-/**
- * Función range(), similar a la de Python. Retorna un array, recibiendo su inicio, final (no incluyente) y paso.
- * 
- * @param start Inicio
- * @param stop Final (no incluyente)
- * @param step Paso
- * @returns array
- */
-function range(start, stop, step) {
-    if (typeof stop == 'undefined') {
-        // one param defined
-        stop = start;
-        start = 0;
-    }
-
-    if (typeof step == 'undefined') {
-        step = 1;
-    }
-
-    if ((step > 0 && start >= stop) || (step < 0 && start <= stop)) {
-        return [];
-    }
-
-    var result = [];
-    for (var i = start; step > 0 ? i < stop : i > stop; i += step) {
-        result.push(i);
-    }
-
-    return result;
 };
 
 /**
@@ -75,6 +41,84 @@ function fechaYYYYMMDD(fecha) {
     ymd += dia < 10 ? '0' + dia : dia;
     return ymd;
 }
+
+/**
+ * Retorna el día de la semana (en letras y en español) correspondiente a una fecha. (Beta)
+ * 
+ * @param fecha_recibida La fecha a evaluar.
+ * @returns El día de la semana correspondiente a la fecha recibida. 
+ */
+function getDiaSemana(fecha_recibida) {
+    var dias = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+    return dias[fecha_recibida.getDay()];
+}
+
+/**
+ * Retorna un array con los valores de un objeto y no sus claves/keys.
+ * @param {Object} object El objeto a recorrer.
+ * @returns {Array}
+ */
+function getObjectValues(object) {
+    var values = [];
+    for (var key in object) {
+        values.push(object[key]);
+    }
+    return values;
+}
+
+/**
+ * Retorna un array con los valores de una propiedad que los objetos del array tengan.
+ * @param {Array} array El array para recorrer.
+ * @param {String} property La propiedad que se necesita para extraer los valores del array.
+ * @returns {Array}
+ */
+function getPropertyInArrayObject(array, property) {
+    var values = [];
+    array = (!array) ? [] : array;
+    array.forEach(function (element) {
+        if (element.hasOwnProperty(property)) {
+            values.push(element[property]);
+        }
+    }, this);
+    return values;
+}
+
+/**
+ * Función para validar si una tecla presionada es numérica o no.
+ * @param {event} evt
+ * @returns {boolean}
+ */
+function isNumberKey(evt) {
+    var event = (!event) ? {} : event;
+    var charCode = (evt.which) ? evt.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+}
+
+/*function MyAlertify(maxLogItems) {
+    maxLogItems = (!maxLogItems) ? 1 : maxLogItems;
+    this.error = function (mensaje, segundos, parent) {
+        init(segundos, parent, maxLogItems);
+        alertify.error(mensaje);
+    };
+    this.log = function (mensaje, segundos, parent) {
+        init(segundos, parent, maxLogItems);
+        alertify.log(mensaje);
+    };
+    this.success = function (mensaje, segundos, parent) {
+        init(segundos, parent, maxLogItems);
+        alertify.success(mensaje);
+    };
+    function init(segundos, parent, cantidadMaxLogs) {
+        alertify.reset();
+        alertify.maxLogItems(cantidadMaxLogs);
+        var parentDOM = document.getElementById(parent);
+        alertify.parent(parentDOM);
+        alertify.delay(segundos * 1000)
+    }
+}*/
 
 /**
  * Retorna una cadena sin tildes ni eñes.
@@ -129,48 +173,6 @@ function occurrences(string, subString, allowOverlapping) {
 }
 
 /**
- * Retorna un array con los valores de una propiedad que los objetos del array tengan.
- * @param {Array} array El array para recorrer.
- * @param {String} property La propiedad que se necesita para extraer los valores del array.
- * @returns {Array}
- */
-function getPropertyInArrayObject(array, property) {
-    var values = [];
-    array = (!array) ? [] : array;
-    array.forEach(function (element) {
-        if (element.hasOwnProperty(property)) {
-            values.push(element[property]);
-        }
-    }, this);
-    return values;
-}
-
-/**
- * Retorna un array con los valores de un objeto y no sus claves/keys.
- * @param {Object} object El objeto a recorrer.
- * @returns {Array}
- */
-function getObjectValues(object) {
-    var values = [];
-    for (var key in object) {
-        values.push(object[key]);
-    }
-    return values;
-}
-
-/**
- * Suma los elementos de un array de valores, no de objetos.
- * @param {array} array El array para sumar sus elementos.
- * @returns {number}
- */
-function sumarElementosArray(array) {
-    array = (!array) ? [] : array;
-    return array.reduce(function (previousValue, currentValue) {
-        return Number(currentValue) + Number(previousValue);
-    }, 0);
-}
-
-/**
  * Retorna un array de enteros que estaban formateados como string.
  * Ejemplo: ['1', '2'] => [1, 2]
  * Si un elemento es null, retorna 0.
@@ -184,15 +186,44 @@ function parseIntArray(array, base) {
 }
 
 /**
- * Función para validar si una tecla presionada es numérica o no.
- * @param {event} evt
- * @returns {boolean}
+ * Función range(), similar a la de Python. Retorna un array, recibiendo su inicio, final (no incluyente) y paso.
+ * 
+ * @param start Inicio
+ * @param stop Final (no incluyente)
+ * @param step Paso
+ * @returns array
  */
-function isNumberKey(evt) {
-    var event = (!event) ? {} : event;
-    var charCode = (evt.which) ? evt.which : event.keyCode;
-    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-        return false;
+function range(start, stop, step) {
+    if (typeof stop == 'undefined') {
+        // one param defined
+        stop = start;
+        start = 0;
     }
-    return true;
+
+    if (typeof step == 'undefined') {
+        step = 1;
+    }
+
+    if ((step > 0 && start >= stop) || (step < 0 && start <= stop)) {
+        return [];
+    }
+
+    var result = [];
+    for (var i = start; step > 0 ? i < stop : i > stop; i += step) {
+        result.push(i);
+    }
+
+    return result;
+};
+
+/**
+ * Suma los elementos de un array de valores, no de objetos.
+ * @param {array} array El array para sumar sus elementos.
+ * @returns {number}
+ */
+function sumarElementosArray(array) {
+    array = (!array) ? [] : array;
+    return array.reduce(function (previousValue, currentValue) {
+        return Number(currentValue) + Number(previousValue);
+    }, 0);
 }

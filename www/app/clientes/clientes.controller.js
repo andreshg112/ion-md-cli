@@ -16,10 +16,17 @@
         var clientes = Restangular.all('clientes');
         var seleccionados = [];
         //
+        vm.alternarSeleccionarTodo = alternarSeleccionarTodo;
+        vm.anterior = anterior;
         vm.cargarClientes = cargarClientes;
-        vm.itemClicked = itemClicked;
         vm.clientes = [];
         vm.escribirOferta = escribirOferta;
+        vm.esUltimaPagina = esUltimaPagina;
+        vm.getInicioTabla = getInicioTabla;
+        vm.itemClicked = itemClicked;
+        vm.pagina = 1;
+        vm.siguiente = siguiente;
+        vm.limit = 5;
 
         activate();
 
@@ -31,6 +38,19 @@
             cargarClientes();
             cargarEstablecimientos();
         }
+
+        function alternarSeleccionarTodo(filtrados) {
+            if (vm.seleccionarTodoChecked) {
+                filtrados.forEach(function (element) {
+                    element.selected = true;
+                    seleccionados.push(element);
+                }, this);
+            } else {
+                limpiarSeleccionados();
+            }
+        }
+
+        function anterior() { if (vm.pagina > 1) { vm.pagina--; } }
 
         function cargarClientes() {
             $ionicLoading.show(loading);
@@ -123,6 +143,13 @@
             }
         }
 
+        function esUltimaPagina(filtrados) {
+            var totalPaginas = Math.ceil(vm.clientes.length / vm.limit);
+            return vm.pagina >= totalPaginas || filtrados.length < vm.limit;
+        }
+
+        function getInicioTabla() { return 5 * (vm.pagina - 1); }
+
         /**
          * Agrega o quita un elemento del listado de seleccionados.
          * 
@@ -151,9 +178,11 @@
             seleccionados = [];
         }
 
-        /*vm.data = {};
-        vm.data.columns = [{ "id": "1453", "name": "Product" }, { "id": "1355", "name": "Weight" }, { "id": "0393", "name": "Height" }, { "id": "3932", "name": "Width" }, { "id": "2939", "name": "Depth" }, { "id": "1234", "name": "Color" }];
-        vm.data.items = [{ "1234": "Green", "1355": "15 oz.", "1453": "Crayons", "2939": "1.5 in.", "3932": "3 in.", "0393": "5 in." }, { "1234": "Brown", "1355": "12 oz.", "1453": "Cookies", "2939": "2.5 in.", "3932": "8 in.", "0393": "7 in." }, { "1234": "Green", "1355": "15 oz.", "1453": "Crayons", "2939": "1.5 in.", "3932": "3 in.", "0393": "5 in." }, { "1234": "Green", "1355": "15 oz.", "2939": "1.5 in.", "3932": "3 in.", "14531": "Crayons", "0393": "5 in." }];*/
-
+        function siguiente(filtrados) {
+            var totalPaginas = Math.ceil(vm.clientes.length / vm.limit);
+            if (vm.pagina < totalPaginas && filtrados.length >= vm.limit) {
+                vm.pagina++;
+            }
+        }
     }
 })();

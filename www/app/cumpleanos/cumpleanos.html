@@ -4,26 +4,25 @@
             <strong class="title">Clientes</strong>
         </div>
         <div class="im-wrapper">
-            <div class="list">
-                <div class="item row responsive-sm">
-                    <pre class="col col-20 centered-text">Nombre completo</pre>
-                    <pre class="col col-10 centered-text">Celular<br/>Teléfono</pre>
-                    <pre class="col col-20 centered-text">Direcciones</pre>
-                    <pre class="col col-10 centered-text">Fecha de<br/>nacimiento</pre>
-                    <pre class="col col-10 centered-text">Email</pre>
-                    <pre class="col col-10 centered-text">Cliente de</pre>
-                    <pre class="col col-10 centered-text"># de pedidos</pre>
+            <div class="table-bordered">
+                <div class="row responsive-sm">
+                    <pre class="col col-20">Nombre completo</pre>
+                    <pre class="col col-10">Celular<br/>Teléfono</pre>
+                    <pre class="col col-20">Direcciones</pre>
+                    <pre class="col col-10">Fecha de<br/>nacimiento</pre>
+                    <pre class="col col-10">Email</pre>
+                    <pre class="col col-10">Cliente de</pre>
+                    <pre class="col col-10"># de pedidos</pre>
                     <pre class="col col-10 centered-text">Felicitar</pre>
                 </div>
-                <div class="item item-divider"></div>
-                <div class="item item-button-right row responsive-sm" ng-repeat="cliente in app.clientesCumpliendo track by $index">
-                    <pre class="col col-20 centered-text">{{cliente.nombre_completo}}</pre>
-                    <pre class="col col-10 centered-text">{{cliente.celular}}<br/>{{cliente.telefono}}</pre>
-                    <pre class="col col-20 centered-text">{{cliente.direccion_casa}}<br/>{{cliente.direccion_oficina}}<br/>{{cliente.direccion_otra}}</pre>
-                    <pre class="col col-10 centered-text">{{cliente.fecha_nacimiento}}</pre>
-                    <pre class="col col-10 centered-text">{{cliente.email}}</pre>
-                    <pre class="col col-10 centered-text">{{cliente.establecimiento.nombre}}</pre>
-                    <pre class="col col-10 centered-text">{{cliente.total_pedidos}}</pre>
+                <div class="row responsive-sm" ng-repeat="cliente in app.clientesCumpliendo track by $index">
+                    <pre class="col col-20">{{cliente.nombre_completo}}</pre>
+                    <pre class="col col-10">{{cliente.celular}}<br/>{{cliente.telefono}}</pre>
+                    <pre class="col col-20">{{cliente.direccion_casa}}<br/>{{cliente.direccion_oficina}}<br/>{{cliente.direccion_otra}}</pre>
+                    <pre class="col col-10">{{cliente.fecha_nacimiento}}</pre>
+                    <pre class="col col-10">{{cliente.email}}</pre>
+                    <pre class="col col-10">{{cliente.establecimiento.nombre}}</pre>
+                    <pre class="col col-10">{{cliente.total_pedidos}}</pre>
                     <div class="col col-10 centered-text">
                         <button title="Despachar" class="button-icon ink" ng-click="vm.escribirMensaje(cliente)">
                             <i class="ion-android-textsms icon"></i>
@@ -31,27 +30,6 @@
                     </div>
                 </div>
             </div>
-
-            <!--<ion-list>
-                <div class="item col-header item-icon-right">
-                    <div class="flex-container wrap">
-                        <div ng-repeat="column in vm.data.columns" ng-click="sortBy(column.id)">
-                            <div class="column" ng-class="{ 'underlined' : vm.data.sortOn === column.id }">{{column.name}}&nbsp;</div>
-                            <div class="column-sort">
-                                <i ng-class="{'ion-chevron-up' : vm.data.sortReverse === false, 'ion-chevron-down' : vm.data.sortReverse === true} " ng-if="vm.data.sortOn === column.id"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="item low-pad-item item-icon-right" ng-repeat="item in vm.data.items | orderBy:sortvm.Data:vm.data.sortReverse ">
-                    <div class="flex-container wrap">
-                        <div ng-repeat="column in vm.data.columns">
-                            <div class="column">{{item[column.id]}}&nbsp;</div>
-                        </div>
-                    </div>
-                    <i class="icon ion-chevron-right icon-accessory"></i>
-                </div>
-            </ion-list>-->
         </div>
     </ion-content>
 </ion-view>

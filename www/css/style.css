@@ -20,8 +20,16 @@ body {
 
 /* Felicitacion */
 .felicitacion.popup-container .popup {
-    width: 30% !important;
+    width: 384px !important;
 }
+
+@media only screen and (max-width: 384px) {
+    .felicitacion.popup-container .popup {
+        width: 100%;
+    }
+}
+
+/* 1074*/
 
 /* Capitalizar texto en registro de pedidos */
 .capitalize {
@@ -102,7 +110,7 @@ pre {
     
 }
 
-.table-header {
+.table-bordered .row:first-child {
     font-weight: bold;
 }
 

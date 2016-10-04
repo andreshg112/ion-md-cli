@@ -1,5 +1,5 @@
 ﻿<ion-view view-title="Administrar clientes">
-    <button id="fab-oferta" title="Ofertar" class="button button-balanced button-fab button-fab-bottom-left" ng-click="vm.escribirOferta()">
+    <button id="fab-oferta" title="Ofertar" class="button button-balanced button-fab button-fab-bottom-right" ng-click="vm.escribirOferta()">
         <i class="icon ion-speakerphone"></i>
     </button>
     <ion-content>
@@ -8,32 +8,48 @@
         </div>
         <div class="im-wrapper">
             <div class="list">
-                <div class="row">
-                    <div class="item item-input item-select">
+                <div class="row responsive-md">
+                    <div class="item item-input item-select col col-25 col-bottom">
                         <div class="input-label">Establecimiento</div>
                         <select id="establecimientoSeleccionado" ng-model="vm.establecimientoSeleccionado" ng-options="establecimiento as establecimiento.nombre for establecimiento in vm.establecimientos"
                             ng-change="vm.cargarClientes()">
                             <option value="" selected>Todos</option>
                         </select>
                     </div>
+                    <div class="item item-input item-stacked-label col col-25">
+                        <span class="input-label">Filtro</span>
+                        <input id="filtro" type="text" placeholder="Nombre, Celular, Teléfono, Dirección, etc." ng-change="vm.pagina = 1" ng-model="vm.filtro"
+                        />
+                    </div>
+                    <div class="item item-input item-stacked-label col col-25">
+                        <span class="input-label">Clientes registrados</span>
+                        <input id="clientes-pantalla" type="number" value="{{vm.clientes.length}}" disabled />
+                    </div>
+                    <div class="item item-input col col-25 col-bottom">
+                        <ion-checkbox class="checkbox-balanced" ng-change="vm.alternarSeleccionarTodo(filtrados)" ng-model="vm.seleccionarTodoChecked">Seleccionar todo<span ng-show="!!vm.filtro"> lo filtrado</span></ion-checkbox>
+                    </div>
                 </div>
-                <div class="item row responsive-sm">
-                    <pre class="col col-20 centered-text">Nombre completo</pre>
-                    <pre class="col col-10 centered-text">Celular<br/>Teléfono</pre>
-                    <pre class="col col-30 centered-text">Direcciones</pre>
-                    <pre class="col col-10 centered-text">Fecha de<br/>nacimiento</pre>
-                    <pre class="col col-10 centered-text">Email</pre>
-                    <pre class="col col-10 centered-text"># de pedidos</pre>
-                    <div class="col col-10 centered-text"></div>
+            </div>
+            <div class="table-bordered">
+                <div class="row responsive-sm">
+                    <pre class="col col-10">Nombre completo</pre>
+                    <pre class="col col-10">Celular<br/>Teléfono</pre>
+                    <pre class="col col-30">Direcciones</pre>
+                    <pre class="col col-10">Género</pre>
+                    <pre class="col col-10">Email</pre>
+                    <pre class="col col-10">Fecha de<br/>nacimiento</pre>
+                    <pre class="col col-10"># de pedidos</pre>
+                    <div class="col col-10 centered-text">Seleccionado</div>
                 </div>
-                <div class="item item-divider"></div>
-                <div class="item item-button-right row responsive-sm" ng-repeat="cliente in vm.clientes track by $index" ng-click="vm.itemClicked(cliente)">
-                    <pre class="col col-20 centered-text">{{cliente.nombre_completo}}</pre>
-                    <pre class="col col-10 centered-text">{{cliente.celular}}<br/>{{cliente.telefono}}</pre>
-                    <pre class="col col-30 centered-text">{{cliente.direccion_casa}}<br/>{{cliente.direccion_oficina}}<br/>{{cliente.direccion_otra}}</pre>
-                    <pre class="col col-10 centered-text">{{cliente.fecha_nacimiento}}</pre>
-                    <pre class="col col-10 centered-text">{{cliente.email}}</pre>
-                    <pre class="col col-10 centered-text">{{cliente.total_pedidos}}</pre>
+                <div class="row responsive-sm" ng-repeat="cliente in vm.clientes | filter:vm.filtro | limitTo : vm.limit : vm.getInicioTabla() as filtrados track by cliente.id"
+                    ng-click="vm.itemClicked(cliente)">
+                    <pre class="col col-10">{{cliente.nombre_completo}}</pre>
+                    <pre class="col col-10">{{cliente.celular}}<br/>{{cliente.telefono}}</pre>
+                    <pre class="col col-30">{{cliente.direccion_casa}}<br/>{{cliente.direccion_oficina}}<br/>{{cliente.direccion_otra}}</pre>
+                    <pre class="col col-10 capitalize">{{cliente.genero}}</pre>
+                    <pre class="col col-10">{{cliente.email}}</pre>
+                    <pre class="col col-10">{{cliente.fecha_nacimiento}}</pre>
+                    <pre class="col col-10">{{cliente.total_pedidos}}</pre>
                     <div class="col col-10 centered-text">
                         <button title="Seleccionar" class="button-icon ink" ng-show="cliente.selected">
                             <i class="ion-checkmark-round icon"></i>
@@ -41,27 +57,16 @@
                     </div>
                 </div>
             </div>
-
-            <!--<ion-list>
-                <div class="item col-header item-icon-right">
-                    <div class="flex-container wrap">
-                        <div ng-repeat="column in vm.data.columns" ng-click="sortBy(column.id)">
-                            <div class="column" ng-class="{ 'underlined' : vm.data.sortOn === column.id }">{{column.name}}&nbsp;</div>
-                            <div class="column-sort">
-                                <i ng-class="{'ion-chevron-up' : vm.data.sortReverse === false, 'ion-chevron-down' : vm.data.sortReverse === true} " ng-if="vm.data.sortOn === column.id"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="item low-pad-item item-icon-right" ng-repeat="item in vm.data.items | orderBy:sortvm.Data:vm.data.sortReverse ">
-                    <div class="flex-container wrap">
-                        <div ng-repeat="column in vm.data.columns">
-                            <div class="column">{{item[column.id]}}&nbsp;</div>
-                        </div>
-                    </div>
-                    <i class="icon ion-chevron-right icon-accessory"></i>
-                </div>
-            </ion-list>-->
+            <!-- fin tabla -->
+            <div class="row center-block centered-text">
+                <button title="Anterior" class="button-icon ink" ng-click="vm.anterior()" ng-hide="vm.pagina <= 1">
+                    <i class="ion-chevron-left icon"></i>
+                </button>
+                <span>{{vm.pagina}}</span>
+                <button title="Siguiente" class="button-icon ink" ng-click="vm.siguiente(filtrados)" ng-hide="vm.esUltimaPagina(filtrados)">
+                    <i class="ion-chevron-right icon"></i>
+                </button>
+            </div>
         </div>
     </ion-content>
 </ion-view>

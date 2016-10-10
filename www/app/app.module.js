@@ -13,6 +13,7 @@
         'ionic-datepicker',
         'starter.super_admin',
         'starter.admin',
-        'starter.vendedor'
+        'starter.vendedor',
+        'ngTable'
     ])
 })();

@@ -106,8 +106,7 @@ pre {
     border-style: solid;
     border-radius: 15px;
     border-width: 1px;
-    padding: 10px;
-    
+    padding: 10px;   
 }
 
 .table-bordered .row:first-child {
@@ -124,6 +123,36 @@ pre {
 
 .table-bordered .row:last-child {
     border-bottom-style: none;
+}
+
+.data-table {
+    border-collapse: separate !important;
+    border-color: lightgray;
+    border-spacing: 2px;
+    border-style: solid;
+    border-radius: 15px;
+    border-width: 1px;
+    padding: 10px;
+    width: 100%;
+}
+
+.data-table thead tr:first-child {
+    font-weight: bold;
+}
+
+.data-table tr {
+    border-bottom-style: solid;
+    border-color: lightgray;
+    border-width: 1px;
+    align-items: center;
+    justify-content: center;
+}
+
+.data-table input {
+    border-style: solid !important;
+    border-width: 1px !important;
+    border-radius: 5px !important;
+    border-color: lightgray !important;
 }
 
 .bordered-list-no-solid {

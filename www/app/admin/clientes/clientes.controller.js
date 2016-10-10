@@ -5,9 +5,9 @@
         .module('starter')
         .controller('ClientesController', ClientesController);
 
-    ClientesController.$inject = ['ionicMaterialInk', 'Restangular', '$ionicLoading', '$ionicModal', 'user', 'ionicToast', '$ionicPopup', '$scope'];
+    ClientesController.$inject = ['ionicMaterialInk', 'Restangular', '$ionicLoading', '$ionicModal', 'user', 'ionicToast', '$ionicPopup', '$scope', 'NgTableParams'];
 
-    function ClientesController(ionicMaterialInk, Restangular, $ionicLoading, $ionicModal, user, ionicToast, $ionicPopup, $scope) {
+    function ClientesController(ionicMaterialInk, Restangular, $ionicLoading, $ionicModal, user, ionicToast, $ionicPopup, $scope, NgTableParams) {
         Restangular.setDefaultRequestParams({ token: user.get().token });
         var vm = this;
         var loading = {
@@ -17,16 +17,16 @@
         var seleccionados = [];
         //
         vm.alternarSeleccionarTodo = alternarSeleccionarTodo;
-        vm.anterior = anterior;
+        // vm.anterior = anterior;
         vm.cargarClientes = cargarClientes;
         vm.clientes = [];
         vm.escribirOferta = escribirOferta;
-        vm.esUltimaPagina = esUltimaPagina;
-        vm.getInicioTabla = getInicioTabla;
+        // vm.esUltimaPagina = esUltimaPagina;
+        // vm.getInicioTabla = getInicioTabla;
         vm.itemClicked = itemClicked;
-        vm.pagina = 1;
-        vm.siguiente = siguiente;
-        vm.limit = 5;
+        // vm.pagina = 1;
+        // vm.siguiente = siguiente;
+        // vm.limit = 5;
 
         activate();
 
@@ -41,7 +41,7 @@
 
         function alternarSeleccionarTodo(filtrados) {
             if (vm.seleccionarTodoChecked) {
-                filtrados.forEach(function (element) {
+                vm.clientes.forEach(function (element) {
                     element.selected = true;
                     seleccionados.push(element);
                 }, this);
@@ -50,7 +50,7 @@
             }
         }
 
-        function anterior() { if (vm.pagina > 1) { vm.pagina--; } }
+        //function anterior() { if (vm.pagina > 1) { vm.pagina--; } }
 
         function cargarClientes() {
             $ionicLoading.show(loading);
@@ -61,6 +61,7 @@
                 .then(function (data) {
                     if (data.length > 0) {
                         vm.clientes = data;
+                        vm.tableParams = new NgTableParams({}, { dataset: vm.clientes });
                     }
                 })
                 .catch(function (error) {
@@ -143,12 +144,12 @@
             }
         }
 
-        function esUltimaPagina(filtrados) {
+        /*function esUltimaPagina(filtrados) {
             var totalPaginas = Math.ceil(vm.clientes.length / vm.limit);
             return vm.pagina >= totalPaginas || filtrados.length < vm.limit;
         }
 
-        function getInicioTabla() { return 5 * (vm.pagina - 1); }
+        function getInicioTabla() { return 5 * (vm.pagina - 1); }*/
 
         /**
          * Agrega o quita un elemento del listado de seleccionados.
@@ -178,11 +179,11 @@
             seleccionados = [];
         }
 
-        function siguiente(filtrados) {
+        /*function siguiente(filtrados) {
             var totalPaginas = Math.ceil(vm.clientes.length / vm.limit);
             if (vm.pagina < totalPaginas && filtrados.length >= vm.limit) {
                 vm.pagina++;
             }
-        }
+        }*/
     }
 })();

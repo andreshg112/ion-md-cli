@@ -26,54 +26,6 @@
                         redirectTo: 'login'
                     }
                 }
-            })
-            .state('app.pedidos', {
-                url: '/pedidos',
-                views: {
-                    'menuContent': {
-                        templateUrl: 'app/pedidos/pedidos.html',
-                        controller: 'PedidosController',
-                        controllerAs: 'vm'
-                    }
-                },
-                data: {
-                    permissions: {
-                        only: ['VENDEDOR'],
-                        redirectTo: 'login'
-                    }
-                }
-            })
-            .state('app.pedidos-anteriores', {
-                url: '/pedidos-anteriores',
-                views: {
-                    'menuContent': {
-                        templateUrl: 'app/pedidos-anteriores/pedidos-anteriores.html',
-                        controller: 'PedidosAnterioresController',
-                        controllerAs: 'vm'
-                    }
-                },
-                data: {
-                    permissions: {
-                        only: ['VENDEDOR'],
-                        redirectTo: 'login'
-                    }
-                }
-            })
-            .state('app.registrar-clientes', {
-                url: '/registrar-clientes',
-                views: {
-                    'menuContent': {
-                        templateUrl: 'app/registrar-clientes/registrar-clientes.html',
-                        controller: 'RegistrarClientesController',
-                        controllerAs: 'vm'
-                    }
-                },
-                data: {
-                    permissions: {
-                        only: ['VENDEDOR'],
-                        redirectTo: 'login'
-                    }
-                }
             });
 
         // if none of the above states are matched, use this as the fallback

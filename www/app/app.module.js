@@ -12,6 +12,7 @@
         'chart.js',
         'ionic-datepicker',
         'starter.super_admin',
-        'starter.admin'
+        'starter.admin',
+        'starter.vendedor'
     ])
 })();

@@ -2,26 +2,26 @@
     'use strict';
 
     angular
-        .module('starter')
-        .controller('RegistrarClientesController', RegistrarClientesController);
+        .module('starter.vendedor')
+        .controller('PedidosAnterioresController', PedidosAnterioresController);
 
-    RegistrarClientesController.$inject = ['ionicMaterialInk', '$ionicPopup', 'Restangular', '$ionicLoading', 'ionicToast', '$scope', 'user', 'ionicDatePicker'];
+    PedidosAnterioresController.$inject = ['ionicMaterialInk', '$ionicPopup', 'Restangular', '$ionicLoading', 'ionicToast', '$scope', 'user', 'ionicDatePicker'];
 
-    function RegistrarClientesController(ionicMaterialInk, $ionicPopup, Restangular, $ionicLoading, ionicToast, $scope, user, ionicDatePicker) {
+    function PedidosAnterioresController(ionicMaterialInk, $ionicPopup, Restangular, $ionicLoading, ionicToast, $scope, user, ionicDatePicker) {
         Restangular.setDefaultHeaders({ token: user.get().token });
         var vm = this;
-        var fechaNacimiento = {
-            callback: function (val) { vm.cliente.fecha_nacimiento = fechaYYYYMMDD(new Date(val)) }
+        var fechaPedido = {
+            callback: function (val) { vm.pedido.created_at = fechaYYYYMMDD(new Date(val)) }
         };
         var loading = {
             template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>'
         };
-        var clientes = Restangular.all('clientes');
+        var pedidos = Restangular.all('pedidos');
         //
         vm.cambioNombre = cambioNombre
         vm.confirmar = confirmar;
         vm.formatearBusqueda = formatearBusqueda;
-        vm.seleccionarFechaNacimiento = seleccionarFechaNacimiento;
+        vm.seleccionarFechaPedido = seleccionarFechaPedido;
         vm.setCliente = setCliente;
 
         activate();
@@ -31,28 +31,42 @@
         ionicMaterialInk.displayEffect();
 
         function activate() {
-            vm.cliente = {};
+            vm.pedido = {
+                created_at: fechaYYYYMMDD(new Date()),
+                cliente: {}
+            };
             $scope.$broadcast('angucomplete-alt:clearInput', 'nombre_completo');
-            //document.getElementById('nombre_completo_value').focus();
+            document.getElementById("pedido").focus();
         }
 
         function cambioNombre(str) {
             if (str == '') {
-                vm.cliente = {};
+                vm.pedido.cliente = {};
             } else {
-                vm.cliente.nombre_completo = str;
+                vm.pedido.cliente.nombre_completo = str;
             }
         }
 
         function confirmar() {
             $ionicLoading.show(loading);
-            vm.cliente.establecimiento_id = user.get().vendedor.sede.establecimiento_id;
-            clientes.post(vm.cliente)
+            vm.pedido.numero = (vm.tipo_numero == 'Celular') ?
+                vm.pedido.cliente.celular : vm.pedido.cliente.telefono;
+            if (vm.tipo_direccion == 'Casa') {
+                vm.pedido.direccion = vm.pedido.cliente.direccion_casa;
+            } else if (vm.tipo_direccion == 'Oficina') {
+                vm.pedido.direccion = vm.pedido.cliente.direccion_oficina;
+            } else {
+                vm.pedido.direccion = vm.pedido.cliente.direccion_otra;
+            }
+            vm.pedido.vendedor_id = user.get().vendedor.id;
+            vm.pedido.cliente.establecimiento_id = user.get().vendedor.sede.establecimiento_id;
+            vm.pedido.enviado = 1;
+            pedidos.post(vm.pedido)
                 .then(function (data) {
                     if (data.result) {
                         var alertPopup = $ionicPopup.alert({
                             title: '¡Registro exitoso!',
-                            template: 'El cliente se ha almacenado correctamente.'
+                            template: 'Tu pedido se ha almacenado correctamente.'
                         });
                         alertPopup.then(function (option) {
                             activate();
@@ -84,13 +98,13 @@
             };
         }
 
-        function seleccionarFechaNacimiento() {
-            ionicDatePicker.openDatePicker(fechaNacimiento);
+        function seleccionarFechaPedido() {
+            ionicDatePicker.openDatePicker(fechaPedido);
         }
 
         function setCliente($item) {
             if ($item) {
-                vm.cliente = $item.originalObject;
+                vm.pedido.cliente = $item.originalObject;
             }
         }
     }

@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('starter')
+        .module('starter.vendedor')
         .controller('PedidosController', PedidosController);
 
     PedidosController.$inject = ['ionicMaterialInk', '$ionicPopup', 'Restangular', '$ionicLoading', 'ionicToast', '$ionicModal', '$scope', 'user', 'ionicDatePicker', '$timeout'];
@@ -138,7 +138,7 @@
             var confirmarPedido = $ionicPopup.confirm({
                 title: 'Estás a punto de registrar el siguiente pedido.',
                 cssClass: 'resumen-pedido',
-                templateUrl: 'app/pedidos/modal-resumen-pedido.html',
+                templateUrl: 'app/vendedor/pedidos/modal-resumen-pedido.html',
                 scope: $scope,
                 cancelText: 'Cancelar'
             });
@@ -182,7 +182,7 @@
             var confirmarPedido = $ionicPopup.confirm({
                 title: 'Imprimir pedido',
                 cssClass: 'resumen-pedido',
-                templateUrl: 'app/pedidos/modal-resumen-pedido.html',
+                templateUrl: 'app/vendedor/pedidos/modal-resumen-pedido.html',
                 scope: $scope,
                 cancelText: 'Cancelar'
             });
@@ -257,14 +257,14 @@
         }
 
         //Actividades de los modales
-        $ionicModal.fromTemplateUrl('app/pedidos/nuevo-pedido.html', {
+        $ionicModal.fromTemplateUrl('app/vendedor/pedidos/nuevo-pedido.html', {
             scope: $scope,
             focusFirstInput: true
         }).then(function (modal) {
             vm.modalNuevo = modal;
         });
 
-        $ionicModal.fromTemplateUrl('app/pedidos/pedidos-anteriores-cliente.html', {
+        $ionicModal.fromTemplateUrl('app/vendedor/pedidos/pedidos-anteriores-cliente.html', {
             scope: $scope
         }).then(function (modal) {
             vm.modalPedidosCliente = modal;

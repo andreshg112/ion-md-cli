@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('starter')
+        .module('starter.super_admin')
         .controller('UsersController', UsersController);
 
     UsersController.$inject = ['ionicMaterialInk', '$ionicPopup', 'Restangular', '$ionicLoading', 'ionicToast', '$ionicModal', '$scope', 'user', 'ionicDatePicker'];
@@ -148,7 +148,7 @@
             }
         }*/
 
-        $ionicModal.fromTemplateUrl('app/users/nuevo-user.html', {
+        $ionicModal.fromTemplateUrl('app/super_admin/users/nuevo-user.html', {
             scope: $scope,
             focusFirstInput: true
         }).then(function (modal) {

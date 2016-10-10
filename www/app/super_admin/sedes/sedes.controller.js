@@ -151,7 +151,7 @@
                 });
         }
 
-        $ionicModal.fromTemplateUrl('app/sedes/nuevo-sede.html', {
+        $ionicModal.fromTemplateUrl('app/super_admin/sedes/nuevo-sede.html', {
             scope: $scope,
             focusFirstInput: true
         }).then(function (modal) {

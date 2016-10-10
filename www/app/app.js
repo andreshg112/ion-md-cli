@@ -10,6 +10,7 @@
         'permission.ui',
         'angucomplete-alt',
         'chart.js',
-        'ionic-datepicker'
+        'ionic-datepicker',
+        'starter.super_admin'
     ])
 })();

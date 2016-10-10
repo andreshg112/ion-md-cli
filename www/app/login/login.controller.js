@@ -48,7 +48,6 @@
                             } else {
                                 $state.go('app.reporte-general');
                             }
-
                         }, 2000);
                     } else {
                         mensaje = 'Error: ' + data.mensaje;

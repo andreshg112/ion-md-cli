@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('starter')
+        .module('starter.super_admin')
         .controller('EstablecimientosController', EstablecimientosController);
 
     EstablecimientosController.$inject = ['ionicMaterialInk', '$ionicPopup', 'Restangular', '$ionicLoading', 'ionicToast', '$ionicModal', '$scope', 'user'];
@@ -172,7 +172,7 @@
                 });
         }
 
-        $ionicModal.fromTemplateUrl('app/establecimientos/nuevo-establecimiento.html', {
+        $ionicModal.fromTemplateUrl('app/super_admin/establecimientos/nuevo-establecimiento.html', {
             scope: $scope,
             focusFirstInput: true
         }).then(function (modal) {

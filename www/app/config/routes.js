@@ -74,54 +74,6 @@
                         redirectTo: 'login'
                     }
                 }
-            })
-            .state('app.clientes', {
-                url: '/clientes',
-                views: {
-                    'menuContent': {
-                        templateUrl: 'app/clientes/clientes.html',
-                        controller: 'ClientesController',
-                        controllerAs: 'vm'
-                    }
-                },
-                data: {
-                    permissions: {
-                        only: ['ADMIN'],
-                        redirectTo: 'login'
-                    }
-                }
-            })
-            .state('app.reporte-general', {
-                url: '/reporte-general',
-                views: {
-                    'menuContent': {
-                        templateUrl: 'app/reporte-general/reporte-general.html',
-                        controller: 'ReporteGeneralController',
-                        controllerAs: 'vm'
-                    }
-                },
-                data: {
-                    permissions: {
-                        only: ['ADMIN'],
-                        redirectTo: 'login'
-                    }
-                }
-            })
-            .state('app.cumpleanos', {
-                url: '/cumpleanos',
-                views: {
-                    'menuContent': {
-                        templateUrl: 'app/cumpleanos/cumpleanos.html',
-                        controller: 'CumpleanosController',
-                        controllerAs: 'vm'
-                    }
-                },
-                data: {
-                    permissions: {
-                        only: ['ADMIN'],
-                        redirectTo: 'login'
-                    }
-                }
             });
 
         // if none of the above states are matched, use this as the fallback

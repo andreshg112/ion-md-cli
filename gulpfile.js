@@ -57,7 +57,7 @@ gulp.task('git-check', function (done) {
 // Mis tareas de Gulp
 
 var appScripts = [
-    './www/app/app.js',
+    './www/app/app.module.js',
     './www/app/values/*.js',
     './www/app/services/*.js',
     './www/app/app.*.js',

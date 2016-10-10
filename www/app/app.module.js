@@ -11,6 +11,7 @@
         'angucomplete-alt',
         'chart.js',
         'ionic-datepicker',
-        'starter.super_admin'
+        'starter.super_admin',
+        'starter.admin'
     ])
 })();

@@ -3,6 +3,7 @@
 
     angular.module('starter.super_admin', [])
         .config(['$stateProvider', '$urlRouterProvider', routes]);
+    
     function routes($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('app.users', {

@@ -5,9 +5,15 @@
         .module('starter')
         .controller('AppController', AppController);
 
-    AppController.$inject = ['$scope', '$ionicPopover', 'user', '$state', '$timeout', '$ionicHistory', 'API', 'Restangular', 'ionicToast'];
+    AppController.$inject = ['$scope', '$ionicPopover', 'user', '$state', '$timeout', '$ionicHistory', 'API', 'Restangular', 'ionicToast', '$ionicSideMenuDelegate'];
 
-    function AppController($scope, $ionicPopover, user, $state, $timeout, $ionicHistory, API, Restangular, ionicToast) {
+    function AppController($scope, $ionicPopover, user, $state, $timeout, $ionicHistory, API, Restangular, ionicToast, $ionicSideMenuDelegate) {
+        $scope.$on('$ionicView.enter', function () {
+            $ionicSideMenuDelegate.canDragContent(false);
+        });
+        /*$scope.$on('$ionicView.leave', function () {
+            $ionicSideMenuDelegate.canDragContent(true);
+        });*/
         Restangular.setDefaultRequestParams({ token: user.get().token });
         var vm = this;
 

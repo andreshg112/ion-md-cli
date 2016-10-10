@@ -1,7 +1,7 @@
 /* Empty. Add your own CSS if you like */
-body {
+/*body {
   cursor: url('../img/finger.png'), auto;
-}
+}*/
 
 /* Resaltar las coincidencias en el filtro de clientes */
 .highlight {
@@ -36,9 +36,9 @@ body {
     text-transform: capitalize;
 }
 
-.chart {
+/*.chart {
     cursor: default;
-}
+}*/
 
 .center-block {
     display: block;

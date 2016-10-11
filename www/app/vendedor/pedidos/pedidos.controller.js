@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('starter.vendedor')
+        .module('app.vendedor')
         .controller('PedidosController', PedidosController);
 
     PedidosController.$inject = ['ionicMaterialInk', '$ionicPopup', 'Restangular', '$ionicLoading', 'ionicToast', '$ionicModal', '$scope', 'user', 'ionicDatePicker', '$timeout'];

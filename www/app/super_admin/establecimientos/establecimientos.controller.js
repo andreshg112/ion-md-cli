@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('starter.super_admin')
+        .module('app.super_admin')
         .controller('EstablecimientosController', EstablecimientosController);
 
     EstablecimientosController.$inject = ['ionicMaterialInk', '$ionicPopup', 'Restangular', '$ionicLoading', 'ionicToast', '$ionicModal', '$scope', 'user'];

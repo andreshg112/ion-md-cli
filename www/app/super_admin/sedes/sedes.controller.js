@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('starter')
+        .module('app')
         .controller('SedesController', SedesController);
 
     SedesController.$inject = ['ionicMaterialInk', '$ionicPopup', 'Restangular', '$ionicLoading', 'ionicToast', '$ionicModal', '$scope', 'user'];

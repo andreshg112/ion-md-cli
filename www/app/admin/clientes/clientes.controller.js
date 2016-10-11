@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('starter')
+        .module('app')
         .controller('ClientesController', ClientesController);
 
     ClientesController.$inject = ['ionicMaterialInk', 'Restangular', '$ionicLoading', '$ionicModal', 'user', 'ionicToast', '$ionicPopup', '$scope', 'NgTableParams'];

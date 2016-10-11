@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('starter')
+        .module('app')
         .controller('AppController', AppController);
 
     AppController.$inject = ['$scope', '$ionicPopover', 'user', '$state', '$timeout', '$ionicHistory', 'API', 'Restangular', 'ionicToast', '$ionicSideMenuDelegate'];

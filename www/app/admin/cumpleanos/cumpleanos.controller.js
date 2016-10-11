@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('starter')
+        .module('app')
         .controller('CumpleanosController', CumpleanosController);
 
     CumpleanosController.$inject = ['ionicMaterialInk', '$ionicPopup', 'Restangular', '$ionicLoading', 'ionicToast', '$scope', 'user'];

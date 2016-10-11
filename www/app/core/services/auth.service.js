@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('starter')
+        .module('app')
         .factory('AuthService', AuthService);
 
     AuthService.$inject = ['$q', 'PermRoleStore', 'user'];

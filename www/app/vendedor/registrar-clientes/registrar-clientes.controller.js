@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('starter.vendedor')
+        .module('app.vendedor')
         .controller('RegistrarClientesController', RegistrarClientesController);
 
     RegistrarClientesController.$inject = ['ionicMaterialInk', '$ionicPopup', 'Restangular', '$ionicLoading', 'ionicToast', '$scope', 'user', 'ionicDatePicker'];

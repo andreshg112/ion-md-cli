@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('starter.vendedor', [])
+    angular.module('app.vendedor', [])
         .config(['$stateProvider', '$urlRouterProvider', routes]);
 
     function routes($stateProvider, $urlRouterProvider) {

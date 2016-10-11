@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('starter.vendedor')
+        .module('app.vendedor')
         .controller('ResumenDiaController', ResumenDiaController);
 
     ResumenDiaController.$inject = ['ionicMaterialInk', 'Restangular', '$ionicLoading', 'ionicToast', '$scope', 'user', 'ionicDatePicker'];

@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('starter')
+        .module('app')
         .config(['$ionicConfigProvider', IonicConfig]);
 
     /** @ngInject */

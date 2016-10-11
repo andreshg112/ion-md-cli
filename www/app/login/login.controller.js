@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('starter')
+        .module('app')
         .controller('LoginController', LoginController);
 
     LoginController.$inject = ['ionicMaterialInk', 'Restangular', '$ionicLoading', 'ionicToast', '$timeout', 'user', '$ionicHistory', '$state'];

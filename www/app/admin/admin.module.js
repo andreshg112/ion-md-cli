@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('starter.admin', [])
+    angular.module('app.admin', [])
         .config(['$stateProvider', '$urlRouterProvider', routes]);
 
     function routes($stateProvider, $urlRouterProvider) {

@@ -1,7 +1,7 @@
 (function () {
     'use strict';
     //
-    angular.module('starter', [
+    angular.module('app', [
         'ionic',
         'ionic-material',
         'restangular',
@@ -11,9 +11,9 @@
         'angucomplete-alt',
         'chart.js',
         'ionic-datepicker',
-        'starter.super_admin',
-        'starter.admin',
-        'starter.vendedor',
+        'app.super_admin',
+        'app.admin',
+        'app.vendedor',
         'ngTable'
     ])
 })();

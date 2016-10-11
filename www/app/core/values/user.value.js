@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('starter')
+    angular.module('app')
         .value('user', {
             get: function () {
                 var basil = new window.Basil({ namespace: 'fd', storages: ['session'] });

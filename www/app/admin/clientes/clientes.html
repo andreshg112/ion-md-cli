@@ -1,39 +1,39 @@
 ﻿<ion-view view-title="Administrar clientes">
-    <button id="fab-oferta" title="Ofertar" class="button button-balanced button-fab button-fab-bottom-right" ng-click="vm.escribirOferta()">
+	<button id="fab-oferta" title="Ofertar" class="button button-balanced button-fab button-fab-bottom-right" ng-click="vm.escribirOferta()">
         <i class="icon ion-speakerphone"></i>
     </button>
-    <!--<ion-content overflow-scroll="true">-->
-    <ion-content>
-        <div class="bar bar-subheader bar-stable static text-center">
-            <strong class="title">Clientes</strong>
-        </div>
-        <div class="im-wrapper">
-            <div class="list">
-                <div class="row responsive-md">
-                    <div class="item item-input item-select col col-33 col-bottom">
-                        <div class="input-label">Establecimiento</div>
-                        <select id="establecimientoSeleccionado" ng-model="vm.establecimientoSeleccionado" ng-options="establecimiento as establecimiento.nombre for establecimiento in vm.establecimientos"
-                            ng-change="vm.cargarClientes()">
+	<!--<ion-content overflow-scroll="true">-->
+	<ion-content>
+		<div class="bar bar-subheader bar-stable static text-center">
+			<strong class="title">Clientes</strong>
+		</div>
+		<div class="im-wrapper">
+			<div class="list">
+				<div class="row responsive-md">
+					<div class="item item-input item-select col col-33 col-bottom">
+						<div class="input-label">Establecimiento</div>
+						<select id="establecimientoSeleccionado" ng-model="vm.establecimientoSeleccionado" ng-options="establecimiento as establecimiento.nombre for establecimiento in vm.establecimientos"
+							ng-change="vm.cargarClientes()">
                             <option value="" selected>Todos</option>
                         </select>
-                    </div>
-                    <!--<div class="item item-input item-stacked-label col col-25">
+					</div>
+					<!--<div class="item item-input item-stacked-label col col-25">
                         <span class="input-label">Filtro</span>
                         <input id="filtro" type="text" placeholder="Nombre, Celular, Teléfono, Dirección, etc." ng-change="vm.pagina = 1" ng-model="vm.filtro"
                         />
                     </div>-->
-                    <div class="item item-input item-stacked-label col col-33">
-                        <span class="input-label">Clientes registrados</span>
-                        <input id="clientes-pantalla" type="number" value="{{vm.clientes.length}}" disabled />
-                    </div>
-                    <div class="item item-input col col-33 col-bottom">
-                        <ion-checkbox class="checkbox-balanced" ng-change="vm.alternarSeleccionarTodo(filtrados)" ng-model="vm.seleccionarTodoChecked">Seleccionar todo
-                            <!--<span ng-show="!!vm.filtro"> lo filtrado</span>-->
-                        </ion-checkbox>
-                    </div>
-                </div>
-            </div>
-            <!--<div class="table-bordered">
+					<div class="item item-input item-stacked-label col col-33">
+						<span class="input-label">Clientes registrados</span>
+						<input id="clientes-pantalla" type="number" value="{{vm.clientes.length}}" disabled />
+					</div>
+					<div class="item item-input col col-33 col-bottom">
+						<ion-checkbox class="checkbox-balanced" ng-change="vm.alternarSeleccionarTodo(filtrados)" ng-model="vm.seleccionarTodoChecked">Seleccionar todo
+							<!--<span ng-show="!!vm.filtro"> lo filtrado</span>-->
+						</ion-checkbox>
+					</div>
+				</div>
+			</div>
+			<!--<div class="table-bordered">
                 <div class="row responsive-sm">
                     <pre class="col col-10">Nombre completo</pre>
                     <pre class="col col-10">Celular<br/>Teléfono</pre>
@@ -60,8 +60,8 @@
                     </div>
                 </div>
             </div>-->
-            <!-- fin tabla -->
-            <!--<div class="row center-block centered-text">
+			<!-- fin tabla -->
+			<!--<div class="row center-block centered-text">
                 <button title="Anterior" class="button-icon ink" ng-click="vm.anterior()" ng-hide="vm.pagina <= 1">
                     <i class="ion-chevron-left icon"></i>
                 </button>
@@ -70,45 +70,45 @@
                     <i class="ion-chevron-right icon"></i>
                 </button>
             </div>-->
-            <div class="table-responsive">
-                <style scoped>
-                    @import url('http://bootswatch.com/paper/bootstrap.min.css');
-                </style>
-                <table ng-table="vm.tableParams" class="table" show-filter="true">
-                    <tr ng-repeat="item in $data" ng-click="vm.itemClicked(item)">
-                        <td title="'Nombre completo'" filter="{ nombre_completo: 'text'}" sortable="'nombre_completo'">
-                            {{item.nombre_completo}}
-                        </td>
-                        <td title="'Contacto'" filter="{ celular: 'number'}" sortable="'celular'">
-                            {{item.celular}}<br/>{{item.telefono}}
-                        </td>
-                        <td title="'Direcciones'" filter="{ direccion_casa: 'text'}" sortable="'direccion_casa'">
-                            {{item.direccion_casa}}<br/>{{item.direccion_oficina}}<br/>{{item.direccion_otra}}
-                        </td>
-                        <td title="'Género'" filter="{ genero: 'text'}" sortable="'genero'" class="capitalize">
-                            {{item.genero}}
-                        </td>
-                        <td title="'Email'" filter="{ email: 'text'}" sortable="'email'">
-                            {{item.email}}
-                        </td>
-                        <td title="'Fecha de nacimiento'" filter="{ fecha_nacimiento: 'text'}" sortable="'fecha_nacimiento'">
-                            {{item.fecha_nacimiento}}
-                        </td>
-                        <td title="'Total pedidos'" filter="{ total_pedidos: 'number'}" sortable="'total_pedidos'">
-                            {{item.total_pedidos}}
-                        </td>
-                        <td>
-                            <button title="Seleccionar" class="button-icon ink" ng-show="item.selected">
+			<div class="table-responsive">
+				<style scoped>
+					@import url('http://bootswatch.com/paper/bootstrap.min.css');
+				</style>
+				<table ng-table="vm.tableParams" class="table" show-filter="true">
+					<tr ng-repeat="item in $data" ng-click="vm.itemClicked(item)">
+						<td title="'Nombre completo'" filter="{ nombre_completo: 'text'}" sortable="'nombre_completo'">
+							{{item.nombre_completo}}
+						</td>
+						<td title="'Contacto'" filter="{ celular: 'number'}" sortable="'celular'">
+							{{item.celular}}<br/>{{item.telefono}}
+						</td>
+						<td title="'Direcciones'" filter="{ direccion_casa: 'text'}" sortable="'direccion_casa'">
+							{{item.direccion_casa}}<br/>{{item.direccion_oficina}}<br/>{{item.direccion_otra}}
+						</td>
+						<td title="'Género'" filter="{ genero: 'text'}" sortable="'genero'" class="capitalize">
+							{{item.genero}}
+						</td>
+						<td title="'Email'" filter="{ email: 'text'}" sortable="'email'">
+							{{item.email}}
+						</td>
+						<td title="'Fecha de nacimiento'" filter="{ fecha_nacimiento: 'text'}" sortable="'fecha_nacimiento'">
+							{{item.fecha_nacimiento}}
+						</td>
+						<td title="'Total pedidos'" filter="{ total_pedidos: 'number'}" sortable="'total_pedidos'">
+							{{item.total_pedidos}}
+						</td>
+						<td>
+							<button title="Seleccionar" class="button-icon ink" ng-show="item.selected">
                                 <i class="ion-checkmark-round icon"></i>
                             </button>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-        <br />
-        <br />
-        <br />
-        <br />
-    </ion-content>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<br />
+		<br />
+		<br />
+		<br />
+	</ion-content>
 </ion-view>

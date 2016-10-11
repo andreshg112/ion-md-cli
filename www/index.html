@@ -2,101 +2,102 @@
 <html>
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width" />
-    <title>Fidelivery</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width" />
+	<title>Fidelivery</title>
 
-    <!--<link href="http://bootswatch.com/paper/bootstrap.min.css" rel="stylesheet" />-->
+	<!--<link href="http://bootswatch.com/paper/bootstrap.min.css" rel="stylesheet" />-->
 
-    <link href="fonts/roboto-draft.css" rel="stylesheet" />
-    <link href="lib/ionic/css/ionic.css" rel="stylesheet" />
-    <link href="lib/ionic-material/dist/ionic.material.min.css" rel="stylesheet" />
-    <link href="css/style.css" rel="stylesheet" />
-    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+	<link href="fonts/roboto-draft.css" rel="stylesheet" />
+	<link href="lib/ionic/css/ionic.min.css" rel="stylesheet" />
+	<link href="lib/ionic-material/dist/ionic.material.min.css" rel="stylesheet" />
+	<link href="css/style.css" rel="stylesheet" />
+	<!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
     -->
-    <!-- ionic/angularjs js -->
-    <script src="lib/ionic/js/ionic.bundle.js"></script>
-    <script src="lib/ionic-material/dist/ionic.material.min.js"></script>
-    <!-- cordova script (this will be a 404 during development) -->
-    <script src="cordova.js"></script>
+	<!-- ionic/angularjs js -->
+	<script src="lib/ionic/js/ionic.bundle.min.js"></script>
+	<script src="lib/ionic-material/dist/ionic.material.min.js"></script>
+	<!-- cordova script (this will be a 404 during development) -->
+	<script src="cordova.js"></script>
 
-    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
-    <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
+	<link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
+	<link rel="icon" href="img/favicon.ico" type="image/x-icon" />
 
-    <!-- Restangular -->
-    <script src="lib/lodash/lodash.min.js"></script>
-    <script type="text/javascript" src="lib/restangular/restangular.min.js"></script>
+	<!-- Restangular -->
+	<script src="lib/lodash/lodash.min.js"></script>
+	<script type="text/javascript" src="lib/restangular/restangular.min.js"></script>
 
-    <!-- Ionic Toast -->
-    <link href="lib/ionic-toast/dist/style.css" rel="stylesheet">
-    <script src="lib/ionic-toast/dist/ionic-toast.js"></script>
+	<!-- Ionic Toast -->
+	<link href="lib/ionic-toast/dist/style.css" rel="stylesheet">
+	<script src="lib/ionic-toast/dist/ionic-toast.js"></script>
 
-    <!-- Angular Permission -->
-    <script src="lib/angular-permission/dist/angular-permission.min.js"></script>
-    <script src="lib/angular-permission/dist/angular-permission-ui.min.js"></script>
-    <script src="lib/angular-permission/dist/angular-permission-ng.min.js"></script>
+	<!-- Angular Permission -->
+	<script src="lib/angular-permission/dist/angular-permission.min.js"></script>
+	<script src="lib/angular-permission/dist/angular-permission-ui.min.js"></script>
+	<script src="lib/angular-permission/dist/angular-permission-ng.min.js"></script>
 
-    <!-- Basil -->
-    <script src="lib/basil/basil.min.js"></script>
-    <script src="lib/basil/basil.list.js"></script>
-    <script src="lib/basil/basil.set.js"></script>
+	<!-- Basil -->
+	<script src="lib/basil/basil.min.js"></script>
+	<script src="lib/basil/basil.list.js"></script>
+	<script src="lib/basil/basil.set.js"></script>
 
-    <!-- Angucomplete-alt -->
-    <link rel="stylesheet" href="lib/angucomplete-alt/angucomplete-alt.css" />
-    <script src="lib/angucomplete-alt/dist/angucomplete-alt.min.js"></script>
+	<!-- Angucomplete-alt -->
+	<link rel="stylesheet" href="lib/angucomplete-alt/angucomplete-alt.css" />
+	<script src="lib/angucomplete-alt/dist/angucomplete-alt.min.js"></script>
 
-    <!-- Angular Chart.js -->
-    <script src="lib/chart.js/dist/Chart.min.js"></script>
-    <script src="lib/angular-chart.js/dist/angular-chart.min.js"></script>
+	<!-- Angular Chart.js -->
+	<script src="lib/chart.js/dist/Chart.min.js"></script>
+	<script src="lib/angular-chart.js/dist/angular-chart.min.js"></script>
 
-    <!-- Ionic Datepicker -->
-    <script src="lib/ionic-datepicker/dist/ionic-datepicker.bundle.min.js"></script>
+	<!-- Ionic Datepicker -->
+	<script src="lib/ionic-datepicker/dist/ionic-datepicker.bundle.min.js"></script>
 
-    <!-- Material Icons -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+	<!-- Material Icons -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 
-    <!-- jQuery -->
-    <script src="lib/jquery/dist/jquery.min.js"></script>
-    <script src="lib/jquery/dist/jquery.scoped.js"></script>
+	<!-- jQuery -->
+	<script src="lib/jquery/dist/jquery.min.js"></script>
+	<script src="lib/jquery/dist/jquery.scoped.js"></script>
 
-    <!-- ngTable -->
-    <link rel="stylesheet" href="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css" />
-    <script src="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>
+	<!-- ngTable -->
+	<link rel="stylesheet" href="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css" />
+	<script src="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>
 
-    <!-- inject:js -->
-    <script src="app/app.module.js"></script>
-    <script src="app/admin/admin.module.js"></script>
-    <script src="app/super_admin/super_admin.module.js"></script>
-    <script src="app/vendedor/vendedor.module.js"></script>
-    <script src="app/app.run.js"></script>
-    <script src="app/utilities.js"></script>
-    <script src="app/core/constants.js"></script>
-    <script src="app/layout/app.controller.js"></script>
-    <script src="app/login/login.controller.js"></script>
-    <script src="app/admin/clientes/clientes.controller.js"></script>
-    <script src="app/admin/cumpleanos/cumpleanos.controller.js"></script>
-    <script src="app/admin/reporte-general/reporte-general.controller.js"></script>
-    <script src="app/core/config/chartjs.config.js"></script>
-    <script src="app/core/config/ionic-datepicker.config.js"></script>
-    <script src="app/core/config/ionic.config.js"></script>
-    <script src="app/core/config/restangular.config.js"></script>
-    <script src="app/core/config/routes.js"></script>
-    <script src="app/core/filters/cmdate.filter.js"></script>
-    <script src="app/core/services/auth.service.js"></script>
-    <script src="app/core/values/user.value.js"></script>
-    <script src="app/super_admin/establecimientos/establecimientos.controller.js"></script>
-    <script src="app/super_admin/sedes/sedes.controller.js"></script>
-    <script src="app/super_admin/users/users.controller.js"></script>
-    <script src="app/super_admin/vendedores/vendedores.controller.js"></script>
-    <script src="app/vendedor/pedidos/pedidos.controller.js"></script>
-    <script src="app/vendedor/pedidos-anteriores/pedidos-anteriores.controller.js"></script>
-    <script src="app/vendedor/registrar-clientes/registrar-clientes.controller.js"></script>
-    <!-- endinject -->
+	<!-- inject:js -->
+	<script src="app/app.module.js"></script>
+	<script src="app/admin/admin.module.js"></script>
+	<script src="app/super_admin/super_admin.module.js"></script>
+	<script src="app/vendedor/vendedor.module.js"></script>
+	<script src="app/app.run.js"></script>
+	<script src="app/utilities.js"></script>
+	<script src="app/core/constants.js"></script>
+	<script src="app/layout/app.controller.js"></script>
+	<script src="app/login/login.controller.js"></script>
+	<script src="app/admin/clientes/clientes.controller.js"></script>
+	<script src="app/admin/cumpleanos/cumpleanos.controller.js"></script>
+	<script src="app/admin/reporte-general/reporte-general.controller.js"></script>
+	<script src="app/core/config/chartjs.config.js"></script>
+	<script src="app/core/config/ionic-datepicker.config.js"></script>
+	<script src="app/core/config/ionic.config.js"></script>
+	<script src="app/core/config/restangular.config.js"></script>
+	<script src="app/core/config/routes.js"></script>
+	<script src="app/core/filters/cmdate.filter.js"></script>
+	<script src="app/core/services/auth.service.js"></script>
+	<script src="app/core/values/user.value.js"></script>
+	<script src="app/super_admin/establecimientos/establecimientos.controller.js"></script>
+	<script src="app/super_admin/sedes/sedes.controller.js"></script>
+	<script src="app/super_admin/users/users.controller.js"></script>
+	<script src="app/super_admin/vendedores/vendedores.controller.js"></script>
+	<script src="app/vendedor/pedidos/pedidos.controller.js"></script>
+	<script src="app/vendedor/pedidos-anteriores/pedidos-anteriores.controller.js"></script>
+	<script src="app/vendedor/registrar-clientes/registrar-clientes.controller.js"></script>
+	<script src="app/vendedor/resumen-dia/resumen-dia.controller.js"></script>
+	<!-- endinject -->
 </head>
 
 <body ng-app="starter">
-    <ion-nav-view></ion-nav-view>
+	<ion-nav-view></ion-nav-view>
 </body>
 
 </html>

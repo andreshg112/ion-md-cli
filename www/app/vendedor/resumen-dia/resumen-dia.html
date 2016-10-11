@@ -1,0 +1,38 @@
+﻿<ion-view view-title="Resumen del día" id="view-pedidos">
+	<ion-content>
+		<div class="bar bar-subheader bar-stable static text-center">
+			<strong class="title">Aquí verás los pedidos despachados del día que selecciones</strong>
+		</div>
+		<div class="im-wrapper">
+			<div class="list">
+				<div class="row responsive-md">
+					<div class="item item-input item-floating-label col col-20">
+						<span class="input-label">Fecha</span>
+						<input type="text" placeholder="Fecha" ng-click="vm.seleccionarFechaInicial()" ng-model="vm.fecha_inicial" />
+					</div>
+					<div class="item item-input item-stacked-label col col-offset-10 col-20">
+						<span class="input-label">Cantidad</span>
+						<input type="text" placeholder="Cantidad" value="{{vm.pedidos.length}}" disabled />
+					</div>
+				</div>
+			</div>
+			<div class="table-bordered">
+				<div class="row responsive-sm">
+					<pre class="col col-30">Detalles</pre>
+					<pre class="col col-10">Total</pre>
+					<pre class="col col-20">Cliente</pre>
+					<pre class="col col-10">Contacto</pre>
+					<pre class="col col-30">Dirección</pre>
+				</div>
+				<div class="row responsive-sm" ng-repeat="pedido in vm.pedidos track by $index">
+					<pre class="col col-30">{{pedido.detalles}}</pre>
+					<pre class="col col-10">{{pedido.total}}</pre>
+					<pre class="col col-20">{{pedido.cliente.nombre_completo}}</pre>
+					<pre class="col col-10">{{pedido.numero}}</pre>
+					<pre class="col col-30">{{pedido.direccion}}</pre>
+				</div>
+			</div>
+		</div>
+		<!--<i class="material-icons">3d_rotation</i>-->
+	</ion-content>
+</ion-view>

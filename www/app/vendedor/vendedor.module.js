@@ -53,6 +53,22 @@
                         redirectTo: 'login'
                     }
                 }
+            })
+            .state('app.resumen-dia', {
+                url: '/resumen-dia',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'app/vendedor/resumen-dia/resumen-dia.html',
+                        controller: 'ResumenDiaController',
+                        controllerAs: 'vm'
+                    }
+                },
+                data: {
+                    permissions: {
+                        only: ['VENDEDOR'],
+                        redirectTo: 'login'
+                    }
+                }
             });
     }
 })();

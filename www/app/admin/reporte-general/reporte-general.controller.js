@@ -152,37 +152,19 @@
                 data: [],
                 labels: [],
                 series: ['Domicilios'],
-                options: {
-                    scales: {
-                        yAxes: [{
-                            ticks: { beginAtZero: true }
-                        }]
-                    }
-                }
+                options: { scales: { yAxes: [{ ticks: { beginAtZero: true } }] } }
             };
             vm.pedidosDiaSemana = {
                 data: [],
                 labels: [],
                 series: ['Domicilios'],
-                options: {
-                    scales: {
-                        yAxes: [{
-                            ticks: { beginAtZero: true }
-                        }]
-                    }
-                }
+                options: { scales: { yAxes: [{ ticks: { beginAtZero: true } }] } }
             };
             vm.valorPorDia = {
                 data: [],
                 labels: [],
                 series: ['Domicilios'],
-                options: {
-                    scales: {
-                        yAxes: [{
-                            ticks: { beginAtZero: true }
-                        }]
-                    }
-                }
+                options: { scales: { yAxes: [{ ticks: { beginAtZero: true } }] } }
             };
         }
     }

@@ -16,7 +16,7 @@
 					</div>
 					<div class="item item-input item-stacked-label col col-offset-10 col-20">
 						<span class="input-label">Valor</span>
-						<input type="number" placeholder="Valor" value="{{vm.getValorPedidos()}}" disabled />
+						<input type="text" placeholder="Valor" value="{{vm.getValorPedidos() | currency : '$ ' : 0}}" disabled />
 					</div>
 				</div>
 			</div>

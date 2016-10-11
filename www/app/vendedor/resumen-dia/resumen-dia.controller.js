@@ -22,6 +22,7 @@
         var pedidos = Restangular.all('pedidos');
 
         //
+        vm.getValorPedidos = getValorPedidos;
         vm.seleccionarFechaInicial = seleccionarFechaInicial;
 
         activate();
@@ -54,6 +55,10 @@
                 .finally(function () {
                     $ionicLoading.hide();
                 });
+        }
+
+        function getValorPedidos() {
+            return sumarElementosArray(getPropertyInArrayObject(vm.pedidos, 'total'));
         }
 
         function seleccionarFechaInicial() {

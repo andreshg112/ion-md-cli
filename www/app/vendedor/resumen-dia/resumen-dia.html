@@ -12,7 +12,11 @@
 					</div>
 					<div class="item item-input item-stacked-label col col-offset-10 col-20">
 						<span class="input-label">Cantidad</span>
-						<input type="text" placeholder="Cantidad" value="{{vm.pedidos.length}}" disabled />
+						<input type="number" placeholder="Cantidad" value="{{vm.pedidos.length}}" disabled />
+					</div>
+					<div class="item item-input item-stacked-label col col-offset-10 col-20">
+						<span class="input-label">Valor</span>
+						<input type="number" placeholder="Valor" value="{{vm.getValorPedidos()}}" disabled />
 					</div>
 				</div>
 			</div>

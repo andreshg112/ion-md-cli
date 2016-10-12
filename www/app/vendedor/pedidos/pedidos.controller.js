@@ -5,9 +5,9 @@
         .module('app.vendedor')
         .controller('PedidosController', PedidosController);
 
-    PedidosController.$inject = ['ionicMaterialInk', '$ionicPopup', 'Restangular', '$ionicLoading', 'ionicToast', '$ionicModal', '$scope', 'user', 'ionicDatePicker', '$timeout'];
+    PedidosController.$inject = ['ionicMaterialInk', '$ionicPopup', 'Restangular', '$ionicLoading', 'ionicToast', '$ionicModal', '$scope', 'user', 'ionicDatePicker', '$timeout', 'ClientesService'];
 
-    function PedidosController(ionicMaterialInk, $ionicPopup, Restangular, $ionicLoading, ionicToast, $ionicModal, $scope, user, ionicDatePicker, $timeout) {
+    function PedidosController(ionicMaterialInk, $ionicPopup, Restangular, $ionicLoading, ionicToast, $ionicModal, $scope, user, ionicDatePicker, $timeout, ClientesService) {
         Restangular.setDefaultRequestParams({ token: user.get().token });
 
         var vm = this;
@@ -26,10 +26,12 @@
         vm.cancelarPedido = cancelarPedido;
         vm.cerrarModal = cerrarModal;
         vm.cerrarPedidosCliente = cerrarPedidosCliente;
+        vm.clientes = [];
         vm.confirmar = confirmar;
         vm.despachar = despachar;
-        vm.formatearBusqueda = formatearBusqueda;
+        //vm.formatearBusqueda = formatearBusqueda;
         vm.imprimirPedidoEnCola = imprimirPedidoEnCola;
+        vm.localSearch = localSearch;
         vm.pedidos = [];
         vm.pedidosCliente = [];
         vm.openModal = openModal;
@@ -48,6 +50,7 @@
                 cliente: {}
             };
             $scope.$broadcast('angucomplete-alt:clearInput', 'nombre_completo');
+            cargarClientesEstablecimiento();
             cargarPedidosNoEnviados();
         }
 
@@ -74,6 +77,16 @@
                     var mensaje = (!error.status) ? error :
                         String.format('Error: {0} {1}', error.status, error.statusText);
                     ionicToast.show(mensaje, 'top', true, 3000);
+                });
+        }
+
+        function cargarClientesEstablecimiento() {
+            ClientesService.all(user.get().vendedor.sede.establecimiento_id)
+                .then(function (data) {
+                    vm.clientes = data;
+                })
+                .catch(function (error) {
+                    console.log(error);
                 });
         }
 
@@ -206,13 +219,26 @@
             popupWin.document.close();
         }
 
-        function formatearBusqueda(str) {
+        function localSearch(str) {
+            var matches = [];
+            var cantidad = (vm.clientes.length < 5) ? vm.clientes.length : 5;
+            for (var index = 0; index < cantidad; index++) {
+                var cliente = vm.clientes[index];
+                if ((cliente.nombre_completo.toLowerCase()
+                    .indexOf(str.toString().toLowerCase()) >= 0)) {
+                    matches.push(cliente);
+                }
+            }
+            return matches;
+        }
+
+        /*function formatearBusqueda(str) {
             return {
                 establecimiento_id: user.get().vendedor.sede.establecimiento_id,
                 nombre_completo: str,
                 token: user.get().token
             };
-        }
+        }*/
 
         function openModal() {
             vm.modalNuevo.show();
@@ -224,6 +250,11 @@
             pedidos.post(vm.pedido)
                 .then(function (data) {
                     if (data.result) {
+                        if (!vm.pedido.cliente.id) {
+                            //Si el cliente no había sido registrado, se registra en memoria
+                            ClientesService.add(data.result.cliente);
+                            vm.clientes.push(data.result.cliente);
+                        }
                         ionicToast.show(data.mensaje, 'top', false, 3000);
                         activate();
                     } else {
@@ -243,7 +274,7 @@
 
         function setCliente($item) {
             if ($item) {
-                vm.pedido.cliente = $item.originalObject;
+                vm.pedido.cliente = angular.copy($item.originalObject);
             }
         }
 

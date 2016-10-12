@@ -5,20 +5,14 @@
         .module('app')
         .controller('AppController', AppController);
 
-    AppController.$inject = ['$scope', '$ionicPopover', 'user', '$state', '$timeout', '$ionicHistory', 'API', 'Restangular', 'ionicToast', '$ionicSideMenuDelegate'];
+    AppController.$inject = ['$scope', '$ionicPopover', 'user', '$state', '$timeout', '$ionicHistory', 'Restangular', 'ionicToast', '$ionicSideMenuDelegate'];
 
-    function AppController($scope, $ionicPopover, user, $state, $timeout, $ionicHistory, API, Restangular, ionicToast, $ionicSideMenuDelegate) {
-        $scope.$on('$ionicView.enter', function () {
-            $ionicSideMenuDelegate.canDragContent(false);
-        });
-        /*$scope.$on('$ionicView.leave', function () {
-            $ionicSideMenuDelegate.canDragContent(true);
-        });*/
+    function AppController($scope, $ionicPopover, user, $state, $timeout, $ionicHistory, Restangular, ionicToast, $ionicSideMenuDelegate) {
         Restangular.setDefaultRequestParams({ token: user.get().token });
+
         var vm = this;
 
-        vm.API = API;
-        vm.clientesCumpliendo = [];
+        vm.clientesCumpliendo = []; //Para el administrador 
         vm.cerrarSesion = cerrarSesion;
         vm.user = user.get();
 
@@ -28,11 +22,11 @@
 
         function activate() {
             if (user.get().rol == 'ADMIN') {
-                cargarClientes();
+                cargarClientesCumpliendo();
             }
         }
 
-        function cargarClientes() {
+        function cargarClientesCumpliendo() {
             Restangular.one('administradores', user.get().administrador.id)
                 .customGET('clientes', { cumpleanos: true })
                 .then(function (data) {
@@ -50,6 +44,7 @@
 
         function cerrarSesion() {
             user.set(null);
+            ClientesService.clear();
             $timeout(function () {
                 vm.closePopover();
                 $ionicHistory.clearCache();
@@ -75,12 +70,21 @@
         vm.openPopover = function ($event) {
             vm.popover.show($event);
         };
+
         vm.closePopover = function () {
             vm.popover.hide();
         };
+
         //Cleanup the popover when we're done with it!
         $scope.$on('$destroy', function () {
             vm.popover.remove();
         });
+
+        $scope.$on('$ionicView.enter', function () {
+            $ionicSideMenuDelegate.canDragContent(false);
+        });
+        /*$scope.$on('$ionicView.leave', function () {
+            $ionicSideMenuDelegate.canDragContent(true);
+        });*/
     }
 })();

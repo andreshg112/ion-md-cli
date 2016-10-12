@@ -38,6 +38,22 @@
                     }
                 }
             })
+            .state('app.historial-pedidos', {
+                url: '/historial-pedidos',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'app/admin/historial-pedidos/historial-pedidos.html',
+                        controller: 'HistorialPedidosController',
+                        controllerAs: 'vm'
+                    }
+                },
+                data: {
+                    permissions: {
+                        only: ['ADMIN'],
+                        redirectTo: 'login'
+                    }
+                }
+            })
             .state('app.reporte-general', {
                 url: '/reporte-general',
                 views: {

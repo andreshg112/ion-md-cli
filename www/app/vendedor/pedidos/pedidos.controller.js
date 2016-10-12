@@ -5,9 +5,9 @@
         .module('app.vendedor')
         .controller('PedidosController', PedidosController);
 
-    PedidosController.$inject = ['ionicMaterialInk', '$ionicPopup', 'Restangular', '$ionicLoading', 'ionicToast', '$ionicModal', '$scope', 'user', 'ionicDatePicker', '$timeout', 'ClientesService'];
+    PedidosController.$inject = ['ionicMaterialInk', '$ionicPopup', 'Restangular', '$ionicLoading', 'ionicToast', '$ionicModal', '$scope', 'user', 'ionicDatePicker', 'ClientesService'];
 
-    function PedidosController(ionicMaterialInk, $ionicPopup, Restangular, $ionicLoading, ionicToast, $ionicModal, $scope, user, ionicDatePicker, $timeout, ClientesService) {
+    function PedidosController(ionicMaterialInk, $ionicPopup, Restangular, $ionicLoading, ionicToast, $ionicModal, $scope, user, ionicDatePicker, ClientesService) {
         Restangular.setDefaultRequestParams({ token: user.get().token });
 
         var vm = this;
@@ -272,6 +272,11 @@
                 });
         }
 
+        /**
+         * Función callback del angucomplete.
+         * Almacena una copia del cliente seleccionado en el pedido. 
+         * @param {any} $item Representa el cliente seleccionado del autucompletado.
+         */
         function setCliente($item) {
             if ($item) {
                 vm.pedido.cliente = angular.copy($item.originalObject);
@@ -280,7 +285,7 @@
 
         function seleccionarFechaNacimiento() {
             ionicDatePicker.openDatePicker(fechaNacimiento);
-        };
+        }
 
         function verPedidosAnteriores(cliente) {
             cargarPedidosCliente(cliente);

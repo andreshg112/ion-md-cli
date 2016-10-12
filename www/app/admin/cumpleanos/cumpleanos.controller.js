@@ -43,17 +43,13 @@
                             if (!vm.mensaje) {
                                 //No permitir al usuario enviar el mensaje si no ha escrito nada.
                                 e.preventDefault();
-                            } else {
-                                return vm.mensaje;
-                            }
+                            } else { return vm.mensaje; }
                         }
                     }
                 ]
             });
             popupMensaje.then(function (mensaje) {
-                if (mensaje) {
-                    felicitar(cliente, mensaje);
-                }
+                if (mensaje) { felicitar(cliente, mensaje); }
             });
         }
 

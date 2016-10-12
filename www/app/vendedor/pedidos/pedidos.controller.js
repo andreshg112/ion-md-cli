@@ -86,7 +86,9 @@
                     vm.clientes = data;
                 })
                 .catch(function (error) {
-                    console.log(error);
+                    var mensaje = (!error.status) ? error :
+                        String.format('Error: {0} {1}', error.status, error.statusText);
+                    ionicToast.show(mensaje, 'top', true, 3000);
                 });
         }
 

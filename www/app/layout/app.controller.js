@@ -5,13 +5,14 @@
         .module('app')
         .controller('AppController', AppController);
 
-    AppController.$inject = ['$scope', '$ionicPopover', 'user', '$state', '$timeout', '$ionicHistory', 'Restangular', 'ionicToast', '$ionicSideMenuDelegate', 'ClientesService'];
+    AppController.$inject = ['$scope', '$ionicPopover', 'user', '$state', '$timeout', '$ionicHistory', 'Restangular', 'ionicToast', '$ionicSideMenuDelegate', 'ClientesService', 'API'];
 
-    function AppController($scope, $ionicPopover, user, $state, $timeout, $ionicHistory, Restangular, ionicToast, $ionicSideMenuDelegate, ClientesService) {
+    function AppController($scope, $ionicPopover, user, $state, $timeout, $ionicHistory, Restangular, ionicToast, $ionicSideMenuDelegate, ClientesService, API) {
         Restangular.setDefaultRequestParams({ token: user.get().token });
 
         var vm = this;
 
+        this.API = API;
         vm.clientesCumpliendo = []; //Para el administrador 
         vm.cerrarSesion = cerrarSesion;
         vm.user = user.get();

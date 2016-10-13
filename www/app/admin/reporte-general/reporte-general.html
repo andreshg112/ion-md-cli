@@ -1,83 +1,91 @@
 ﻿<ion-view view-title="Reportes">
-    <ion-content>
-        <div class="bar bar-subheader bar-stable static text-center">
-            <strong class="title">Reporte general</strong>
-        </div>
-        <div class="im-wrapper">
-            <div class="list">
-                <div class="row responsive-md">
-                    <div class="item item-input item-select col col-50">
-                        <div class="input-label">Establecimiento</div>
-                        <select id="establecimientoSeleccionado" ng-model="vm.establecimientoSeleccionado" ng-options="establecimiento as establecimiento.nombre for establecimiento in vm.establecimientos"
-                            ng-change="vm.cargarDatos()">
+	<ion-content>
+		<div class="bar bar-subheader bar-stable static text-center">
+			<strong class="title">Reporte general</strong>
+		</div>
+		<div class="im-wrapper">
+			<div class="list">
+				<div class="row responsive-md">
+					<div class="item item-input item-floating-label col col-25">
+						<span class="input-label">Fecha inicial</span>
+						<input type="text" placeholder="YYYY-MM-DD" ng-click="vm.seleccionarFechaInicial()" ng-model="vm.fechaInicial" />
+					</div>
+					<div class="item item-input item-floating-label col col-25">
+						<span class="input-label">Fecha final</span>
+						<input type="text" placeholder="YYYY-MM-DD" ng-click="vm.seleccionarFechaFinal()" ng-model="vm.fechaFinal" />
+					</div>
+					<div class="item item-input item-select col col-25">
+						<div class="input-label">Establecimiento</div>
+						<select id="establecimientoSeleccionado" ng-model="vm.establecimientoSeleccionado" ng-options="establecimiento as establecimiento.nombre for establecimiento in vm.establecimientos"
+							ng-change="vm.cargarDatos()">
                             <option value="" selected>Todos</option>
                         </select>
-                    </div>
-                    <div class="item item-input item-select col col-50" ng-hide="!vm.establecimientoSeleccionado">
-                        <div class="input-label">Sedes</div>
-                        <select id="sedeSeleccionada" ng-model="vm.sedeSeleccionada" ng-options="sede as sede.nombre for sede in vm.establecimientoSeleccionado.sedes"
-                            ng-change="vm.cargarDatos()">
+					</div>
+					<div class="item item-input item-select col col-25" ng-hide="!vm.establecimientoSeleccionado">
+						<div class="input-label">Sedes</div>
+						<select id="sedeSeleccionada" ng-model="vm.sedeSeleccionada" ng-options="sede as sede.nombre for sede in vm.establecimientoSeleccionado.sedes"
+							ng-change="vm.cargarDatos()">
                             <option value="" selected>Todas</option>
                         </select>
-                    </div>
-                </div>
-            </div>
-            <div class="row responsive-md">
-                <div class="card col col-50">
-                    <div class="item item-divider">
-                        Pedidos por día de la semana
-                    </div>
-                    <div class="item item-text-wrap">
-                        <canvas id="pedidos-dia-semana" class="chart chart-bar" chart-data="vm.pedidosDiaSemana.data" chart-labels="vm.pedidosDiaSemana.labels"
-                            chart-options="vm.pedidosDiaSemana.options" chart-series="vm.pedidosDiaSemana.series">
-                        </canvas>
-                    </div>
-                    <div class="item item-divider">
-                        Total: {{vm.getTotalPedidosDiaSemana()}}
-                    </div>
-                </div>
-                <div class="card col col-50">
-                    <div class="item item-divider">
-                        Pedidos por día en el último mes
-                    </div>
-                    <div class="item item-text-wrap">
-                        <canvas id="pedidos-por-dia-en-lapso" class="chart chart-line" chart-data="vm.pedidosDiaLapso.data" chart-labels="vm.pedidosDiaLapso.labels"
-                            chart-options="vm.pedidosDiaLapso.options" chart-series="vm.pedidosDiaLapso.series">
-                        </canvas>
-                    </div>
-                    <div class="item item-divider">
-                        Total: {{vm.getTotalPedidosDiaLapso()}}
-                    </div>
-                </div>
-            </div>
-            <div class="row responsive-md">
-                <div class="card col col-50">
-                    <div class="item item-divider">
-                        Clientes por género
-                    </div>
-                    <div class="item item-text-wrap">
-                        <canvas id="clientes-por-genero" class="chart chart-pie" chart-data="vm.clientesPorGenero.data" chart-labels="vm.clientesPorGenero.labels"
-                            chart-options="vm.clientesPorGenero.options">
-                        </canvas>
-                    </div>
-                    <div class="item item-divider">
-                        Total: {{vm.getTotalClientesPorGenero()}}
-                    </div>
-                </div>
-                <div class="card col col-50">
-                    <div class="item item-divider">
-                        Valor de por día en el último mes
-                    </div>
-                    <div class="item item-text-wrap">
-                        <canvas id="valor-por-dia" class="chart chart-line" chart-data="vm.valorPorDia.data" chart-labels="vm.valorPorDia.labels"
-                            chart-options="vm.valorPorDia.options" chart-series="vm.valorPorDia.series">
-                        </canvas>
-                    </div>
-                    <div class="item item-divider">
-                        Total: {{vm.getTotalValorPorDia() || 0}}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </ion-content>
+					</div>
+				</div>
+			</div>
+			<div class="row responsive-md">
+				<div class="card col col-50">
+					<div class="item item-divider">
+						Cantidad de pedidos por día
+					</div>
+					<div class="item item-text-wrap">
+						<canvas id="pedidos-por-dia-en-lapso" class="chart chart-line" chart-data="vm.pedidosDiaLapso.data" chart-labels="vm.pedidosDiaLapso.labels"
+							chart-options="vm.pedidosDiaLapso.options" chart-series="vm.pedidosDiaLapso.series">
+						</canvas>
+					</div>
+					<div class="item item-divider">
+						Total: {{vm.getTotalPedidosDiaLapso()}}
+					</div>
+				</div>
+				<div class="card col col-50">
+					<div class="item item-divider">
+						Valor de los pedidos por día
+					</div>
+					<div class="item item-text-wrap">
+						<canvas id="valor-por-dia" class="chart chart-line" chart-data="vm.valorPorDia.data" chart-labels="vm.valorPorDia.labels"
+							chart-options="vm.valorPorDia.options" chart-series="vm.valorPorDia.series">
+						</canvas>
+					</div>
+					<div class="item item-divider">
+						Total: {{vm.getTotalValorPorDia() || 0}}
+					</div>
+				</div>
+			</div>
+			<div class="row responsive-md">
+				<div class="card col col-50">
+					<div class="item item-divider">
+						Pedidos por día de la semana
+					</div>
+					<div class="item item-text-wrap">
+						<canvas id="pedidos-dia-semana" class="chart chart-bar" chart-data="vm.pedidosDiaSemana.data" chart-labels="vm.pedidosDiaSemana.labels"
+							chart-options="vm.pedidosDiaSemana.options" chart-series="vm.pedidosDiaSemana.series">
+						</canvas>
+					</div>
+					<div class="item item-divider">
+						Total: {{vm.getTotalPedidosDiaSemana()}}
+					</div>
+				</div>
+				<div class="card col col-50">
+					<div class="item item-divider">
+						Clientes por género
+					</div>
+					<div class="item item-text-wrap">
+						<canvas id="clientes-por-genero" class="chart chart-pie" chart-data="vm.clientesPorGenero.data" chart-labels="vm.clientesPorGenero.labels"
+							chart-options="vm.clientesPorGenero.options">
+						</canvas>
+					</div>
+					<div class="item item-divider">
+						Total: {{vm.getTotalClientesPorGenero()}}
+					</div>
+				</div>
+			</div>
+		</div>
+	</ion-content>
 </ion-view>

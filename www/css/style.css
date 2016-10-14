@@ -131,7 +131,7 @@ pre {
     border-bottom-style: none;
 }
 
-.data-table {
+/*.data-table {
     border-collapse: separate !important;
     border-color: lightgray;
     border-spacing: 2px;
@@ -159,7 +159,7 @@ pre {
     border-width: 1px !important;
     border-radius: 5px !important;
     border-color: lightgray !important;
-}
+}*/
 
 .bordered-list-no-solid {
     border-radius: 15px;

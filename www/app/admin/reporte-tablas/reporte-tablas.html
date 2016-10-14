@@ -1,7 +1,7 @@
 ﻿<ion-view view-title="Reportes">
 	<ion-content>
 		<div class="bar bar-subheader bar-stable static text-center">
-			<strong class="title">Reporte general en gráficas</strong>
+			<strong class="title">Reporte general en tablas</strong>
 		</div>
 		<div class="im-wrapper">
 			<div class="list">
@@ -36,12 +36,23 @@
 						Cantidad de pedidos por día
 					</div>
 					<div class="item item-text-wrap">
-						<canvas id="pedidos-por-dia-en-lapso" class="chart chart-line" chart-data="vm.pedidosDiaLapso.data" chart-labels="vm.pedidosDiaLapso.labels"
-							chart-options="vm.pedidosDiaLapso.options" chart-series="vm.pedidosDiaLapso.series">
-						</canvas>
+						<table wt-responsive-table>
+							<thead>
+								<tr>
+									<th>Fecha</th>
+									<th>Pedidos</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="item in vm.pedidosDiaLapso">
+									<td class="text-center">{{item.fecha}}</td>
+									<td class="text-center">{{item.pedidos_enviados}}</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 					<div class="item item-divider">
-						Total: {{vm.getTotalPedidosDiaLapso()}}
+						Total: {{vm.getTotalPedidosDiaLapso() || 0}}
 					</div>
 				</div>
 				<div class="card col col-50">
@@ -49,40 +60,21 @@
 						Valor de los pedidos por día
 					</div>
 					<div class="item item-text-wrap">
-						<canvas id="valor-por-dia" class="chart chart-line" chart-data="vm.valorPorDia.data" chart-labels="vm.valorPorDia.labels"
-							chart-options="vm.valorPorDia.options" chart-series="vm.valorPorDia.series">
-						</canvas>
+						<table wt-responsive-table>
+							<thead>
+								<th>Fecha</th>
+								<th>Valor</th>
+							</thead>
+							<tbody>
+								<tr ng-repeat="item in vm.valorPorDia">
+									<td class="text-center">{{item.fecha}}</td>
+									<td class="text-center">{{item.valor}}</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 					<div class="item item-divider">
 						Total: {{vm.getTotalValorPorDia() || 0}}
-					</div>
-				</div>
-			</div>
-			<div class="row responsive-md">
-				<div class="card col col-50">
-					<div class="item item-divider">
-						Pedidos por día de la semana
-					</div>
-					<div class="item item-text-wrap">
-						<canvas id="pedidos-dia-semana" class="chart chart-bar" chart-data="vm.pedidosDiaSemana.data" chart-labels="vm.pedidosDiaSemana.labels"
-							chart-options="vm.pedidosDiaSemana.options" chart-series="vm.pedidosDiaSemana.series">
-						</canvas>
-					</div>
-					<div class="item item-divider">
-						Total: {{vm.getTotalPedidosDiaSemana()}}
-					</div>
-				</div>
-				<div class="card col col-50">
-					<div class="item item-divider">
-						Clientes por género
-					</div>
-					<div class="item item-text-wrap">
-						<canvas id="clientes-por-genero" class="chart chart-pie" chart-data="vm.clientesPorGenero.data" chart-labels="vm.clientesPorGenero.labels"
-							chart-options="vm.clientesPorGenero.options">
-						</canvas>
-					</div>
-					<div class="item item-divider">
-						Total: {{vm.getTotalClientesPorGenero()}}
 					</div>
 				</div>
 			</div>

@@ -69,6 +69,22 @@
                         redirectTo: 'login'
                     }
                 }
+            })
+            .state('app.reporte-tablas', {
+                url: '/reporte-tablas',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'app/admin/reporte-tablas/reporte-tablas.html',
+                        controller: 'ReporteTablasController',
+                        controllerAs: 'vm'
+                    }
+                },
+                data: {
+                    permissions: {
+                        only: ['ADMIN'],
+                        redirectTo: 'login'
+                    }
+                }
             });
     }
 })();

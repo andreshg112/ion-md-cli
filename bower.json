@@ -17,6 +17,7 @@
     "chart.js": "npm:chart.js#^2.2.2",
     "ionic-datepicker": "^1.2.1",
     "jquery": "^3.1.1",
-    "jQuery-Scoped-CSS-plugin": "https://github.com/thingsinjars/jQuery-Scoped-CSS-plugin.git"
+    "jQuery-Scoped-CSS-plugin": "https://github.com/thingsinjars/jQuery-Scoped-CSS-plugin.git",
+    "angular-responsive-tables": "^0.4.1"
   }
 }

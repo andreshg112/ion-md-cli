@@ -17,13 +17,24 @@
         var seleccionados = [];
         //
         vm.alternarSeleccionarTodo = alternarSeleccionarTodo;
-        // vm.anterior = anterior;
         vm.cargarClientes = cargarClientes;
         vm.clientes = [];
         vm.escribirOferta = escribirOferta;
+        vm.generos = [{ id: 'masculino', title: 'Masculino' }, { id: 'femenino', title: 'Femenino' }]
+
+        vm.itemClicked = itemClicked;
+        vm.contactoFilterDef = {
+            celular: { id: "text", placeholder: "Celular" },
+            telefono: { id: "text", placeholder: "Teléfono" }
+        };
+        vm.direccionesFilterDef = {
+            direccion_casa: { id: "text", placeholder: "Casa" },
+            direccion_oficina: { id: "text", placeholder: "Oficina" },
+            direccion_otra: { id: "text", placeholder: "Otra" }
+        };
+        // vm.anterior = anterior;
         // vm.esUltimaPagina = esUltimaPagina;
         // vm.getInicioTabla = getInicioTabla;
-        vm.itemClicked = itemClicked;
         // vm.pagina = 1;
         // vm.siguiente = siguiente;
         // vm.limit = 5;
@@ -59,10 +70,8 @@
             Restangular.one('administradores', user.get().administrador.id)
                 .customGET('clientes', { establecimiento_id: establecimientoId })
                 .then(function (data) {
-                    if (data.length > 0) {
-                        vm.clientes = data;
-                        vm.tableParams = new NgTableParams({}, { dataset: vm.clientes });
-                    }
+                    vm.clientes = data;
+                    vm.tableParams = new NgTableParams({}, { dataset: vm.clientes });
                 })
                 .catch(function (error) {
                     var mensaje = String.format('Error: {0} {1}', error.status, error.statusText);

@@ -54,12 +54,12 @@
                     }
                 }
             })
-            .state('app.reporte-general', {
-                url: '/reporte-general',
+            .state('app.reporte-graficas', {
+                url: '/reporte-graficas',
                 views: {
                     'menuContent': {
-                        templateUrl: 'app/admin/reporte-general/reporte-general.html',
-                        controller: 'ReporteGeneralController',
+                        templateUrl: 'app/admin/reporte-graficas/reporte-graficas.html',
+                        controller: 'ReporteGraficasController',
                         controllerAs: 'vm'
                     }
                 },

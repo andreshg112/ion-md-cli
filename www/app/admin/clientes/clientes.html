@@ -70,37 +70,40 @@
                     <i class="ion-chevron-right icon"></i>
                 </button>
             </div>-->
-			<div class="table-responsive">
+			<div>
 				<style scoped>
 					@import url('lib/bootstrap-paper/bootstrap-paper.min.css');
 				</style>
-				<table ng-table="vm.tableParams" class="table" show-filter="true">
-					<tr ng-repeat="item in $data" ng-click="vm.itemClicked(item)">
+				<table wt-responsive-table ng-table="vm.tableParams" class="table table-condensed table-hover" show-filter="true">
+					<tr ng-repeat="item in $data" ng-click="vm.itemClicked(item)" ng-class="{success: item.selected}">
 						<td title="'Nombre completo'" filter="{ nombre_completo: 'text'}" sortable="'nombre_completo'">
 							{{item.nombre_completo}}
 						</td>
-						<td title="'Contacto'" filter="{ celular: 'number'}" sortable="'celular'">
+						<td title="'Contacto'" filter="vm.contactoFilterDef" sortable="'celular'">
 							{{item.celular}}<br/>{{item.telefono}}
 						</td>
-						<td title="'Direcciones'" filter="{ direccion_casa: 'text'}" sortable="'direccion_casa'">
-							{{item.direccion_casa}}<br/>{{item.direccion_oficina}}<br/>{{item.direccion_otra}}
+						<td title="'Direcciones'" filter="vm.direccionesFilterDef" sortable="'direccion_casa'">
+							<span ng-if="item.direccion_casa">{{item.direccion_casa}}.<br/></span>
+							<span ng-if="item.direccion_oficina">{{item.direccion_oficina}}.<br/></span>
+							<span ng-if="item.direccion_otra">{{item.direccion_otra}}.</span>
 						</td>
-						<td title="'Género'" filter="{ genero: 'text'}" sortable="'genero'" class="capitalize">
+						<td title="'Género'" filter="{ genero: 'select'}" filter-data="vm.generos" sortable="'genero'" class="capitalize">
 							{{item.genero}}
 						</td>
 						<td title="'Email'" filter="{ email: 'text'}" sortable="'email'">
-							{{item.email}}
+							{{item.email || 'No registrado'}}
 						</td>
 						<td title="'Fecha de nacimiento'" filter="{ fecha_nacimiento: 'text'}" sortable="'fecha_nacimiento'">
-							{{item.fecha_nacimiento}}
+							{{item.fecha_nacimiento || 'No registrada'}}
 						</td>
 						<td title="'Total pedidos'" filter="{ total_pedidos: 'number'}" sortable="'total_pedidos'">
 							{{item.total_pedidos}}
 						</td>
-						<td>
-							<button title="Seleccionar" class="button-icon ink" ng-show="item.selected">
+						<td title="'Seleccionado'">
+							<!--<button title="Seleccionar" class="button-icon ink" ng-show="item.selected">
                                 <i class="ion-checkmark-round icon"></i>
-                            </button>
+                            </button>-->
+							<input class="form-control" type="checkbox" ng-if="!!item.celular" ng-model="item.selected" />
 						</td>
 					</tr>
 				</table>

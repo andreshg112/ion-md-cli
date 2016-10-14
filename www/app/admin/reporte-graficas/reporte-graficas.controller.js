@@ -3,11 +3,11 @@
 
     angular
         .module('app')
-        .controller('ReporteGeneralController', ReporteGeneralController);
+        .controller('ReporteGraficasController', ReporteGraficasController);
 
-    ReporteGeneralController.$inject = ['ionicMaterialInk', 'Restangular', '$ionicLoading', '$ionicModal', 'user', 'ionicToast', 'ionicDatePicker'];
+    ReporteGraficasController.$inject = ['ionicMaterialInk', 'Restangular', '$ionicLoading', '$ionicModal', 'user', 'ionicToast', 'ionicDatePicker'];
 
-    function ReporteGeneralController(ionicMaterialInk, Restangular, $ionicLoading, $ionicModal, user, ionicToast, ionicDatePicker) {
+    function ReporteGraficasController(ionicMaterialInk, Restangular, $ionicLoading, $ionicModal, user, ionicToast, ionicDatePicker) {
         Restangular.setDefaultRequestParams({ token: user.get().token });
         var vm = this;
         var establecimientos = Restangular.all('establecimientos');

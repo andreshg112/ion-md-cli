@@ -46,7 +46,7 @@
                             } else if (user.get().rol == 'VENDEDOR') {
                                 $state.go('app.pedidos');
                             } else {
-                                $state.go('app.reporte-general');
+                                $state.go('app.historial-pedidos');
                             }
                         }, 2000);
                     } else {

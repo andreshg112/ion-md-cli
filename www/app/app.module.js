@@ -14,6 +14,7 @@
         'app.super_admin',
         'app.admin',
         'app.vendedor',
-        'ngTable'
+        'ngTable',
+        'wt.responsive'
     ])
 })();

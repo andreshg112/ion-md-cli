@@ -98,17 +98,14 @@
             Restangular.one('clientes', cliente.id).getList('pedidos', {
                 establecimiento_id: user.get().vendedor.sede.establecimiento_id,
                 enviado: 1
-            })
-                .then(function (data) {
-                    vm.pedidosCliente = data;
-                })
-                .catch(function (error) {
-                    var mensaje = String.format('Error: {0} {1}', error.status, error.statusText);
-                    ionicToast.show(mensaje, 'top', true, 3000);
-                })
-                .finally(function () {
-                    $ionicLoading.hide();
-                });
+            }).then(function (data) {
+                vm.pedidosCliente = data;
+            }).catch(function (error) {
+                var mensaje = String.format('Error: {0} {1}', error.status, error.statusText);
+                ionicToast.show(mensaje, 'top', true, 3000);
+            }).finally(function () {
+                $ionicLoading.hide();
+            });
         }
 
         function cargarPedidosNoEnviados() {
@@ -222,14 +219,15 @@
         }
 
         function localSearch(str) {
+            var index = 0;
             var matches = [];
-            var cantidad = (vm.clientes.length < 5) ? vm.clientes.length : 5;
-            for (var index = 0; index < cantidad; index++) {
+            while (matches.length < 5 && index < vm.clientes.length) {
                 var cliente = vm.clientes[index];
                 if ((cliente.nombre_completo.toLowerCase()
                     .indexOf(str.toString().toLowerCase()) >= 0)) {
                     matches.push(cliente);
                 }
+                index++;
             }
             return matches;
         }
@@ -252,6 +250,7 @@
             pedidos.post(vm.pedido)
                 .then(function (data) {
                     if (data.result) {
+                        console.log(vm.pedido.cliente.id);
                         if (!vm.pedido.cliente.id) {
                             //Si el cliente no había sido registrado, se registra en memoria
                             ClientesService.add(data.result.cliente);

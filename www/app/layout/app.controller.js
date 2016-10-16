@@ -5,10 +5,9 @@
         .module('app')
         .controller('AppController', AppController);
 
-    AppController.$inject = ['$scope', '$ionicPopover', 'user', '$state', '$timeout', '$ionicHistory', 'Restangular', 'ionicToast', '$ionicSideMenuDelegate', 'ClientesService', 'API', 'toastr'];
+    AppController.$inject = ['$scope', '$ionicPopover', 'user', '$state', '$timeout', '$ionicHistory', 'Restangular', '$ionicSideMenuDelegate', 'ClientesService', 'API', 'toastr'];
 
-    function AppController($scope, $ionicPopover, user, $state, $timeout, $ionicHistory, Restangular, ionicToast, $ionicSideMenuDelegate, ClientesService, API, toastr) {
-        toastr.success('Hello world!', 'Toastr fun!');
+    function AppController($scope, $ionicPopover, user, $state, $timeout, $ionicHistory, Restangular, $ionicSideMenuDelegate, ClientesService, API, toastr) {
         Restangular.setDefaultRequestParams({ token: user.get().token });
 
         var vm = this;
@@ -37,10 +36,11 @@
                     }
                 })
                 .catch(function (error) {
-                    var mensaje = String.format('Error: {0} {1}', error.status, error.statusText);
-                    ionicToast.show(mensaje, 'middle', true, 2000);
-                })
-                .finally(function () {
+                    var mensaje = (!error.status) ? error :
+                        String.format('{0} {1}', error.status, error.statusText);
+                    toastr.error(mensaje, 'Error', {
+                        timeOut: 0
+                    });
                 });
         }
 

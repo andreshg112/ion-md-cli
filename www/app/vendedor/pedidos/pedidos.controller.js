@@ -5,9 +5,9 @@
         .module('app.vendedor')
         .controller('PedidosController', PedidosController);
 
-    PedidosController.$inject = ['ionicMaterialInk', '$ionicPopup', 'Restangular', '$ionicLoading', 'ionicToast', '$ionicModal', '$scope', 'user', 'ionicDatePicker', 'ClientesService', 'toastr'];
+    PedidosController.$inject = ['ionicMaterialInk', '$ionicPopup', 'Restangular', '$ionicLoading', '$ionicModal', '$scope', 'user', 'ionicDatePicker', 'ClientesService', 'toastr'];
 
-    function PedidosController(ionicMaterialInk, $ionicPopup, Restangular, $ionicLoading, ionicToast, $ionicModal, $scope, user, ionicDatePicker, ClientesService, toastr) {
+    function PedidosController(ionicMaterialInk, $ionicPopup, Restangular, $ionicLoading, $ionicModal, $scope, user, ionicDatePicker, ClientesService, toastr) {
         Restangular.setDefaultRequestParams({ token: user.get().token });
 
         var vm = this;
@@ -59,20 +59,23 @@
         }
 
         function cancelarPedido(pedido) {
-            ionicToast.show('Cancelando pedido...', 'top', true, 3000);
+            var toastCancelando = toastr.info('', 'Cancelando pedido...', { timeOut: 0 });
             pedido.remove()
                 .then(function (data) {
                     if (data.result) {
                         vm.pedidos.splice(vm.pedidos.indexOf(pedido), 1);
-                        ionicToast.show(data.mensaje, 'top', false, 3000);
+                        toastr.success('', data.mensaje);
                     } else {
-                        ionicToast.show(data.mensaje, 'top', true, 3000);
+                        toastr.error(data.mensaje, 'Error', { timeOut: 0 });
                     }
                 })
                 .catch(function (error) {
                     var mensaje = (!error.status) ? error :
                         String.format('Error: {0} {1}', error.status, error.statusText);
                     ionicToast.show(mensaje, 'top', true, 3000);
+                })
+                .finally(function (params) {
+                    toastr.clear(toastCancelando);
                 });
         }
 
@@ -241,9 +244,6 @@
         function openModal() {
             vm.modalNuevo.show();
             document.getElementById("nombre_completo_value").required = true;
-            setTimeout(function () {
-                toastr.success('Hello world!', 'Toastr fun!');
-            }, 1000);
         }
 
         function registrarPedido() {

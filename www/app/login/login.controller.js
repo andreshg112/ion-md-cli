@@ -5,9 +5,9 @@
         .module('app')
         .controller('LoginController', LoginController);
 
-    LoginController.$inject = ['ionicMaterialInk', 'Restangular', '$ionicLoading', 'ionicToast', '$timeout', 'user', '$ionicHistory', '$state'];
+    LoginController.$inject = ['ionicMaterialInk', 'Restangular', '$ionicLoading', '$timeout', 'user', '$ionicHistory', '$state', 'toastr'];
 
-    function LoginController(ionicMaterialInk, Restangular, $ionicLoading, ionicToast, $timeout, user, $ionicHistory, $state) {
+    function LoginController(ionicMaterialInk, Restangular, $ionicLoading, $timeout, user, $ionicHistory, $state, toastr) {
         var vm = this;
         var authenticate = Restangular.all('authenticate');
         var loading = {
@@ -15,7 +15,6 @@
         };
         //
         vm.iniciarSesion = iniciarSesion;
-        //ionicToast.hide();
 
         activate();
 
@@ -32,15 +31,16 @@
         }
 
         function iniciarSesion() {
+            toastr.clear();
             $ionicLoading.show(loading);
             authenticate.post(vm.user)
                 .then(function (data) {
-                    var mensaje = '';
                     if (data.result) {
                         user.set(data.result);
-                        mensaje = String.format('¡Bienvenido(a) {0} {1}! Serás redirigido(a) al menú principal.', user.get().primer_nombre, user.get().primer_apellido);
-                        ionicToast.show(mensaje, 'bottom', false, 2000);
+                        var mensaje = String.format('¡Bienvenido(a) {0} {1}!', user.get().primer_nombre, user.get().primer_apellido);
+                        toastr.success('Serás redirigido(a) al menú principal.', mensaje);
                         $timeout(function () {
+                            toastr.clear();
                             if (user.get().rol == 'SUPER_USER') {
                                 $state.go('app.users');
                             } else if (user.get().rol == 'VENDEDOR') {
@@ -50,12 +50,20 @@
                             }
                         }, 2000);
                     } else {
-                        mensaje = 'Error: ' + data.mensaje;
-                        ionicToast.show(mensaje, 'bottom', false, 2000);
+                        var mensaje = (data.validator) ?
+                            data.validator.join('<br />') : '';
+                        toastr.error(mensaje, data.mensaje, {
+                            timeOut: 0
+                        });
                     }
                 })
                 .catch(function (error) {
-                    ionicToast.show(String.format('Error: {0}. Inténtelo más tarde nuevamente.', error), 'bottom', false, 3000);
+                    console.log(error);
+                    var mensaje = (!error.status) ? error :
+                        String.format('{0} {1}', error.status, error.statusText);
+                    toastr.error(mensaje, 'Error', {
+                        timeOut: 0
+                    });
                 })
                 .finally(function () {
                     $ionicLoading.hide();

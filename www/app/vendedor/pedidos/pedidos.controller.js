@@ -5,9 +5,9 @@
         .module('app.vendedor')
         .controller('PedidosController', PedidosController);
 
-    PedidosController.$inject = ['ionicMaterialInk', '$ionicPopup', 'Restangular', '$ionicLoading', 'ionicToast', '$ionicModal', '$scope', 'user', 'ionicDatePicker', 'ClientesService'];
+    PedidosController.$inject = ['ionicMaterialInk', '$ionicPopup', 'Restangular', '$ionicLoading', 'ionicToast', '$ionicModal', '$scope', 'user', 'ionicDatePicker', 'ClientesService', 'toastr'];
 
-    function PedidosController(ionicMaterialInk, $ionicPopup, Restangular, $ionicLoading, ionicToast, $ionicModal, $scope, user, ionicDatePicker, ClientesService) {
+    function PedidosController(ionicMaterialInk, $ionicPopup, Restangular, $ionicLoading, ionicToast, $ionicModal, $scope, user, ionicDatePicker, ClientesService, toastr) {
         Restangular.setDefaultRequestParams({ token: user.get().token });
 
         var vm = this;
@@ -241,6 +241,9 @@
         function openModal() {
             vm.modalNuevo.show();
             document.getElementById("nombre_completo_value").required = true;
+            setTimeout(function () {
+                toastr.success('Hello world!', 'Toastr fun!');
+            }, 1000);
         }
 
         function registrarPedido() {
@@ -311,5 +314,18 @@
         $scope.$on('modal.hidden', function () {
             limpiar();
         });
+
+        document.onkeydown = function (evt) {
+            evt = evt || window.event;
+            var isEscape = false;
+            if ("key" in evt) {
+                isEscape = (evt.key == "Escape" || evt.key == "Esc");
+            } else {
+                isEscape = (evt.keyCode == 27);
+            }
+            if (isEscape) {
+                cerrarModal();
+            }
+        };
     }
 })();

@@ -15,6 +15,8 @@
         'app.admin',
         'app.vendedor',
         'ngTable',
-        'wt.responsive'
+        'wt.responsive',
+        'ngAnimate',
+        'toastr'
     ])
 })();

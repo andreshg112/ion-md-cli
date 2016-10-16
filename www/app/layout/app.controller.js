@@ -5,9 +5,10 @@
         .module('app')
         .controller('AppController', AppController);
 
-    AppController.$inject = ['$scope', '$ionicPopover', 'user', '$state', '$timeout', '$ionicHistory', 'Restangular', 'ionicToast', '$ionicSideMenuDelegate', 'ClientesService', 'API'];
+    AppController.$inject = ['$scope', '$ionicPopover', 'user', '$state', '$timeout', '$ionicHistory', 'Restangular', 'ionicToast', '$ionicSideMenuDelegate', 'ClientesService', 'API', 'toastr'];
 
-    function AppController($scope, $ionicPopover, user, $state, $timeout, $ionicHistory, Restangular, ionicToast, $ionicSideMenuDelegate, ClientesService, API) {
+    function AppController($scope, $ionicPopover, user, $state, $timeout, $ionicHistory, Restangular, ionicToast, $ionicSideMenuDelegate, ClientesService, API, toastr) {
+        toastr.success('Hello world!', 'Toastr fun!');
         Restangular.setDefaultRequestParams({ token: user.get().token });
 
         var vm = this;

@@ -25,13 +25,12 @@
         vm.cambioNombre = cambioNombre
         vm.cancelarPedido = cancelarPedido;
         vm.cerrarModal = cerrarModal;
-        vm.cerrarPedidosCliente = cerrarPedidosCliente;
         vm.clientes = [];
         vm.confirmar = confirmar;
         vm.despachar = despachar;
-        //vm.formatearBusqueda = formatearBusqueda;
         vm.imprimirPedidoEnCola = imprimirPedidoEnCola;
         vm.localSearch = localSearch;
+        vm.modificar = modificar;
         vm.pedidos = [];
         vm.pedidosCliente = [];
         vm.openModal = openModal;
@@ -46,10 +45,7 @@
         ionicMaterialInk.displayEffect();
 
         function activate() {
-            vm.pedido = {
-                cliente: {}
-            };
-            $scope.$broadcast('angucomplete-alt:clearInput', 'nombre_completo');
+            limpiar();
             cargarClientesEstablecimiento();
             cargarPedidosNoEnviados();
         }
@@ -130,10 +126,6 @@
             vm.modalNuevo.hide();
         }
 
-        function cerrarPedidosCliente() {
-            vm.modalPedidosCliente.hide();
-        }
-
         function confirmar() {
             vm.pedido.numero = (vm.tipo_numero == 'Celular') ?
                 vm.pedido.cliente.celular : vm.pedido.cliente.telefono;
@@ -147,8 +139,11 @@
             vm.pedido.vendedor_id = user.get().vendedor.id;
             vm.pedido.cliente.establecimiento_id = user.get().vendedor.sede.establecimiento_id;
             vm.pedido.cliente.nombre_completo = vm.pedido.cliente.nombre_completo.capitalize();
+            var tituloPopup = (!vm.pedido.id) ?
+                'Estás a punto de registrar el siguiente pedido.' :
+                '¿Estás seguro de que deseas modificar la información del pedido?';
             var confirmarPedido = $ionicPopup.confirm({
-                title: 'Estás a punto de registrar el siguiente pedido.',
+                title: tituloPopup,
                 cssClass: 'resumen-pedido',
                 templateUrl: 'app/vendedor/pedidos/modal-resumen-pedido.html',
                 scope: $scope,
@@ -202,9 +197,7 @@
                 if (res) {
                     imprimirResumenPedido('popup-resumen-pedido');
                 }
-                vm.pedido = {
-                    cliente: {}
-                };
+                limpiar();
             });
         }
 
@@ -216,6 +209,13 @@
             var final = '</body></html>';
             popupWin.document.write(inicio + divResumenPedido + final);
             popupWin.document.close();
+        }
+
+        function limpiar() {
+            vm.pedido = {
+                cliente: {}
+            };
+            $scope.$broadcast('angucomplete-alt:clearInput', 'nombre_completo');
         }
 
         function localSearch(str) {
@@ -232,13 +232,11 @@
             return matches;
         }
 
-        /*function formatearBusqueda(str) {
-            return {
-                establecimiento_id: user.get().vendedor.sede.establecimiento_id,
-                nombre_completo: str,
-                token: user.get().token
-            };
-        }*/
+        function modificar(item) {
+            vm.pedido = item; //No funciona con angular.copy().
+            $scope.$broadcast('angucomplete-alt:changeInput', 'nombre_completo', vm.pedido.cliente.nombre_completo);
+            vm.modalNuevo.show();
+        }
 
         function openModal() {
             vm.modalNuevo.show();
@@ -247,30 +245,29 @@
 
         function registrarPedido() {
             ionicToast.show('Registrando...', 'top', true, 3000);
-            pedidos.post(vm.pedido)
-                .then(function (data) {
-                    if (data.result) {
-                        console.log(vm.pedido.cliente.id);
-                        if (!vm.pedido.cliente.id) {
-                            //Si el cliente no había sido registrado, se registra en memoria
-                            ClientesService.add(data.result.cliente);
-                            vm.clientes.push(data.result.cliente);
-                        }
-                        ionicToast.show(data.mensaje, 'top', false, 3000);
-                        activate();
-                    } else {
-                        var mensaje = data.mensaje + '<br />';
-                        if (data.validator) {
-                            mensaje += data.validator.join('.<br />');
-                        }
-                        ionicToast.show(mensaje, 'top', true, 3000);
+            var promesa = (!vm.pedido.id) ?
+                pedidos.post(vm.pedido) : vm.pedido.put();
+            promesa.then(function (data) {
+                if (data.result) {
+                    if (!vm.pedido.cliente.id) {
+                        //Si el cliente no había sido registrado, se registra en memoria
+                        ClientesService.add(data.result.cliente);
+                        vm.clientes.push(data.result.cliente);
                     }
-                })
-                .catch(function (error) {
-                    var mensaje = (!error.status) ? error :
-                        String.format('Error: {0} {1}', error.status, error.statusText);
+                    ionicToast.show(data.mensaje, 'top', false, 3000);
+                    activate();
+                } else {
+                    var mensaje = data.mensaje + '<br />';
+                    if (data.validator) {
+                        mensaje += data.validator.join('.<br />');
+                    }
                     ionicToast.show(mensaje, 'top', true, 3000);
-                });
+                }
+            }).catch(function (error) {
+                var mensaje = (!error.status) ? error :
+                    String.format('Error: {0} {1}', error.status, error.statusText);
+                ionicToast.show(mensaje, 'top', true, 3000);
+            });
         }
 
         /**
@@ -290,7 +287,12 @@
 
         function verPedidosAnteriores(cliente) {
             cargarPedidosCliente(cliente);
-            vm.modalPedidosCliente.show();
+            var pedidosAnteriores = $ionicPopup.alert({
+                title: 'Pedidos anteriores del cliente',
+                cssClass: 'resumen-pedido',
+                templateUrl: 'app/vendedor/pedidos/pedidos-anteriores-cliente.html',
+                scope: $scope
+            });
         }
 
         //Actividades de los modales
@@ -301,16 +303,13 @@
             vm.modalNuevo = modal;
         });
 
-        $ionicModal.fromTemplateUrl('app/vendedor/pedidos/pedidos-anteriores-cliente.html', {
-            scope: $scope
-        }).then(function (modal) {
-            vm.modalPedidosCliente = modal;
-        });
-
         // Cleanup the modal when we're done with it
         $scope.$on('$destroy', function () {
             vm.modalNuevo.remove();
-            vm.modalPedidosCliente.remove();
+        });
+
+        $scope.$on('modal.hidden', function () {
+            limpiar();
         });
     }
 })();

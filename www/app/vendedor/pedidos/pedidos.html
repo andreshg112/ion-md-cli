@@ -1,41 +1,36 @@
 ﻿<ion-view view-title="Pedidos" id="view-pedidos">
-    <button id="fab" class="button button-balanced button-fab button-fab-bottom-right" ng-click="vm.openModal()">
+	<button id="fab" class="button button-balanced button-fab button-fab-bottom-right" ng-click="vm.openModal()">
         <i class="icon ion-plus"></i>
     </button>
-    <ion-content>
-        <div class="bar bar-subheader bar-stable static text-center">
-            <strong class="title">En cola</strong>
-        </div>
-        <div class="im-wrapper">
-            <div class="table-bordered">
-                <div class="row responsive-sm">
-                    <pre class="col col-20">Detalles</pre>
-                    <pre class="col col-10">Total</pre>
-                    <pre class="col col-20">Cliente</pre>
-                    <pre class="col col-10">Contacto</pre>
-                    <pre class="col col-20">Dirección</pre>
-                    <pre class="centered-text col col-20">Acciones</pre>
-                </div>
-                <div class="row responsive-sm" ng-repeat="pedido in vm.pedidos track by $index">
-                    <pre class="col col-20">{{pedido.detalles}}</pre>
-                    <pre class="col col-10">{{pedido.total}}</pre>
-                    <pre class="col col-20">{{pedido.cliente.nombre_completo}}</pre>
-                    <pre class="col col-10">{{pedido.numero}}</pre>
-                    <pre class="col col-20">{{pedido.direccion}}</pre>
-                    <div class="centered-text col col-20">
-                        <button title="Despachar" class="button-icon ink" ng-click="vm.despachar(pedido)">
-                            <i class="ion-paper-airplane icon"></i>
-                        </button>
-                        <button title="Imprimir" class="button-icon ink" ng-click="vm.imprimirPedidoEnCola(pedido)">
-                            <i class="ion-printer icon"></i>
-                        </button>
-                        <button title="Cancelar" class="button-icon ink" ng-click="vm.cancelarPedido(pedido)">
-                            <i class="ion-close-round icon"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--<i class="material-icons">3d_rotation</i>-->
-    </ion-content>
+	<ion-content>
+		<div class="bar bar-subheader bar-stable static text-center">
+			<strong class="title">En cola</strong>
+		</div>
+		<div class="im-wrapper">
+			<div class="table-bordered">
+				<div class="row responsive-sm">
+					<pre class="col col-20">Detalles</pre>
+					<pre class="col col-10">Total</pre>
+					<pre class="col col-20">Cliente</pre>
+					<pre class="col col-10">Contacto</pre>
+					<pre class="col col-20">Dirección</pre>
+					<pre class="text-center col col-20">Acciones</pre>
+				</div>
+				<div class="row responsive-sm" ng-repeat="pedido in vm.pedidos track by $index">
+					<pre class="col col-20">{{pedido.detalles}}</pre>
+					<pre class="col col-10">{{pedido.total}}</pre>
+					<pre class="col col-20">{{pedido.cliente.nombre_completo}}</pre>
+					<pre class="col col-10">{{pedido.numero}}</pre>
+					<pre class="col col-20">{{pedido.direccion}}</pre>
+					<div class="text-center col col-20">
+						<i class="ion-paper-airplane icon button-icon ink" title="Despachar" ng-click="vm.despachar(pedido)"></i>
+						<i class="ion-printer icon button-icon ink" title="Imprimir" ng-click="vm.imprimirPedidoEnCola(pedido)"></i>
+						<i class="ion-edit icon button-icon ink" title="Modificar" ng-click="vm.modificar(pedido)"></i>
+						<i class="ion-close-round icon button-icon ink" title="Cancelar" ng-click="vm.cancelarPedido(pedido)"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--<i class="material-icons">3d_rotation</i>-->
+	</ion-content>
 </ion-view>

@@ -1,6 +1,7 @@
 ﻿<ion-modal-view id="nuevo-pedido" style="width: 90%; height: 90%; top: 5%; left: 5%; right: 5%; bottom: 5%;">
 	<ion-header-bar>
-		<h1 class="title">Nuevo pedido</h1>
+		<h1 class="title" ng-if="!vm.pedido.id">Nuevo pedido</h1>
+		<h1 class="title" ng-if="vm.pedido.id">Modificar pedido</h1>
 		<div class="buttons">
 			<button class="button-icon icon ion-close" ng-click="vm.cerrarModal()"></button>
 		</div>

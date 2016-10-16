@@ -1,40 +1,66 @@
 /* Empty. Add your own CSS if you like */
+
+
 /*body {
   cursor: url('../img/finger.png'), auto;
 }*/
 
+
 /* Resaltar las coincidencias en el filtro de clientes */
+
 .highlight {
     color: #ff0000;
 }
 
+
 /* Centrar el texto de los datos en las tablas */
+
 .centered-text {
     text-align: center;
 }
 
+
 /* Clase del resumen del pedido */
+
 .resumen-pedido.popup-container .popup {
     width: 50% !important;
 }
 
+@media only screen and (max-width: 768px) {
+    .resumen-pedido.popup-container .popup {
+        width: 70% !important;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .resumen-pedido.popup-container .popup {
+        width: 100% !important;
+    }
+}
+
+
 /* Felicitacion */
+
 .felicitacion.popup-container .popup {
     width: 384px !important;
 }
 
 @media only screen and (max-width: 384px) {
     .felicitacion.popup-container .popup {
-        width: 100%;
+        width: 100% !important;
     }
 }
 
+
 /* 1074*/
 
+
 /* Capitalizar texto en registro de pedidos */
+
 .capitalize {
     text-transform: capitalize;
 }
+
 
 /*.chart {
     cursor: default;
@@ -112,7 +138,7 @@ pre {
     border-style: solid;
     border-radius: 15px;
     border-width: 1px;
-    padding: 10px;   
+    padding: 10px;
 }
 
 .table-bordered .row:first-child {
@@ -130,6 +156,7 @@ pre {
 .table-bordered .row:last-child {
     border-bottom-style: none;
 }
+
 
 /*.data-table {
     border-collapse: separate !important;
@@ -171,10 +198,11 @@ pre {
     background-image: url('../img/mas-cerca-de-tus-clientes.jpg');
     background-size: cover;
     background-repeat: no-repeat;
-    
 }
 
+
 /* Fin CSS personal */
+
 
 /* Utilities */
 

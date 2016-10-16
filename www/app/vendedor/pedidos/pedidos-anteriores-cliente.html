@@ -1,4 +1,4 @@
-﻿<ion-modal-view>
+﻿<!--<ion-modal-view>
     <ion-header-bar>
         <h1 class="title">Pedidos anteriores</h1>
         <div class="buttons">
@@ -6,15 +6,15 @@
         </div>
     </ion-header-bar>
     <ion-content class="padding">
-        <div class="im-wrapper">
-            <div class="list">
-                <div class="item" ng-repeat="pedido in vm.pedidosCliente track by $index">
-                    <div class="row">
-                        <pre class="col col-30">{{pedido.created_at | cmdate : 'medium'}}</pre>
-                        <pre class="col col-70">{{pedido.detalles}}</pre>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div class="im-wrapper">-->
+<div class="list">
+	<div class="item" ng-repeat="pedido in vm.pedidosCliente">
+		<div class="row">
+			<pre class="col col-30">{{pedido.created_at | cmdate : 'medium'}}</pre>
+			<pre class="col col-70">{{pedido.detalles}}</pre>
+		</div>
+	</div>
+</div>
+<!--</div>
     </ion-content>
-</ion-modal-view>
+</ion-modal-view>-->

@@ -59,23 +59,23 @@
         }
 
         function cancelarPedido(pedido) {
-            var toastCancelando = toastr.info('', 'Cancelando pedido...', { timeOut: 0 });
+            var toast = toastr.info('Cancelando pedido...', { timeOut: 0 });
             pedido.remove()
                 .then(function (data) {
                     if (data.result) {
                         vm.pedidos.splice(vm.pedidos.indexOf(pedido), 1);
-                        toastr.success('', data.mensaje);
+                        toastr.success(data.mensaje);
                     } else {
                         toastr.error(data.mensaje, 'Error', { timeOut: 0 });
                     }
                 })
                 .catch(function (error) {
                     var mensaje = (!error.status) ? error :
-                        String.format('Error: {0} {1}', error.status, error.statusText);
-                    ionicToast.show(mensaje, 'top', true, 3000);
+                        String.format('{0} {1}', error.status, error.statusText);
+                    toastr.error(mensaje, 'Error', { timeOut: 0 });
                 })
                 .finally(function (params) {
-                    toastr.clear(toastCancelando);
+                    toastr.clear(toast);
                 });
         }
 
@@ -86,8 +86,8 @@
                 })
                 .catch(function (error) {
                     var mensaje = (!error.status) ? error :
-                        String.format('Error: {0} {1}', error.status, error.statusText);
-                    ionicToast.show(mensaje, 'top', true, 3000);
+                        String.format('{0} {1}', error.status, error.statusText);
+                    toastr.error(mensaje, 'Error', { timeOut: 0 });
                 });
         }
 
@@ -100,8 +100,9 @@
             }).then(function (data) {
                 vm.pedidosCliente = data;
             }).catch(function (error) {
-                var mensaje = String.format('Error: {0} {1}', error.status, error.statusText);
-                ionicToast.show(mensaje, 'top', true, 3000);
+                var mensaje = (!error.status) ? error :
+                    String.format('{0} {1}', error.status, error.statusText);
+                toastr.error(mensaje, 'Error', { timeOut: 0 });
             }).finally(function () {
                 $ionicLoading.hide();
             });
@@ -117,8 +118,9 @@
                     }
                 })
                 .catch(function (error) {
-                    var mensaje = String.format('Error: {0} {1}', error.status, error.statusText);
-                    ionicToast.show(mensaje, 'top', true, 3000);
+                    var mensaje = (!error.status) ? error :
+                        String.format('{0} {1}', error.status, error.statusText);
+                    toastr.error(mensaje, 'Error', { timeOut: 0 });
                 })
                 .finally(function () {
                     $ionicLoading.hide();
@@ -161,29 +163,27 @@
         }
 
         function despachar(pedido) {
-            ionicToast.show('Despachando...', 'top', true, 3000);
+            var toast = toastr.info('Despachando...', { timeOut: 0 });
             pedido.enviado = 1;
             pedido.establecimiento = user.get().vendedor.sede.establecimiento;
             pedido.put()
                 .then(function (data) {
                     if (data.result) {
                         vm.pedidos.splice(vm.pedidos.indexOf(pedido), 1);
-                        ionicToast.show('Se ha despachado el pedido.', 'top', false, 3000);
+                        toastr.success('Se ha despachado el pedido.');
                     } else {
-                        var mensaje = data.mensaje + '<br />';
-                        if (data.validator) {
-                            mensaje += data.validator.join('.<br />');
-                        }
-                        ionicToast.show(mensaje, 'top', true, 3000);
+                        var mensaje = (data.validator) ?
+                            data.validator.join('<br />') : '';
+                        toastr.error(mensaje, data.mensaje, { timeOut: 0 });
                     }
                 })
                 .catch(function (error) {
                     var mensaje = (!error.status) ? error :
-                        String.format('Error: {0} {1}', error.status, error.statusText);
-                    ionicToast.show(mensaje, 'top', true, 2000);
+                        String.format('{0} {1}', error.status, error.statusText);
+                    toastr.error(mensaje, 'Error', { timeOut: 0 });
                 })
                 .finally(function () {
-                    $ionicLoading.hide();
+                    toastr.clear(toast);
                 });
         }
 
@@ -247,7 +247,8 @@
         }
 
         function registrarPedido() {
-            ionicToast.show('Registrando...', 'top', true, 3000);
+            var info = (!vm.pedido.id) ? 'Registrando...' : 'Modificando...';
+            var toast = toastr.info(info, { timeOut: 0 });
             var promesa = (!vm.pedido.id) ?
                 pedidos.post(vm.pedido) : vm.pedido.put();
             promesa.then(function (data) {
@@ -257,19 +258,24 @@
                         ClientesService.add(data.result.cliente);
                         vm.clientes.push(data.result.cliente);
                     }
-                    ionicToast.show(data.mensaje, 'top', false, 3000);
                     activate();
+                    toastr.success(data.mensaje, {
+                        onShown: function () { toastr.clear(toast); }
+                    });
                 } else {
-                    var mensaje = data.mensaje + '<br />';
-                    if (data.validator) {
-                        mensaje += data.validator.join('.<br />');
-                    }
-                    ionicToast.show(mensaje, 'top', true, 3000);
+                    var mensaje = (data.validator) ?
+                        data.validator.join('<br />') : '';
+                    toastr.error(mensaje, data.mensaje, {
+                        timeOut: 0,
+                        onShown: function () { toastr.clear(toast); }
+                    });
                 }
             }).catch(function (error) {
                 var mensaje = (!error.status) ? error :
-                    String.format('Error: {0} {1}', error.status, error.statusText);
-                ionicToast.show(mensaje, 'top', true, 3000);
+                    String.format('{0} {1}', error.status, error.statusText);
+                toastr.error(mensaje, 'Error', { timeOut: 0 });
+            }).finally(function () {
+                //toastr.clear(toast);
             });
         }
 

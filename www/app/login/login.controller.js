@@ -52,18 +52,13 @@
                     } else {
                         var mensaje = (data.validator) ?
                             data.validator.join('<br />') : '';
-                        toastr.error(mensaje, data.mensaje, {
-                            timeOut: 0
-                        });
+                        toastr.error(mensaje, data.mensaje, { timeOut: 0 });
                     }
                 })
                 .catch(function (error) {
-                    console.log(error);
                     var mensaje = (!error.status) ? error :
                         String.format('{0} {1}', error.status, error.statusText);
-                    toastr.error(mensaje, 'Error', {
-                        timeOut: 0
-                    });
+                    toastr.error(mensaje, 'Error', { timeOut: 0 });
                 })
                 .finally(function () {
                     $ionicLoading.hide();

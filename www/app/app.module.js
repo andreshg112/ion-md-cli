@@ -17,6 +17,7 @@
         'ngTable',
         'wt.responsive',
         'ngAnimate',
-        'toastr'
+        'toastr',
+        'ng-currency'
     ])
 })();

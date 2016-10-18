@@ -61,11 +61,6 @@
     text-transform: capitalize;
 }
 
-
-/*.chart {
-    cursor: default;
-}*/
-
 .center-block {
     display: block;
     margin-left: auto;
@@ -101,6 +96,13 @@
 
 .input-login {
     margin-right: 20px !important;
+    border-style: solid !important;
+    border-width: 1px !important;
+    border-radius: 5px !important;
+    border-color: lightgray !important;
+}
+
+.fd-input {
     border-style: solid !important;
     border-width: 1px !important;
     border-radius: 5px !important;
@@ -199,6 +201,14 @@ pre {
     background-size: cover;
     background-repeat: no-repeat;
 }
+
+
+/*Representa a los valores dentro del nuevo pedido*/
+
+
+/*#valores input {
+    margin-bottom: 12px;
+}*/
 
 
 /* Fin CSS personal */

@@ -39,18 +39,22 @@
 			</div>
 			<div class="table-bordered">
 				<div class="row responsive-sm">
-					<pre class="col col-30">Detalles</pre>
+					<pre class="col col-20">Detalles</pre>
+					<pre class="col col-10">Subtotal</pre>
+					<pre class="col col-10">Valor del domicilio</pre>
 					<pre class="col col-10">Total</pre>
 					<pre class="col col-20">Cliente</pre>
 					<pre class="col col-10">Contacto</pre>
-					<pre class="col col-30">Dirección</pre>
+					<pre class="col col-20">Dirección</pre>
 				</div>
 				<div class="row responsive-sm" ng-repeat="pedido in vm.pedidos track by $index">
-					<pre class="col col-30">{{pedido.detalles}}</pre>
-					<pre class="col col-10">{{pedido.total}}</pre>
+					<pre class="col col-20">{{pedido.detalles}}</pre>
+					<pre class="col col-10">{{pedido.subtotal | currency : '$ ' : 0}}</pre>
+					<pre class="col col-10">{{pedido.valor_domicilio | currency : '$ ' : 0}}</pre>
+					<pre class="col col-10">{{pedido.total | currency : '$ ' : 0}}</pre>
 					<pre class="col col-20">{{pedido.cliente.nombre_completo}}</pre>
 					<pre class="col col-10">{{pedido.numero}}</pre>
-					<pre class="col col-30">{{pedido.direccion}}</pre>
+					<pre class="col col-20">{{pedido.direccion}}</pre>
 				</div>
 			</div>
 		</div>

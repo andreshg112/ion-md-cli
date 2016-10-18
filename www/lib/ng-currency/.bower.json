@@ -1,0 +1,37 @@
+{
+  "name": "ng-currency",
+  "version": "1.1.4",
+  "main": "dist/ng-currency.js",
+  "description": "Directive that works in conjunction with currency filter.",
+  "homepage": "http://alaguirre.com",
+  "authors": [
+    "Luis Aguirre <luis@alaguirre.com>",
+    "Nick Woodward <nick@salte.io>"
+  ],
+  "keywords": [
+    "currency",
+    "directive",
+    "filter"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "angular": ">=1.3.4"
+  },
+  "_release": "1.1.4",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.1.4",
+    "commit": "71ad543cbf52ff71db7572e10d0ae16e4cfea858"
+  },
+  "_source": "https://github.com/aguirrel/ng-currency.git",
+  "_target": "^1.1.4",
+  "_originalSource": "ng-currency",
+  "_direct": true
+}

@@ -36,6 +36,7 @@
         vm.openModal = openModal;
         vm.seleccionarFechaNacimiento = seleccionarFechaNacimiento;
         vm.setCliente = setCliente;
+        vm.setTotal = setTotal;
         vm.verPedidosAnteriores = verPedidosAnteriores;
 
         activate();
@@ -170,7 +171,10 @@
                 .then(function (data) {
                     if (data.result) {
                         vm.pedidos.splice(vm.pedidos.indexOf(pedido), 1);
-                        toastr.success('Se ha despachado el pedido.');
+                        var titulo = 'Se ha despachado el pedido.';
+                        var cuerpo = !data.sms_restantes ?
+                            '' : String.format('{0} mensajes de texto restantes.', data.sms_restantes);
+                        toastr.success(cuerpo, titulo);
                     } else {
                         var mensaje = (data.validator) ?
                             data.validator.join('<br />') : '';
@@ -185,6 +189,12 @@
                 .finally(function () {
                     toastr.clear(toast);
                 });
+        }
+
+        function setTotal() {
+            var subtotal = vm.pedido.subtotal || 0;
+            var valor_domicilio = vm.pedido.valor_domicilio || 0
+            vm.pedido.total = subtotal + valor_domicilio;
         }
 
         function imprimirPedidoEnCola(pedido) {

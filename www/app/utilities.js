@@ -1,3 +1,7 @@
+$(document).on("focus mouseover", ".tooltip", function () {
+    $('.tooltip').tooltipster();
+});
+
 if (!String.format) {
     /**
      * Formatea un String como en C# o VB.NET: String.format(Hola {0}, 'Andres') = 'Hola Andres' 

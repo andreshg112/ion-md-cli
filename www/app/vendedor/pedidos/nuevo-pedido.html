@@ -26,7 +26,7 @@
 								</div>
 							</div>
 							<div class="row responsive-lg">
-								<div class="col">
+								<div class="col tooltip" title="Si el domicilio lo entrega un mensajero del establecimiento, marca esta opción. Si lo lleva un mensajero externo, déjala sin marcar.">
 									<!--<div class="item item-input item-select">
 										<div class="input-label">
 											Domicilio
@@ -38,6 +38,9 @@
 									</div>-->
 									<ion-checkbox class="checkbox-balanced" ng-model="vm.pedido.tipo_domicilio">Domicilio propio</ion-checkbox>
 								</div>
+								<!--<script>
+									$('.tooltip').tooltipster();
+								</script>-->
 								<div class="item item-input col col-bottom">
 									<input type="text" id="valor_domicilio" class="fd-input" fraction="0" min="0" onkeypress="return isNumberKey(event)" placeholder="Valor del domicilio"
 										ng-change="vm.setTotal()" ng-currency ng-model="vm.pedido.valor_domicilio" />

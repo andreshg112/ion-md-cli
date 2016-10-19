@@ -75,15 +75,19 @@
                         String.format('{0} {1}', error.status, error.statusText);
                     toastr.error(mensaje, 'Error', { timeOut: 0 });
                 })
-                .finally(function (params) {
+                .finally(function () {
                     toastr.clear(toast);
                 });
         }
 
         function cargarClientesEstablecimiento() {
+            var toast = toastr.info('Por favor espere.', 'Cargando clientes...', { timeOut: 0 });
             ClientesService.all(user.get().vendedor.sede.establecimiento_id)
                 .then(function (data) {
                     vm.clientes = data;
+                    toastr.success('Clientes cargados correctamente.', {
+                        onShown: function () { toastr.clear(toast); }
+                    });
                 })
                 .catch(function (error) {
                     var mensaje = (!error.status) ? error :
@@ -164,22 +168,22 @@
         }
 
         function despachar(pedido) {
-            pedido.tipo_domicilio = 'propio';
             if (user.get().vendedor.sede.establecimiento.tiene_mensajero) {
-                var confirmPopup = $ionicPopup.confirm({
+                var confirmarDespacho = $ionicPopup.confirm({
                     title: '¿Quién va a despachar el pedido?',
                     cssClass: 'resumen-pedido',
-                    templateUrl: 'app/vendedor/pedidos/tipo-domicilio.html',
-                    cancelText: 'Cancelar'
+                    templateUrl: 'app/vendedor/pedidos/tipo-mensajero.html',
+                    cancelText: 'Cancelar',
+                    scope: $scope
                 });
-                confirmPopup.then(function (res) {
+                confirmarDespacho.then(function (res) {
                     if (res) {
-                        console.log('You are sure');
-                    } else {
-                        console.log('You are not sure');
+                        pedido.tipo_mensajero = vm.tipo_mensajero;
+                        registrarDespacho(pedido);
                     }
                 });
             } else {
+                pedido.tipo_mensajero = 'externo';
                 registrarDespacho(pedido);
             }
         }
@@ -220,7 +224,6 @@
         function limpiar() {
             vm.pedido = {
                 cliente: {}
-                // tipo_domicilio: 'externo'
             };
             $scope.$broadcast('angucomplete-alt:clearInput', 'nombre_completo');
             if (vm.formPedido) {

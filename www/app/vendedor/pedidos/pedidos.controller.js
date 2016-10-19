@@ -40,6 +40,7 @@
         vm.verPedidosAnteriores = verPedidosAnteriores;
 
         activate();
+        cargarClientesEstablecimiento();
 
         ////////////////
 
@@ -47,7 +48,6 @@
 
         function activate() {
             limpiar();
-            cargarClientesEstablecimiento();
             cargarPedidosNoEnviados();
         }
 

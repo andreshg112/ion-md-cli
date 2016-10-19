@@ -226,7 +226,8 @@
 
         function limpiar() {
             vm.pedido = {
-                cliente: {}
+                cliente: {},
+                tipo_domicilio: 'externo'
             };
             $scope.$broadcast('angucomplete-alt:clearInput', 'nombre_completo');
             if (vm.formPedido) {

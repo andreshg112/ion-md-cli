@@ -36,7 +36,7 @@
 											<option>Propio</option>
 										</select>
 									</div>-->
-									<ion-checkbox class="checkbox-balanced" ng-model="vm.pedido.tipo_domicilio">Domicilio propio</ion-checkbox>
+									<ion-checkbox class="checkbox-balanced" ng-model="vm.pedido.tipo_domicilio" ng-false-value="'externo'" ng-true-value="'propio'">Mensajero propio</ion-checkbox>
 								</div>
 								<!--<script>
 									$('.tooltip').tooltipster();

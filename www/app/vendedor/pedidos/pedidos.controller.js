@@ -164,31 +164,24 @@
         }
 
         function despachar(pedido) {
-            var toast = toastr.info('Despachando...', { timeOut: 0 });
-            pedido.enviado = 1;
-            pedido.establecimiento = user.get().vendedor.sede.establecimiento;
-            pedido.put()
-                .then(function (data) {
-                    if (data.result) {
-                        vm.pedidos.splice(vm.pedidos.indexOf(pedido), 1);
-                        var titulo = 'Se ha despachado el pedido.';
-                        var cuerpo = !data.sms_restantes ?
-                            '' : String.format('{0} mensajes de texto restantes.', data.sms_restantes);
-                        toastr.success(cuerpo, titulo);
-                    } else {
-                        var mensaje = (data.validator) ?
-                            data.validator.join('<br />') : '';
-                        toastr.error(mensaje, data.mensaje, { timeOut: 0 });
-                    }
-                })
-                .catch(function (error) {
-                    var mensaje = (!error.status) ? error :
-                        String.format('{0} {1}', error.status, error.statusText);
-                    toastr.error(mensaje, 'Error', { timeOut: 0 });
-                })
-                .finally(function () {
-                    toastr.clear(toast);
+            pedido.tipo_domicilio = 'propio';
+            if (user.get().vendedor.sede.establecimiento.tiene_mensajero) {
+                var confirmPopup = $ionicPopup.confirm({
+                    title: '¿Quién va a despachar el pedido?',
+                    cssClass: 'resumen-pedido',
+                    templateUrl: 'app/vendedor/pedidos/tipo-domicilio.html',
+                    cancelText: 'Cancelar'
                 });
+                confirmPopup.then(function (res) {
+                    if (res) {
+                        console.log('You are sure');
+                    } else {
+                        console.log('You are not sure');
+                    }
+                });
+            } else {
+                registrarDespacho(pedido);
+            }
         }
 
         function setTotal() {
@@ -226,8 +219,8 @@
 
         function limpiar() {
             vm.pedido = {
-                cliente: {},
-                tipo_domicilio: 'externo'
+                cliente: {}
+                // tipo_domicilio: 'externo'
             };
             $scope.$broadcast('angucomplete-alt:clearInput', 'nombre_completo');
             if (vm.formPedido) {
@@ -259,6 +252,34 @@
         function openModal() {
             vm.modalNuevo.show();
             document.getElementById("nombre_completo_value").required = true;
+        }
+
+        function registrarDespacho(pedido) {
+            var toast = toastr.info('Despachando...', { timeOut: 0 });
+            pedido.enviado = 1;
+            pedido.establecimiento = user.get().vendedor.sede.establecimiento;
+            pedido.put()
+                .then(function (data) {
+                    if (data.result) {
+                        vm.pedidos.splice(vm.pedidos.indexOf(pedido), 1);
+                        var titulo = 'Se ha despachado el pedido.';
+                        var cuerpo = !data.sms_restantes ?
+                            '' : String.format('{0} mensajes de texto restantes.', data.sms_restantes);
+                        toastr.success(cuerpo, titulo);
+                    } else {
+                        var mensaje = (data.validator) ?
+                            data.validator.join('<br />') : '';
+                        toastr.error(mensaje, data.mensaje, { timeOut: 0 });
+                    }
+                })
+                .catch(function (error) {
+                    var mensaje = (!error.status) ? error :
+                        String.format('{0} {1}', error.status, error.statusText);
+                    toastr.error(mensaje, 'Error', { timeOut: 0 });
+                })
+                .finally(function () {
+                    toastr.clear(toast);
+                });
         }
 
         function registrarPedido() {

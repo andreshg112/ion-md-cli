@@ -229,6 +229,10 @@
                 cliente: {}
             };
             $scope.$broadcast('angucomplete-alt:clearInput', 'nombre_completo');
+            if (vm.formPedido) {
+                vm.formPedido.$setPristine();
+                vm.formPedido.$setUntouched();
+            }
         }
 
         function localSearch(str) {

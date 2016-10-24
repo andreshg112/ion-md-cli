@@ -1,14 +1,19 @@
 ﻿<div id="popup-resumen-pedido">
-	<div class="list">
+	<div id="list-resumen-pedido" class="list">
+		<div class="item item-input" ng-if="app.user.vendedor.sede.establecimiento.tiene_pedido_mesa">
+			<span class="input-label">Tipo de pedido</span>
+			<pre ng-if="vm.pedido.tipo_pedido == 'mesa'">De mesa</pre>
+			<pre ng-if="vm.pedido.tipo_pedido == 'domicilio'">Domicilio</pre>
+		</div>
 		<div class="item item-input">
 			<span class="input-label">Pedido</span>
 			<pre>{{vm.pedido.detalles}}</pre>
 		</div>
-		<div class="item item-input">
+		<div class="item item-input" ng-if="vm.pedido.tipo_pedido == 'domicilio'">
 			<span class="input-label">Subtotal</span>
 			<pre>{{vm.pedido.subtotal | currency : '$ ' : 0}}</pre>
 		</div>
-		<div class="item item-input">
+		<div class="item item-input" ng-if="vm.pedido.tipo_pedido == 'domicilio'">
 			<span class="input-label">Valor del domicilio</span>
 			<pre>{{vm.pedido.valor_domicilio | currency : '$ ' : 0}}</pre>
 		</div>
@@ -24,7 +29,7 @@
 			<span class="input-label">Número</span>
 			<pre>{{vm.pedido.numero}}</pre>
 		</div>
-		<div class="item item-input">
+		<div class="item item-input" ng-if="vm.pedido.tipo_pedido == 'domicilio'">
 			<span class="input-label">Dirección</span>
 			<pre class="capitalize">{{vm.pedido.direccion}}</pre>
 		</div>

@@ -10,6 +10,15 @@
 		<div class="im-wrapper">
 			<form id="formPedido" name="vm.formPedido" ng-submit="vm.confirmar()">
 				<div class="list">
+					<div id="fila-0" class="row responsive-md" ng-if="app.user.vendedor.sede.establecimiento.tiene_pedido_mesa">
+						<div class="item item-input item-select col col-50">
+							<div class="input-label">Tipo de pedido</div>
+							<select ng-init="vm.pedido.tipo_pedido = 'mesa'" ng-model="vm.pedido.tipo_pedido">
+                                <option value="mesa" ng-selected="true">De mesa</option>
+                                <option value="domicilio">Domicilio</option>
+                            </select>
+						</div>
+					</div>
 					<div id="fila-1" class="row responsive-md">
 						<div class="item item-input item-stacked-label col col-50">
 							<span class="input-label">Pedido</span>
@@ -25,7 +34,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="row">
+							<div class="row" ng-if="vm.pedido.tipo_pedido == 'domicilio'">
 								<div class="item item-input">
 									<span class="input-label col">Valor del domicilio</span>
 									<div class="col">
@@ -34,7 +43,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="row">
+							<div class="row" ng-if="vm.pedido.tipo_pedido == 'domicilio'">
 								<div class="item item-input">
 									<span class="input-label col">Total a pagar</span>
 									<div class="col">
@@ -64,15 +73,15 @@
                             </select>
 						</div>
 						<div class="item item-input col col-50" ng-if="vm.tipo_numero == 'Celular'">
-							<input type="number" id="celular" class="fd-input" min="3000000000" minlength="10" max="3999999999" maxlength="10" placeholder="Celular"
-								ng-model="vm.pedido.cliente.celular" ng-required="vm.tipo_numero == 'Celular'" />
+							<input type="number" id="celular" class="fd-input" min="3000000000" minlength="10" max="3999999999" maxlength="10" onkeypress="return isNumberKey(event)"
+								placeholder="Celular" ng-model="vm.pedido.cliente.celular" ng-required="vm.tipo_numero == 'Celular'" />
 						</div>
 						<div class="item item-input col col-50" ng-if="vm.tipo_numero == 'Teléfono'">
-							<input type="number" id="telefono" class="fd-input" min="1000000" minlength="7" max="9999999" maxlength="7" placeholder="Teléfono"
-								ng-model="vm.pedido.cliente.telefono" ng-required="vm.tipo_numero == 'Teléfono'" />
+							<input type="number" id="telefono" class="fd-input" min="1000000" minlength="7" max="9999999" maxlength="7" onkeypress="return isNumberKey(event)"
+								placeholder="Teléfono" ng-model="vm.pedido.cliente.telefono" ng-required="vm.tipo_numero == 'Teléfono'" />
 						</div>
 					</div>
-					<div id="fila-4" class="row responsive-md">
+					<div id="fila-4" class="row responsive-md" ng-if="vm.pedido.tipo_pedido == 'domicilio'">
 						<div class="item item-input item-select col col-50">
 							<div class="input-label">Dirección</div>
 							<select ng-init="vm.tipo_direccion = 'Casa'" ng-model="vm.tipo_direccion">

@@ -18,7 +18,6 @@
 						<div class="input-label">Establecimiento</div>
 						<select id="establecimientoSeleccionado" ng-model="vm.establecimientoSeleccionado" ng-options="establecimiento as establecimiento.nombre for establecimiento in vm.establecimientos"
 							ng-change="vm.cargarDatos()">
-                            <option value="" selected>Todos</option>
                         </select>
 					</div>
 					<div class="item item-input item-select col col-25 col-bottom" ng-hide="!vm.establecimientoSeleccionado">
@@ -31,50 +30,39 @@
 				</div>
 			</div>
 			<div class="row responsive-md">
-				<div class="card col col-50">
-					<div class="item item-divider">
-						Cantidad de pedidos por día
-					</div>
-					<div class="item item-text-wrap">
-						<table wt-responsive-table>
-							<thead>
-								<tr>
-									<th>Fecha</th>
-									<th>Pedidos</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr ng-repeat="item in vm.pedidosDiaLapso">
-									<td class="text-center">{{item.fecha}}</td>
-									<td class="text-center">{{item.pedidos_enviados}}</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					<div class="item item-divider">
-						Total: {{vm.getTotalPedidosDiaLapso() || 0}}
-					</div>
-				</div>
-				<div class="card col col-50">
-					<div class="item item-divider">
-						Valor de los pedidos por día
-					</div>
-					<div class="item item-text-wrap">
-						<table wt-responsive-table>
-							<thead>
-								<th>Fecha</th>
-								<th>Valor</th>
-							</thead>
-							<tbody>
-								<tr ng-repeat="item in vm.valorPorDia">
-									<td class="text-center">{{item.fecha}}</td>
-									<td class="text-center">{{item.valor}}</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					<div class="item item-divider">
-						Total: {{vm.getTotalValorPorDia() || 0}}
+				<div class="col col-80 col-offset-10">
+					<div class="card">
+						<div class="item item-divider">
+							Pedidos por día
+						</div>
+						<div class="item item-text-wrap">
+							<table wt-responsive-table>
+								<thead>
+									<tr>
+										<th class="bold">Fecha</th>
+										<th class="bold">Cantidad</th>
+										<th class="bold">Ingresos</th>
+										<th class="bold" ng-if="vm.establecimientoSeleccionado.tiene_mensajero">Ingresos por domicilio</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="item in vm.pedidosDiaLapso">
+										<td class="text-center">{{item.fecha}}</td>
+										<td class="text-center">{{item.pedidos_enviados}}</td>
+										<td class="text-center">{{(item.valor | currency : '$ ' : 0) || 0}}</td>
+										<td class="text-center" ng-if="vm.establecimientoSeleccionado.tiene_mensajero">{{(item.valor_domicilios | currency : '$ ' : 0) || 0}}</td>
+									</tr>
+									<tr>
+										<td class="bold text-center">Total</td>
+										<td class="bold text-center">{{vm.getTotalPedidosDiaLapso() || 0}}</td>
+										<td class="bold text-center">{{(vm.getTotalValorPorDia() | currency : '$ ' : 0) || 0}}</td>
+										<td class="bold text-center" ng-if="vm.establecimientoSeleccionado.tiene_mensajero">{{(vm.getTotalValorDomicilios() | currency : '$ ' : 0) || 0}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<!--<div class="item item-divider">
+						</div>-->
 					</div>
 				</div>
 			</div>

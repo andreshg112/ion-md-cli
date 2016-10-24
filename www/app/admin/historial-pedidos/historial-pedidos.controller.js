@@ -76,7 +76,10 @@
         }
 
         function getValorPedidos() {
-            return sumarElementosArray(getPropertyInArrayObject(vm.pedidos, 'total'));
+            return sumarElementosArray(getPropertyInArrayObject(vm.pedidos, 'subtotal')) +
+                sumarElementosArray(
+                    getPropertyInArrayObject(vm.pedidos, 'valor_domicilio', 'tipo_mensajero', 'propio')
+                );
         }
 
         function seleccionarFechaInicial() {

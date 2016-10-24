@@ -55,7 +55,6 @@
             cargarPedidosDiaSemana();
             cargarPedidosDiaLapso();
             cargarClientesPorGenero();
-            cargarValorPorDia();
             inicializarCharts();
         }
 
@@ -83,6 +82,8 @@
 
         function cargarEstablecimientos() {
             vm.establecimientos = user.get().administrador.establecimientos;
+            vm.establecimientoSeleccionado = (!!vm.establecimientos)
+                ? vm.establecimientos[0] : {};
         }
 
         function cargarPedidosDiaLapso() {
@@ -100,6 +101,8 @@
                     if (data.length > 0) {
                         vm.pedidosDiaLapso.labels = getPropertyInArrayObject(data, 'fecha');
                         vm.pedidosDiaLapso.data = [getPropertyInArrayObject(data, 'pedidos_enviados')];
+                        vm.valorPorDia.labels = getPropertyInArrayObject(data, 'fecha');
+                        vm.valorPorDia.data = [parseIntArray(getPropertyInArrayObject(data, 'valor'))];
                     }
                 })
                 .catch(function (error) {
@@ -131,33 +134,6 @@
                 });
         }
 
-        function cargarValorPorDia() {
-            $ionicLoading.show(loading);
-            var establecimientoId = (!vm.establecimientoSeleccionado) ? null : vm.establecimientoSeleccionado.id;
-            var sedeId = (!vm.sedeSeleccionada) ? null : vm.sedeSeleccionada.id;
-            Restangular.one('administradores', user.get().administrador.id)
-                .customGET('valor-pedidos-por-dia',
-                {
-                    establecimiento_id: establecimientoId,
-                    sede_id: sedeId,
-                    fecha_inicial: vm.fechaInicial,
-                    fecha_final: vm.fechaFinal
-                }).then(function (data) {
-                    if (data.length > 0) {
-                        vm.valorPorDia.labels = getPropertyInArrayObject(data, 'fecha');
-                        vm.valorPorDia.data = [parseIntArray(getPropertyInArrayObject(data, 'valor'))];
-                    }
-                })
-                .catch(function (error) {
-                    var mensaje = (!error.status) ? error :
-                        String.format('Error: {0} {1}', error.status, error.statusText);
-                    ionicToast.show(mensaje, 'middle', true, 2000);
-                })
-                .finally(function () {
-                    $ionicLoading.hide();
-                });
-        }
-
         function getTotalClientesPorGenero() {
             return sumarElementosArray(vm.clientesPorGenero.data);
         }
@@ -170,7 +146,7 @@
             return sumarElementosArray(vm.pedidosDiaSemana.data);
         }
 
-        function getTotalValorPorDia(params) {
+        function getTotalValorPorDia() {
             return sumarElementosArray(vm.valorPorDia.data[0]);
         }
 

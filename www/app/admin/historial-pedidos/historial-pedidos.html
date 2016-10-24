@@ -32,29 +32,37 @@
 						<input type="number" placeholder="Cantidad" value="{{vm.pedidos.length}}" disabled />
 					</div>
 					<div class="item item-input item-stacked-label col col-offset-10 col-20">
-						<span class="input-label">Valor</span>
+						<span class="input-label">Ingresos</span>
 						<input type="text" placeholder="Valor" value="{{vm.getValorPedidos() | currency : '$ ' : 0}}" disabled />
 					</div>
 				</div>
 			</div>
 			<div class="table-bordered">
-				<div class="row responsive-sm">
+				<div class="row responsive-md">
 					<pre class="col col-20">Detalles</pre>
 					<pre class="col col-10">Subtotal</pre>
 					<pre class="col col-10">Valor del domicilio</pre>
+					<pre class="col col-10">Mensajero</pre>
 					<pre class="col col-10">Total</pre>
-					<pre class="col col-20">Cliente</pre>
+					<pre class="col col-10">Cliente</pre>
 					<pre class="col col-10">Contacto</pre>
 					<pre class="col col-20">Dirección</pre>
 				</div>
-				<div class="row responsive-sm" ng-repeat="pedido in vm.pedidos track by $index">
+				<div class="row responsive-md" ng-repeat="pedido in vm.pedidos">
 					<pre class="col col-20">{{pedido.detalles}}</pre>
 					<pre class="col col-10">{{pedido.subtotal | currency : '$ ' : 0}}</pre>
-					<pre class="col col-10">{{pedido.valor_domicilio | currency : '$ ' : 0}}</pre>
+
+					<pre class="col col-10" ng-if="pedido.tipo_pedido == 'domicilio'">{{pedido.valor_domicilio | currency : '$ ' : 0}}</pre>
+					<pre class="col col-10" ng-if="pedido.tipo_pedido == 'mesa'">De mesa</pre>
+
+					<pre class="col col-10 capitalize" ng-if="pedido.tipo_pedido == 'domicilio'">{{pedido.tipo_mensajero}}</pre>
+					<pre class="col col-10" ng-if="pedido.tipo_pedido == 'mesa'">De mesa</pre>
+
 					<pre class="col col-10">{{pedido.total | currency : '$ ' : 0}}</pre>
-					<pre class="col col-20">{{pedido.cliente.nombre_completo}}</pre>
+					<pre class="col col-10">{{pedido.cliente.nombre_completo}}</pre>
 					<pre class="col col-10">{{pedido.numero}}</pre>
-					<pre class="col col-20">{{pedido.direccion}}</pre>
+					<pre class="col col-20" ng-if="pedido.tipo_pedido == 'domicilio'">{{pedido.direccion}}</pre>
+					<pre class="col col-20" ng-if="pedido.tipo_pedido == 'mesa'">De mesa</pre>
 				</div>
 			</div>
 		</div>

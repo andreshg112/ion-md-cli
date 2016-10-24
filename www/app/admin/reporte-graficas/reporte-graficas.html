@@ -18,7 +18,6 @@
 						<div class="input-label">Establecimiento</div>
 						<select id="establecimientoSeleccionado" ng-model="vm.establecimientoSeleccionado" ng-options="establecimiento as establecimiento.nombre for establecimiento in vm.establecimientos"
 							ng-change="vm.cargarDatos()">
-                            <option value="" selected>Todos</option>
                         </select>
 					</div>
 					<div class="item item-input item-select col col-25 col-bottom" ng-hide="!vm.establecimientoSeleccionado">
@@ -54,7 +53,7 @@
 						</canvas>
 					</div>
 					<div class="item item-divider">
-						Total: {{vm.getTotalValorPorDia() || 0}}
+						Total: {{(vm.getTotalValorPorDia() | currency : '$ ' : 0) || 0}}
 					</div>
 				</div>
 			</div>

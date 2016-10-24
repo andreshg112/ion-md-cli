@@ -222,6 +222,10 @@ pre {
     }
 }
 
+#list-resumen-pedido .item {
+    margin-bottom: -6px;
+}
+
 
 /* Fin CSS personal */
 

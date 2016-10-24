@@ -21,11 +21,13 @@
 				<div class="row responsive-sm" ng-repeat="pedido in vm.pedidos track by $index">
 					<pre class="col col-20">{{pedido.detalles}}</pre>
 					<pre class="col col-10">{{pedido.subtotal | currency : '$ ' : 0}}</pre>
-					<pre class="col col-10">{{pedido.valor_domicilio | currency : '$ ' : 0}}</pre>
+					<pre class="col col-10" ng-if="pedido.tipo_pedido == 'domicilio'">{{pedido.valor_domicilio | currency : '$ ' : 0}}</pre>
+					<pre class="col col-10" ng-if="pedido.tipo_pedido == 'mesa'">De mesa</pre>
 					<pre class="col col-10">{{pedido.total | currency : '$ ' : 0}}</pre>
 					<pre class="col col-10">{{pedido.cliente.nombre_completo}}</pre>
 					<pre class="col col-10">{{pedido.numero}}</pre>
-					<pre class="col col-10">{{pedido.direccion}}</pre>
+					<pre class="col col-10" ng-if="pedido.tipo_pedido == 'domicilio'">{{pedido.direccion}}</pre>
+					<pre class="col col-10" ng-if="pedido.tipo_pedido == 'mesa'">De mesa</pre>
 					<div class="text-center col col-20">
 						<i class="ion-paper-airplane icon button-icon ink tooltip" title="Despachar" ng-click="vm.despachar(pedido)"></i>
 						<i class="ion-printer icon button-icon ink tooltip" title="Imprimir" ng-click="vm.imprimirPedidoEnCola(pedido)"></i>

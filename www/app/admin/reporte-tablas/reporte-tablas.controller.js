@@ -31,6 +31,7 @@
         vm.getTotalPedidosDiaLapso = getTotalPedidosDiaLapso;
         vm.seleccionarFechaInicial = seleccionarFechaInicial;
         vm.seleccionarFechaFinal = seleccionarFechaFinal;
+        vm.getTotalValorDomicilios = getTotalValorDomicilios;
         vm.getTotalValorPorDia = getTotalValorPorDia;
 
         activate();
@@ -53,11 +54,12 @@
 
         function cargarDatos() {
             cargarPedidosDiaLapso();
-            cargarValorPorDia();
         }
 
         function cargarEstablecimientos() {
             vm.establecimientos = user.get().administrador.establecimientos;
+            vm.establecimientoSeleccionado = (!!vm.establecimientos)
+                ? vm.establecimientos[0] : {};
         }
 
         function cargarPedidosDiaLapso() {
@@ -84,36 +86,16 @@
                 });
         }
 
-        function cargarValorPorDia() {
-            $ionicLoading.show(loading);
-            var establecimientoId = (!vm.establecimientoSeleccionado) ? null : vm.establecimientoSeleccionado.id;
-            var sedeId = (!vm.sedeSeleccionada) ? null : vm.sedeSeleccionada.id;
-            Restangular.one('administradores', user.get().administrador.id)
-                .customGET('valor-pedidos-por-dia',
-                {
-                    establecimiento_id: establecimientoId,
-                    sede_id: sedeId,
-                    fecha_inicial: vm.fechaInicial,
-                    fecha_final: vm.fechaFinal
-                }).then(function (data) {
-                    vm.valorPorDia = data;
-                })
-                .catch(function (error) {
-                    var mensaje = (!error.status) ? error :
-                        String.format('Error: {0} {1}', error.status, error.statusText);
-                    ionicToast.show(mensaje, 'middle', true, 2000);
-                })
-                .finally(function () {
-                    $ionicLoading.hide();
-                });
-        }
-
         function getTotalPedidosDiaLapso() {
             return sumarElementosArray(getPropertyInArrayObject(vm.pedidosDiaLapso, 'pedidos_enviados'));
         }
 
-        function getTotalValorPorDia(params) {
-            return sumarElementosArray(getPropertyInArrayObject(vm.valorPorDia, 'valor'));
+        function getTotalValorDomicilios() {
+            return sumarElementosArray(getPropertyInArrayObject(vm.pedidosDiaLapso, 'valor_domicilios'));
+        }
+
+        function getTotalValorPorDia() {
+            return sumarElementosArray(getPropertyInArrayObject(vm.pedidosDiaLapso, 'valor'));
         }
 
         function seleccionarFechaInicial() {

@@ -168,22 +168,26 @@
         }
 
         function despachar(pedido) {
-            if (user.get().vendedor.sede.establecimiento.tiene_mensajero) {
-                var confirmarDespacho = $ionicPopup.confirm({
-                    title: '¿Quién va a despachar el pedido?',
-                    cssClass: 'resumen-pedido',
-                    templateUrl: 'app/vendedor/pedidos/tipo-mensajero.html',
-                    cancelText: 'Cancelar',
-                    scope: $scope
-                });
-                confirmarDespacho.then(function (res) {
-                    if (res) {
-                        pedido.tipo_mensajero = vm.tipo_mensajero;
-                        registrarDespacho(pedido);
-                    }
-                });
-            } else {
-                pedido.tipo_mensajero = 'externo';
+            if (pedido.tipo_pedido == 'domicilio') {
+                if (user.get().vendedor.sede.establecimiento.tiene_mensajero) {
+                    var confirmarDespacho = $ionicPopup.confirm({
+                        title: '¿Quién va a despachar el pedido?',
+                        cssClass: 'resumen-pedido',
+                        templateUrl: 'app/vendedor/pedidos/tipo-mensajero.html',
+                        cancelText: 'Cancelar',
+                        scope: $scope
+                    });
+                    confirmarDespacho.then(function (res) {
+                        if (res) {
+                            pedido.tipo_mensajero = vm.tipo_mensajero;
+                            registrarDespacho(pedido);
+                        }
+                    });
+                } else {
+                    pedido.tipo_mensajero = 'externo';
+                    registrarDespacho(pedido);
+                }
+            } else if (pedido.tipo_pedido == 'mesa') {
                 registrarDespacho(pedido);
             }
         }
@@ -215,7 +219,10 @@
             var divResumenPedido = document.getElementById(muestra).innerHTML;
             var popupWin = window.open('', '_blank');
             popupWin.document.open();
-            var inicio = '<html><head><link rel="stylesheet" type="text/css" href="lib/ionic/css/ionic.css" /></head><body onload="window.print()">';
+            var inicio = '<html><head>'
+                + '<link rel="stylesheet" href="lib/ionic/css/ionic.css" />'
+                + '<link rel="stylesheet" href="css/style.css" />'
+                + '</head><body onload="window.print()">';
             var final = '</body></html>';
             popupWin.document.write(inicio + divResumenPedido + final);
             popupWin.document.close();
@@ -223,7 +230,9 @@
 
         function limpiar() {
             vm.pedido = {
-                cliente: {}
+                cliente: {},
+                tipo_pedido: (user.get().vendedor.sede.establecimiento.tiene_pedido_mesa) ?
+                    'mesa' : 'domicilio'
             };
             $scope.$broadcast('angucomplete-alt:clearInput', 'nombre_completo');
             if (vm.formPedido) {

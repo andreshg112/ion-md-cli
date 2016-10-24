@@ -14,7 +14,6 @@
 						<div class="input-label">Establecimiento</div>
 						<select id="establecimientoSeleccionado" ng-model="vm.establecimientoSeleccionado" ng-options="establecimiento as establecimiento.nombre for establecimiento in vm.establecimientos"
 							ng-change="vm.cargarClientes()">
-                            <option value="" selected>Todos</option>
                         </select>
 					</div>
 					<!--<div class="item item-input item-stacked-label col col-25">

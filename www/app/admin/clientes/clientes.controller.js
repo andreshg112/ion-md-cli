@@ -84,6 +84,8 @@
 
         function cargarEstablecimientos() {
             vm.establecimientos = user.get().administrador.establecimientos;
+            vm.establecimientoSeleccionado = (!!vm.establecimientos)
+                ? vm.establecimientos[0] : {};
         }
 
         function enviarOferta(mensaje) {

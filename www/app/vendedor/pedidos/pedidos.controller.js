@@ -369,6 +369,9 @@
             limpiar();
         });
 
+        /**
+         * Cerrar modal de nuevo pedido cuando se presione Escape.
+         */
         document.onkeydown = function (evt) {
             evt = evt || window.event;
             var isEscape = false;
@@ -378,7 +381,7 @@
                 isEscape = (evt.keyCode == 27);
             }
             if (isEscape) {
-                cerrarModal();
+                if (vm.modalNuevo.isShown()) cerrarModal();
             }
         };
     }

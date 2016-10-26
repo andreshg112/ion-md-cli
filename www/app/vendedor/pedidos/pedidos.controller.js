@@ -372,7 +372,7 @@
         /**
          * Cerrar modal de nuevo pedido cuando se presione Escape.
          */
-        document.onkeydown = function (evt) {
+        /*document.onkeydown = function (evt) {
             evt = evt || window.event;
             var isEscape = false;
             if ("key" in evt) {
@@ -383,6 +383,6 @@
             if (isEscape) {
                 if (vm.modalNuevo.isShown()) cerrarModal();
             }
-        };
+        };*/
     }
 })();

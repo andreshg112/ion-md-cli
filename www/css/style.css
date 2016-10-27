@@ -222,8 +222,14 @@ pre {
     }
 }
 
-#list-resumen-pedido .item {
-    margin-bottom: -6px;
+#table-resumen-pedido {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#table-resumen-pedido, #table-resumen-pedido th, #table-resumen-pedido td {
+    border: 1px solid lightgray;
+    vertical-align: middle;
 }
 
 

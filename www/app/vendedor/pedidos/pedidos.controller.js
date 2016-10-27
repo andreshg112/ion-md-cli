@@ -220,7 +220,6 @@
             var popupWin = window.open('', '_blank');
             popupWin.document.open();
             var inicio = '<html><head>'
-                + '<link rel="stylesheet" href="lib/ionic/css/ionic.css" />'
                 + '<link rel="stylesheet" href="css/style.css" />'
                 + '</head><body onload="window.print()">';
             var final = '</body></html>';

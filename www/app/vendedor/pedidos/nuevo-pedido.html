@@ -10,7 +10,7 @@
 		<div class="im-wrapper">
 			<form id="formPedido" name="vm.formPedido" ng-submit="vm.confirmar()">
 				<div class="list">
-					<div id="fila-0" class="row responsive-md" ng-if="app.user.vendedor.sede.establecimiento.tiene_pedido_mesa">
+					<div id="fila-0" class="row responsive-sm" ng-if="app.user.vendedor.sede.establecimiento.tiene_pedido_mesa">
 						<div class="item item-input item-select col col-50">
 							<div class="input-label">Tipo de pedido</div>
 							<select ng-init="vm.pedido.tipo_pedido = 'mesa'" ng-model="vm.pedido.tipo_pedido">
@@ -19,12 +19,29 @@
                             </select>
 						</div>
 					</div>
-					<div id="fila-1" class="row responsive-md">
-						<div class="item item-input item-stacked-label col col-50">
-							<span class="input-label">Pedido</span>
-							<textarea id="pedido" class="fd-input" placeholder="Escriba aquí su pedido" rows="6" ng-model="vm.pedido.detalles" required></textarea>
+					<div id="fila-1" class="row responsive-sm">
+						<div class="col col-67">
+							<!--<span class="input-label">Pedido</span>
+							<textarea id="pedido" class="fd-input" placeholder="Escriba aquí su pedido" rows="6" ng-model="vm.pedido.detalles" required></textarea>-->
+							<div class="row responsive-sm">
+								<span class="input-label col col-20">Cantidad</span>
+								<span class="input-label col">Producto</span>
+								<span class="input-label col">Comentario</span>
+							</div>
+							<div class="row responsive-sm">
+								<div class="item item-input col col-20">
+									<input type="number" id="" class="fd-input" min="0" placeholder="Cantidad" />
+								</div>
+								<div class="item item-input col">
+									<input type="text" id="" class="fd-input" placeholder="Producto" />
+								</div>
+								<div class="item item-input col">
+									<input type="text" class="fd-input" placeholder="Comentario" />
+								</div>
+								<i class="ion-plus icon button-icon button-balanced button-fab ink tooltip" title="Agregar producto"></i>
+							</div>
 						</div>
-						<div class="col col-50">
+						<div class="col">
 							<div class="row">
 								<div class="item item-input">
 									<span class="input-label col">Subtotal</span>
@@ -54,7 +71,7 @@
 							</div>
 						</div>
 					</div>
-					<div id="fila-2" class="row responsive-md">
+					<div id="fila-2" class="row responsive-sm">
 						<div class="item item-input item-stacked-label col">
 							<span class="input-label">Nombre completo</span>
 							<angucomplete-alt id="nombre_completo" description-field="direccion_casa" input-changed="vm.cambioNombre" input-class="capitalize fd-input"
@@ -63,7 +80,7 @@
 								text-searching="Buscando cliente..." title-field="nombre_completo" required/>
 						</div>
 					</div>
-					<div id="fila-3" class="row responsive-md">
+					<div id="fila-3" class="row responsive-sm">
 						<div class="item item-input item-select col col-50">
 							<div class="input-label">Número</div>
 							<select ng-model="vm.tipo_numero" ng-init="vm.tipo_numero = 'Celular'">
@@ -81,7 +98,7 @@
 								placeholder="Teléfono" ng-model="vm.pedido.cliente.telefono" ng-required="vm.tipo_numero == 'Teléfono'" />
 						</div>
 					</div>
-					<div id="fila-4" class="row responsive-md" ng-if="vm.pedido.tipo_pedido == 'domicilio'">
+					<div id="fila-4" class="row responsive-sm" ng-if="vm.pedido.tipo_pedido == 'domicilio'">
 						<div class="item item-input item-select col col-50">
 							<div class="input-label">Dirección</div>
 							<select ng-init="vm.tipo_direccion = 'Casa'" ng-model="vm.tipo_direccion">
@@ -103,7 +120,7 @@
 								ng-required="vm.tipo_direccion == 'Otra'" />
 						</div>
 					</div>
-					<div id="fila-5" class="row responsive-md">
+					<div id="fila-5" class="row responsive-sm">
 						<div class="item item-input item-select col col-50 col-bottom">
 							<div class="input-label">Género</div>
 							<select ng-model="vm.pedido.cliente.genero" required>
@@ -117,7 +134,7 @@
 							<input type="email" id="email" class="fd-input" placeholder="usuario@ejemplo.com" ng-model="vm.pedido.cliente.email" />
 						</div>
 						<div class="item item-input item-stacked-label col col-20 col-offset-10">
-							<span class="input-label">Fecha de nacimiento</span>
+							<span class="input-label">Fecha de cumpleaños</span>
 							<input type="text" class="fd-input" placeholder="YYYY-MM-DD" ng-click="vm.seleccionarFechaNacimiento()" ng-model="vm.pedido.cliente.fecha_nacimiento"
 							/>
 						</div>

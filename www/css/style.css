@@ -211,7 +211,7 @@ pre {
     bottom: 2.5%;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 896px) {
     .modal-nuevo-pedido {
         width: 100%;
         height: 100%;

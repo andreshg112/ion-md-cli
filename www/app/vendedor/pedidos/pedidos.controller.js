@@ -144,7 +144,7 @@
         function confirmar() {
             var detalles = '';
             vm.pedido.productosSeleccionados.forEach(function (element) {
-                detalles += element.descripcion + "\n";
+                detalles += element.nombre + ' ' + element.valor + "\n";
             }, this);
             vm.pedido.detalles = detalles;
             vm.pedido.subtotal = getSubtotal();
@@ -205,9 +205,7 @@
         }
 
         function imprimirPedidoEnCola(pedido) {
-            console.log('pedido', pedido);
             vm.pedido = pedido;
-            console.log('vm.pedido', vm.pedido);
             var confirmarPedido = $ionicPopup.confirm({
                 title: 'Imprimir pedido',
                 cssClass: 'resumen-pedido',
@@ -265,6 +263,8 @@
 
         function modificar(item) {
             vm.pedido = item; //No funciona con angular.copy().
+            var detalles = vm.pedido.detalles;
+            var productos = detalles.split('/n');
             $scope.$broadcast('angucomplete-alt:changeInput', 'nombre_completo', vm.pedido.cliente.nombre_completo);
             vm.modalNuevo.show();
         }

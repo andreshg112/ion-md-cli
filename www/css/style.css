@@ -203,12 +203,12 @@ pre {
 }
 
 .modal-nuevo-pedido {
-    width: 90%;
-    height: 90%;
-    top: 5%;
-    left: 5%;
-    right: 5%;
-    bottom: 5%;
+    width: 95%;
+    height: 95%;
+    top: 2.5%;
+    left: 2.5%;
+    right: 2.5%;
+    bottom: 2.5%;
 }
 
 @media only screen and (max-width: 768px) {

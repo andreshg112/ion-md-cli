@@ -24,30 +24,42 @@
 							<!--<span class="input-label">Pedido</span>
 							<textarea id="pedido" class="fd-input" placeholder="Escriba aquí su pedido" rows="6" ng-model="vm.pedido.detalles" required></textarea>-->
 							<div class="row responsive-sm">
-								<span class="input-label col col-20">Cantidad</span>
-								<span class="input-label col">Producto</span>
-								<span class="input-label col">Comentario</span>
+								<div class="col">
+									<span class="input-label">Productos</span>
+								</div>
+								<div class="col col-20">
+									<span class="input-label">Valor</span>
+								</div>
+								<div class="col col-10">
+									<span class="input-label">Quitar</span>
+								</div>
 							</div>
-							<div class="row responsive-sm">
+							<div class="row responsive-sm" ng-repeat="producto in vm.pedido.productosSeleccionados track by $index">
+								<div class="item item-input col">
+									<input type="text" id="" class="fd-input" placeholder="Producto" ng-model="producto.descripcion" required />
+								</div>
 								<div class="item item-input col col-20">
-									<input type="number" id="" class="fd-input" min="0" placeholder="Cantidad" />
+									<input type="text" class="fd-input" min="0" onkeypress="return isNumberKey(event)" placeholder="Valor" ng-currency fraction="0"
+										ng-model="producto.valor" required />
 								</div>
-								<div class="item item-input col">
-									<input type="text" id="" class="fd-input" placeholder="Producto" />
+								<div class="item item-input col col-10">
+									<i class="icon ion-close-round button-icon ink tooltip" title="Quitar producto" ng-click="vm.quitarProducto($index)"></i>
 								</div>
-								<div class="item item-input col">
-									<input type="text" class="fd-input" placeholder="Comentario" />
-								</div>
-								<i class="ion-plus icon button-icon button-balanced button-fab ink tooltip" title="Agregar producto"></i>
 							</div>
+							<div class="row">
+								<div class="col text-center">
+									<i class="icon ion-plus button-icon ink tooltip" title="Agregar producto" ng-click="vm.pedido.productosSeleccionados.push({})"></i>
+								</div>
+							</div>
+							<!--<input type="button" name="" value="Mostrar" ng-click="vm.mostrar(vm.productosSeleccionados)" />-->
 						</div>
 						<div class="col">
 							<div class="row">
 								<div class="item item-input">
 									<span class="input-label col">Subtotal</span>
 									<div class="col">
-										<input type="text" id="subtotal" class="fd-input" fraction="0" min="0" onkeypress="return isNumberKey(event)" placeholder="Subtotal"
-											ng-change="vm.setTotal()" ng-currency ng-model="vm.pedido.subtotal" ng-required="true" />
+										<input type="text" id="subtotal" class="fd-input" placeholder="Subtotal" value="{{vm.getSubtotal() | currency : '$ ' : 0}}"
+											ng-required="true" disabled/>
 									</div>
 								</div>
 							</div>
@@ -56,7 +68,7 @@
 									<span class="input-label col">Valor del domicilio</span>
 									<div class="col">
 										<input type="text" id="valor_domicilio" class="fd-input" fraction="0" min="0" onkeypress="return isNumberKey(event)" placeholder="Valor del domicilio"
-											ng-change="vm.setTotal()" ng-currency ng-model="vm.pedido.valor_domicilio" />
+											ng-currency ng-model="vm.pedido.valor_domicilio" />
 									</div>
 								</div>
 							</div>
@@ -64,8 +76,8 @@
 								<div class="item item-input">
 									<span class="input-label col">Total a pagar</span>
 									<div class="col">
-										<input type="text" id="total" class="fd-input" fraction="0" min="0" placeholder="Total a pagar" onkeypress="return isNumberKey(event)"
-											ng-currency ng-model="vm.pedido.total" disabled ng-required="true" />
+										<input type="text" id="total" class="fd-input" placeholder="Total a pagar" value="{{vm.getTotal() | currency : '$ ' : 0}}"
+											ng-required="true" disabled/>
 									</div>
 								</div>
 							</div>

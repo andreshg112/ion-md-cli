@@ -11,6 +11,9 @@
         Restangular.setDefaultRequestParams({ token: user.get().token });
 
         var vm = this;
+        vm.mostrar = function (algo) {
+            console.log(algo);
+        }
         var loading = {
             template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>'
         };
@@ -33,10 +36,12 @@
         vm.modificar = modificar;
         vm.pedidos = [];
         vm.pedidosCliente = [];
+        vm.quitarProducto = quitarProducto;
         vm.openModal = openModal;
         vm.seleccionarFechaNacimiento = seleccionarFechaNacimiento;
         vm.setCliente = setCliente;
-        vm.setTotal = setTotal;
+        vm.getSubtotal = getSubtotal;
+        vm.getTotal = getTotal;
         vm.verPedidosAnteriores = verPedidosAnteriores;
 
         activate();
@@ -137,6 +142,13 @@
         }
 
         function confirmar() {
+            var detalles = '';
+            vm.pedido.productosSeleccionados.forEach(function (element) {
+                detalles += element.descripcion + "\n";
+            }, this);
+            vm.pedido.detalles = detalles;
+            vm.pedido.subtotal = getSubtotal();
+            vm.pedido.total = getTotal();
             vm.pedido.numero = (vm.tipo_numero == 'Celular') ?
                 vm.pedido.cliente.celular : vm.pedido.cliente.telefono;
             if (vm.tipo_direccion == 'Casa') {
@@ -192,14 +204,10 @@
             }
         }
 
-        function setTotal() {
-            var subtotal = vm.pedido.subtotal || 0;
-            var valor_domicilio = vm.pedido.valor_domicilio || 0
-            vm.pedido.total = subtotal + valor_domicilio;
-        }
-
         function imprimirPedidoEnCola(pedido) {
+            console.log('pedido', pedido);
             vm.pedido = pedido;
+            console.log('vm.pedido', vm.pedido);
             var confirmarPedido = $ionicPopup.confirm({
                 title: 'Imprimir pedido',
                 cssClass: 'resumen-pedido',
@@ -231,7 +239,8 @@
             vm.pedido = {
                 cliente: {},
                 tipo_pedido: (user.get().vendedor.sede.establecimiento.tiene_pedido_mesa) ?
-                    'mesa' : 'domicilio'
+                    'mesa' : 'domicilio',
+                productosSeleccionados: [{}]
             };
             $scope.$broadcast('angucomplete-alt:clearInput', 'nombre_completo');
             if (vm.formPedido) {
@@ -263,6 +272,14 @@
         function openModal() {
             vm.modalNuevo.show();
             document.getElementById("nombre_completo_value").required = true;
+        }
+
+        function quitarProducto(index) {
+            if (vm.pedido.productosSeleccionados.length <= 1) {
+                toastr.error('Un pedido debe tener por lo menos un producto.');
+            } else {
+                vm.pedido.productosSeleccionados.splice(index, 1);
+            }
         }
 
         function registrarDespacho(pedido) {
@@ -335,6 +352,21 @@
             if ($item) {
                 vm.pedido.cliente = angular.copy($item.originalObject);
             }
+        }
+
+        function getSubtotal() {
+            var subtotal = 0;
+            vm.pedido.productosSeleccionados.forEach(function (element) {
+                var valor = element.valor || 0;
+                subtotal += parseInt(valor);
+            }, this);
+            return subtotal;
+        }
+
+        function getTotal() {
+            var subtotal = getSubtotal() || 0;
+            var valorDomicilio = vm.pedido.valor_domicilio || 0;
+            return subtotal + valorDomicilio;
         }
 
         function seleccionarFechaNacimiento() {

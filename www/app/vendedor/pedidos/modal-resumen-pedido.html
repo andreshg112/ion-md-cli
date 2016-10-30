@@ -7,7 +7,9 @@
 		</tr>
 		<tr>
 			<td>Pedido</td>
-			<td>{{vm.pedido.detalles}}</td>
+			<td>
+				<pre>{{vm.pedido.detalles}}</pre>
+			</td>
 		</tr>
 		<tr ng-if="vm.pedido.tipo_pedido == 'domicilio'">
 			<td>Subtotal</td>

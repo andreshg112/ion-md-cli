@@ -40,6 +40,7 @@
         vm.openModal = openModal;
         vm.seleccionarFechaNacimiento = seleccionarFechaNacimiento;
         vm.setCliente = setCliente;
+        vm.setProducto = setProducto;
         vm.getSubtotal = getSubtotal;
         vm.getTotal = getTotal;
         vm.verPedidosAnteriores = verPedidosAnteriores;
@@ -143,7 +144,7 @@
 
         function confirmar() {
             var detalles = '';
-            vm.pedido.productosSeleccionados.forEach(function (element) {
+            vm.pedido.productos.forEach(function (element) {
                 detalles += element.nombre + ' ' + element.valor + "\n";
             }, this);
             vm.pedido.detalles = detalles;
@@ -238,7 +239,7 @@
                 cliente: {},
                 tipo_pedido: (user.get().vendedor.sede.establecimiento.tiene_pedido_mesa) ?
                     'mesa' : 'domicilio',
-                productosSeleccionados: [{}]
+                productos: [{}]
             };
             $scope.$broadcast('angucomplete-alt:clearInput', 'nombre_completo');
             if (vm.formPedido) {
@@ -275,10 +276,10 @@
         }
 
         function quitarProducto(index) {
-            if (vm.pedido.productosSeleccionados.length <= 1) {
+            if (vm.pedido.productos.length <= 1) {
                 toastr.error('Un pedido debe tener por lo menos un producto.');
             } else {
-                vm.pedido.productosSeleccionados.splice(index, 1);
+                vm.pedido.productos.splice(index, 1);
             }
         }
 
@@ -354,9 +355,17 @@
             }
         }
 
+        function setProducto($item) {
+            console.log($item);
+            if ($item) {
+                vm.pedido.productos.push(angular.copy($item.originalObject));
+                console.log(vm.pedido);
+            }
+        }
+
         function getSubtotal() {
             var subtotal = 0;
-            vm.pedido.productosSeleccionados.forEach(function (element) {
+            vm.pedido.productos.forEach(function (element) {
                 var valor = element.valor || 0;
                 subtotal += parseInt(valor);
             }, this);

@@ -39,9 +39,13 @@
 							<span class="input-label">Quitar</span>
 						</div>
 					</div>
-					<div id="fila-2" class="row responsive-md" ng-repeat="item in vm.pedido.productosSeleccionados track by $index">
+					<div id="fila-2" class="row responsive-md" ng-repeat="item in vm.pedido.productos track by $index">
 						<div class="item item-input col col-20">
-							<input type="text" id="p-nombre-{{$index}}" class="fd-input" placeholder="Producto" ng-model="item.nombre" required />
+							<!--<input type="text" id="p-nombre-{{$index}}" class="fd-input" placeholder="Producto" ng-model="item.nombre" required />-->
+							<angucomplete-alt id="p-nombre-{{$index}}" description-field="nombre" input-class="capitalize fd-input" local-data="app.$sStorage.productos"
+								match-class="highlight" minlength="1" placeholder="Producto" search-fields="nombre" selected-object="vm.setProducto"
+								text-no-results="No existen productos que coincidan con el criterio de búsqueda." text-searching="Buscando producto..."
+								title-field="nombre" required/>
 						</div>
 						<div class="item item-input col col-20">
 							<input type="text" id="p-comentario-{{$index}}" class="fd-input" placeholder="Comentario" ng-model="item.comentario" required
@@ -65,7 +69,7 @@
 					</div>
 					<div id="fila-3" class="row">
 						<div class="col text-center">
-							<i class="icon ion-plus button-icon ink tooltip" title="Agregar producto" ng-click="vm.pedido.productosSeleccionados.push({})"></i>
+							<i class="icon ion-plus button-icon ink tooltip" title="Agregar producto" ng-click="vm.pedido.productos.push({})"></i>
 						</div>
 					</div>
 					<div id="fila-4" class="row responsive-sm">

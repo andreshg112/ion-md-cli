@@ -18,6 +18,7 @@
         'wt.responsive',
         'ngAnimate',
         'toastr',
-        'ng-currency'
+        'ng-currency',
+        'ngStorage'
     ])
 })();

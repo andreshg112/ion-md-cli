@@ -5,17 +5,21 @@
         .module('app')
         .controller('AppController', AppController);
 
-    AppController.$inject = ['$scope', '$ionicPopover', 'user', '$state', '$timeout', '$ionicHistory', 'Restangular', '$ionicSideMenuDelegate', 'ClientesService', 'API', 'toastr'];
+    AppController.$inject = ['$scope', '$ionicPopover', 'user', '$state', '$timeout', '$ionicHistory', 'Restangular', '$ionicSideMenuDelegate', 'ClientesService', 'API', 'toastr', '$sessionStorage'];
 
-    function AppController($scope, $ionicPopover, user, $state, $timeout, $ionicHistory, Restangular, $ionicSideMenuDelegate, ClientesService, API, toastr) {
+    function AppController($scope, $ionicPopover, user, $state, $timeout, $ionicHistory, Restangular, $ionicSideMenuDelegate, ClientesService, API, toastr, $sessionStorage) {
         Restangular.setDefaultRequestParams({ token: user.get().token });
 
         var vm = this;
 
-        this.API = API;
+        vm.API = API;
         vm.clientesCumpliendo = []; //Para el administrador 
         vm.cerrarSesion = cerrarSesion;
         vm.user = user.get();
+        vm.$sStorage = $sessionStorage.$default({
+            productos: []
+        });
+
 
         activate();
 
@@ -24,6 +28,8 @@
         function activate() {
             if (user.get().rol == 'ADMIN') {
                 cargarClientesCumpliendo();
+            } else if (user.get().rol == 'VENDEDOR') {
+                cargarProductos();
             }
         }
 
@@ -34,6 +40,20 @@
                     if (data.length > 0) {
                         vm.clientesCumpliendo = data;
                     }
+                })
+                .catch(function (error) {
+                    var mensaje = (!error.status) ? error :
+                        String.format('{0} {1}', error.status, error.statusText);
+                    toastr.error(mensaje, 'Error', {
+                        timeOut: 0
+                    });
+                });
+        }
+
+        function cargarProductos() {
+            Restangular.one('vendedores', user.get().vendedor.id).one('establecimientos', user.get().vendedor.sede.establecimiento.id).getList('productos')
+                .then(function (data) {
+                    vm.$sStorage.productos = data;
                 })
                 .catch(function (error) {
                     var mensaje = (!error.status) ? error :

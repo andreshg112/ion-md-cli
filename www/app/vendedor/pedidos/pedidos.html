@@ -19,7 +19,9 @@
 					<pre class="text-center col col-20">Acciones</pre>
 				</div>
 				<div class="row responsive-sm" ng-repeat="pedido in vm.pedidos track by $index">
-					<pre class="col col-20">{{pedido.detalles}}</pre>
+					<div class="col col-20">
+						<pre ng-repeat="item in pedido.productos">{{item.nombre + ' ' + item.comentario + ' ' + (item.valor | currency : '$ ' : 0)}}</pre>
+					</div>
 					<pre class="col col-10">{{pedido.subtotal | currency : '$ ' : 0}}</pre>
 					<pre class="col col-10" ng-if="pedido.tipo_pedido == 'domicilio'">{{pedido.valor_domicilio | currency : '$ ' : 0}}</pre>
 					<pre class="col col-10" ng-if="pedido.tipo_pedido == 'mesa'">De mesa</pre>

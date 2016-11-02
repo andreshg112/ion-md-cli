@@ -20,6 +20,18 @@
 						</div>
 					</div>
 					<div id="fila-1" class="row responsive-md">
+						<div class="item item-input item-stacked-label col col-50">
+							<span class="input-label">Buscar producto</span>
+							<angucomplete-alt id="busqueda-producto" description-field="valor" input-class="capitalize fd-input" local-data="app.$sStorage.productos"
+								match-class="highlight" minlength="1" placeholder="Escriba aquí para buscar el producto" search-fields="nombre" selected-object="vm.agregarProducto"
+								text-no-results="No existen productos que coincidan con el criterio de búsqueda." text-searching="Buscando producto..."
+								title-field="nombre" clear-selected="true" />
+						</div>
+						<div class="col col-bottom" ng-if="vm.hayProductoEscrito()">
+							<i class="icon ion-plus button-icon ink tooltip" title="Agregar producto" ng-click="vm.agregarProductoNuevo()"></i>
+						</div>
+					</div>
+					<div id="fila-2" class="row responsive-md" ng-if="vm.pedido.productos.length > 0">
 						<div class="col col-20">
 							<span class="input-label">Producto</span>
 						</div>
@@ -39,17 +51,13 @@
 							<span class="input-label">Quitar</span>
 						</div>
 					</div>
-					<div id="fila-2" class="row responsive-md" ng-repeat="item in vm.pedido.productos track by $index">
+					<div id="fila-3" class="row responsive-md" ng-repeat="item in vm.pedido.productos track by $index">
 						<div class="item item-input col col-20">
-							<!--<input type="text" id="p-nombre-{{$index}}" class="fd-input" placeholder="Producto" ng-model="item.nombre" required />-->
-							<angucomplete-alt id="p-nombre-{{$index}}" description-field="nombre" input-class="capitalize fd-input" local-data="app.$sStorage.productos"
-								match-class="highlight" minlength="1" placeholder="Producto" search-fields="nombre" selected-object="vm.setProducto"
-								text-no-results="No existen productos que coincidan con el criterio de búsqueda." text-searching="Buscando producto..."
-								title-field="nombre" required/>
+							<input type="text" id="p-nombre-{{$index}}" class="fd-input" placeholder="Producto" ng-model="item.nombre" required />
 						</div>
 						<div class="item item-input col col-20">
-							<input type="text" id="p-comentario-{{$index}}" class="fd-input" placeholder="Comentario" ng-model="item.comentario" required
-							/>
+							<input type="text" id="p-comentario-{{$index}}" class="fd-input tooltip" placeholder="Comentario" title="Por ejemplo: Sin azúcar, con salsa, etc."
+								ng-model="item.comentario" />
 						</div>
 						<div class="item item-input col col-20">
 							<input type="text" id="p-valor-{{$index}}" class="fd-input" min="0" onkeypress="return isNumberKey(event)" placeholder="Valor"
@@ -65,11 +73,6 @@
 						</div>
 						<div class="col col-10 text-center">
 							<i id="p-quitar-{{$index}}" class="icon ion-close-round button-icon ink tooltip" title="Quitar producto" ng-click="vm.quitarProducto($index)"></i>
-						</div>
-					</div>
-					<div id="fila-3" class="row">
-						<div class="col text-center">
-							<i class="icon ion-plus button-icon ink tooltip" title="Agregar producto" ng-click="vm.pedido.productos.push({})"></i>
 						</div>
 					</div>
 					<div id="fila-4" class="row responsive-sm">
@@ -95,7 +98,7 @@
 							<angucomplete-alt id="nombre_completo" description-field="direccion_casa" input-changed="vm.cambioNombre" input-class="capitalize fd-input"
 								local-data="vm.clientes" local-search="vm.localSearch" match-class="highlight" minlength="1" placeholder="Nombre completo"
 								selected-object="vm.setCliente" search-fields="nombre_completo" text-no-results="No existen clientes que coincidan con el criterio de búsqueda."
-								text-searching="Buscando cliente..." title-field="nombre_completo" required/>
+								text-searching="Buscando cliente..." title-field="nombre_completo" />
 						</div>
 						<div class="item item-input item-select col col-bottom">
 							<div class="input-label">Número</div>
@@ -159,7 +162,7 @@
 						<a href="javascript:;" class="balanced icon ion-navicon-round" ng-click="vm.verPedidosAnteriores(vm.pedido.cliente)">Ver pedidos anteriores</a>
 					</div>
 					<br />
-					<button class="button button-block button-calm ink" data-ink-color="#9DEAFF" data-ink-opacity="1" ng-disabled="vm.formPedido.$invalid">Confirmar</button>
+					<button class="button button-block button-calm ink" data-ink-color="#9DEAFF" data-ink-opacity="1" ng-disabled="vm.formPedido.$invalid || vm.pedido.productos.length == 0">Confirmar</button>
 				</div>
 			</form>
 		</div>

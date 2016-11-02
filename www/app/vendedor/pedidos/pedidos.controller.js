@@ -25,12 +25,15 @@
         var pedidos = Restangular.all('pedidos');
 
         //
+        vm.agregarProducto = agregarProducto;
+        vm.agregarProductoNuevo = agregarProductoNuevo;
         vm.cambioNombre = cambioNombre
         vm.cancelarPedido = cancelarPedido;
         vm.cerrarModal = cerrarModal;
         vm.clientes = [];
         vm.confirmar = confirmar;
         vm.despachar = despachar;
+        vm.hayProductoEscrito = hayProductoEscrito;
         vm.imprimirPedidoEnCola = imprimirPedidoEnCola;
         vm.localSearch = localSearch;
         vm.modificar = modificar;
@@ -40,9 +43,9 @@
         vm.openModal = openModal;
         vm.seleccionarFechaNacimiento = seleccionarFechaNacimiento;
         vm.setCliente = setCliente;
-        vm.setProducto = setProducto;
         vm.getSubtotal = getSubtotal;
         vm.getTotal = getTotal;
+        vm.getTotalProducto = getTotalProducto;
         vm.verPedidosAnteriores = verPedidosAnteriores;
 
         activate();
@@ -55,6 +58,19 @@
         function activate() {
             limpiar();
             cargarPedidosNoEnviados();
+        }
+
+        function agregarProducto($item) {
+            if ($item) {
+                vm.pedido.productos.push(angular.copy($item.originalObject));
+            }
+        }
+
+        function agregarProductoNuevo() {
+            if (hayProductoEscrito()) {
+                var busquedaProducto = document.getElementById("busqueda-producto_value");
+                vm.pedido.productos.push({ nombre: busquedaProducto.value.capitalize() });
+            }
         }
 
         function cambioNombre(str) {
@@ -145,8 +161,11 @@
         function confirmar() {
             var detalles = '';
             vm.pedido.productos.forEach(function (element) {
-                detalles += element.nombre + ' ' + element.valor + "\n";
+                detalles += element.nombre + ' '
+                    + (element.comentario ? element.comentario + ' ' : '')
+                    + element.valor + "\n";
             }, this);
+            detalles = detalles.trim();
             vm.pedido.detalles = detalles;
             vm.pedido.subtotal = getSubtotal();
             vm.pedido.total = getTotal();
@@ -205,6 +224,11 @@
             }
         }
 
+        function hayProductoEscrito() {
+            var busquedaProducto = document.getElementById("busqueda-producto_value");
+            return busquedaProducto && busquedaProducto.value.length > 0;
+        }
+
         function imprimirPedidoEnCola(pedido) {
             vm.pedido = pedido;
             var confirmarPedido = $ionicPopup.confirm({
@@ -239,8 +263,9 @@
                 cliente: {},
                 tipo_pedido: (user.get().vendedor.sede.establecimiento.tiene_pedido_mesa) ?
                     'mesa' : 'domicilio',
-                productos: [{}]
+                productos: []
             };
+            $scope.$broadcast('angucomplete-alt:clearInput', 'busqueda-producto');
             $scope.$broadcast('angucomplete-alt:clearInput', 'nombre_completo');
             if (vm.formPedido) {
                 vm.formPedido.$setPristine();
@@ -264,8 +289,6 @@
 
         function modificar(item) {
             vm.pedido = item; //No funciona con angular.copy().
-            var detalles = vm.pedido.detalles;
-            var productos = detalles.split('/n');
             $scope.$broadcast('angucomplete-alt:changeInput', 'nombre_completo', vm.pedido.cliente.nombre_completo);
             vm.modalNuevo.show();
         }
@@ -276,11 +299,12 @@
         }
 
         function quitarProducto(index) {
-            if (vm.pedido.productos.length <= 1) {
+            vm.pedido.productos.splice(index, 1);
+            /*if (vm.pedido.productos.length <= 1) {
                 toastr.error('Un pedido debe tener por lo menos un producto.');
             } else {
                 vm.pedido.productos.splice(index, 1);
-            }
+            }*/
         }
 
         function registrarDespacho(pedido) {
@@ -355,19 +379,11 @@
             }
         }
 
-        function setProducto($item) {
-            console.log($item);
-            if ($item) {
-                vm.pedido.productos.push(angular.copy($item.originalObject));
-                console.log(vm.pedido);
-            }
-        }
-
         function getSubtotal() {
             var subtotal = 0;
             vm.pedido.productos.forEach(function (element) {
-                var valor = element.valor || 0;
-                subtotal += parseInt(valor);
+                var totalProducto = getTotalProducto(element) || 0;
+                subtotal += parseInt(totalProducto);
             }, this);
             return subtotal;
         }
@@ -376,6 +392,12 @@
             var subtotal = getSubtotal() || 0;
             var valorDomicilio = vm.pedido.valor_domicilio || 0;
             return subtotal + valorDomicilio;
+        }
+
+        function getTotalProducto(item) {
+            var valor = item.valor || 0;
+            var cantidad = item.cantidad || 1;
+            return valor * cantidad;
         }
 
         function seleccionarFechaNacimiento() {

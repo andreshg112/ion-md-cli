@@ -8,7 +8,9 @@
 		<tr>
 			<td>Pedido</td>
 			<td>
-				<pre>{{vm.pedido.detalles}}</pre>
+				<div ng-repeat="item in vm.pedido.productos">
+					<pre>{{item.nombre + ' ' + item.comentario + ' ' + (item.valor | currency : '$ ' : 0)}}</pre>
+				</div>
 			</td>
 		</tr>
 		<tr ng-if="vm.pedido.tipo_pedido == 'domicilio'">

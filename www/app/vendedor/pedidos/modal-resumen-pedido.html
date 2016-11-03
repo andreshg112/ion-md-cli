@@ -1,23 +1,26 @@
 ﻿<div id="popup-resumen-pedido">
+	<style scoped>
+		@import url('css/impresion-pedido.css');
+	</style>
 	<table id="table-resumen-pedido">
-		<tr ng-if="app.user.vendedor.sede.establecimiento.tiene_pedido_mesa">
+		<tr ng-show="app.user.vendedor.sede.establecimiento.tiene_pedido_mesa">
 			<td>Tipo de pedido</td>
-			<td ng-if="vm.pedido.tipo_pedido == 'mesa'">De mesa</td>
-			<td ng-if="vm.pedido.tipo_pedido == 'domicilio'">Domicilio</td>
+			<td>
+				<pre ng-show="vm.pedido.tipo_pedido == 'mesa'">De mesa</pre>
+				<pre ng-show="vm.pedido.tipo_pedido == 'domicilio'">Domicilio</pre>
+			</td>
 		</tr>
 		<tr>
 			<td>Pedido</td>
 			<td>
-				<div ng-repeat="item in vm.pedido.productos">
-					<pre>{{item.nombre + ' ' + item.comentario + ' ' + (item.valor | currency : '$ ' : 0)}}</pre>
-				</div>
+				<pre>{{vm.pedido.detalles}}</pre>
 			</td>
 		</tr>
-		<tr ng-if="vm.pedido.tipo_pedido == 'domicilio'">
+		<tr ng-show="vm.pedido.tipo_pedido == 'domicilio'">
 			<td>Subtotal</td>
 			<td>{{vm.pedido.subtotal | currency : '$ ' : 0}}</td>
 		</tr>
-		<tr ng-if="vm.pedido.tipo_pedido == 'domicilio'">
+		<tr ng-show="vm.pedido.tipo_pedido == 'domicilio'">
 			<td>Valor del domicilio</td>
 			<td>{{vm.pedido.valor_domicilio | currency : '$ ' : 0}}</td>
 		</tr>
@@ -33,7 +36,7 @@
 			<td>Número</td>
 			<td>{{vm.pedido.numero}}</td>
 		</tr>
-		<tr ng-if="vm.pedido.tipo_pedido == 'domicilio'">
+		<tr ng-show="vm.pedido.tipo_pedido == 'domicilio'">
 			<td>Dirección</td>
 			<td class="capitalize">{{vm.pedido.direccion}}</td>
 		</tr>

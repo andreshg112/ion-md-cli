@@ -70,6 +70,7 @@
             if (hayProductoEscrito()) {
                 var busquedaProducto = document.getElementById("busqueda-producto_value");
                 vm.pedido.productos.push({ nombre: busquedaProducto.value.capitalize() });
+                $scope.$broadcast('angucomplete-alt:clearInput', 'busqueda-producto');
             }
         }
 

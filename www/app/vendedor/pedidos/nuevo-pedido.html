@@ -20,18 +20,18 @@
 						</div>
 					</div>
 					<div id="fila-1" class="row responsive-md">
-						<div class="item item-input item-stacked-label col col-50">
+						<div class="item item-input col col-50">
 							<span class="input-label">Buscar producto</span>
 							<angucomplete-alt id="busqueda-producto" description-field="valor" input-class="capitalize fd-input" local-data="app.$sStorage.productos"
 								match-class="highlight" minlength="1" placeholder="Escriba aquí para buscar el producto" search-fields="nombre" selected-object="vm.agregarProducto"
-								text-no-results="No existen productos que coincidan con el criterio de búsqueda." text-searching="Buscando producto..."
-								title-field="nombre" clear-selected="true" />
+								text-no-results="No está registrado. Haga clic en + para registrarlo." text-searching="Buscando producto..." title-field="nombre"
+								clear-selected="true" />
 						</div>
 						<div class="col col-bottom" ng-if="vm.hayProductoEscrito()">
 							<i class="icon ion-plus button-icon ink tooltip" title="Agregar producto" ng-click="vm.agregarProductoNuevo()"></i>
 						</div>
 					</div>
-					<div id="fila-2" class="row responsive-md" ng-if="vm.pedido.productos.length > 0">
+					<div id="fila-2" class="row responsive-md hide-responsive" ng-if="vm.pedido.productos.length > 0">
 						<div class="col col-20">
 							<span class="input-label">Producto</span>
 						</div>

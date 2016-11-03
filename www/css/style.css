@@ -232,6 +232,28 @@ pre {
     vertical-align: middle;
 }
 
+.table-down-bordered {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-down-bordered tr {
+    border-bottom: 1px solid lightgray;
+}
+
+.table-down-bordered tr:last-child {
+    border-bottom: none;
+}
+
+
+/*Ocultar encabezados de "tablas" al pasar a tamaño móvil.*/
+
+@media only screen and (max-width: 767px) {
+    .hide-responsive {
+        display: none;
+    }
+}
+
 
 /* Fin CSS personal */
 

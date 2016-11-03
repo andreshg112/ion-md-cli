@@ -7,7 +7,8 @@
 			<strong class="title">En cola</strong>
 		</div>
 		<div class="im-wrapper">
-			<div class="table-bordered">
+			<!--<pre ng-repeat="item in pedido.productos">{{item.nombre + ' ' + item.comentario + ' ' + (item.valor | currency : '$ ' : 0)}}</pre>-->
+			<!--<div class="table-bordered">
 				<div class="row responsive-sm">
 					<pre class="col col-20">Detalles</pre>
 					<pre class="col col-10">Subtotal</pre>
@@ -20,7 +21,7 @@
 				</div>
 				<div class="row responsive-sm" ng-repeat="pedido in vm.pedidos track by $index">
 					<div class="col col-20">
-						<pre ng-repeat="item in pedido.productos">{{item.nombre + ' ' + item.comentario + ' ' + (item.valor | currency : '$ ' : 0)}}</pre>
+						<pre>{{pedido.detalles}}</pre>
 					</div>
 					<pre class="col col-10">{{pedido.subtotal | currency : '$ ' : 0}}</pre>
 					<pre class="col col-10" ng-if="pedido.tipo_pedido == 'domicilio'">{{pedido.valor_domicilio | currency : '$ ' : 0}}</pre>
@@ -37,8 +38,47 @@
 						<i class="ion-close-round icon button-icon ink tooltip" title="Cancelar" ng-click="vm.cancelarPedido(pedido)"></i>
 					</div>
 				</div>
-			</div>
+			</div>-->
+			<table wt-responsive-table class="table-down-bordered">
+				<thead class="bold">
+					<tr>
+						<th>Detalles</th>
+						<th>Subtotal</th>
+						<th>Valor del domicilio</th>
+						<th>Total</th>
+						<th>Cliente</th>
+						<th>Contacto</th>
+						<th>Dirección</th>
+						<th>Acciones</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="pedido in vm.pedidos track by $index">
+						<td>
+							<pre>{{pedido.detalles}}</pre>
+						</td>
+						<td>{{pedido.subtotal | currency : '$ ' : 0}}</td>
+						<td data-title="Domicilio" ng-if="pedido.tipo_pedido == 'domicilio'">{{pedido.valor_domicilio | currency : '$ ' : 0}}</td>
+						<td ng-if="pedido.tipo_pedido == 'mesa'">De mesa</td>
+						<td>{{pedido.total | currency : '$ ' : 0}}</td>
+						<td>{{pedido.cliente.nombre_completo}}</td>
+						<td>{{pedido.numero}}</td>
+						<td ng-if="pedido.tipo_pedido == 'domicilio'">{{pedido.direccion}}</td>
+						<td ng-if="pedido.tipo_pedido == 'mesa'">De mesa</td>
+						<td class="text-center">
+							<i class="ion-paper-airplane icon button-icon ink tooltip" title="Despachar" ng-click="vm.despachar(pedido)"></i>
+							<i class="ion-printer icon button-icon ink tooltip" title="Imprimir" ng-click="vm.imprimirPedidoEnCola(pedido)"></i>
+							<i class="ion-edit icon button-icon ink tooltip" title="Modificar" ng-click="vm.modificar(pedido)"></i>
+							<i class="ion-close-round icon button-icon ink tooltip" title="Cancelar" ng-click="vm.cancelarPedido(pedido)"></i>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 		<!--<i class="material-icons">3d_rotation</i>-->
+		<br/>
+		<br/>
+		<br/>
+		<br/>
 	</ion-content>
 </ion-view>

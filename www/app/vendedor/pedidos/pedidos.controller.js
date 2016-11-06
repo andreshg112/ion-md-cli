@@ -5,9 +5,9 @@
         .module('app.vendedor')
         .controller('PedidosController', PedidosController);
 
-    PedidosController.$inject = ['ionicMaterialInk', '$ionicPopup', 'Restangular', '$ionicLoading', '$ionicModal', '$scope', 'user', 'ionicDatePicker', 'ClientesService', 'toastr'];
+    PedidosController.$inject = ['ionicMaterialInk', '$ionicPopup', 'Restangular', '$ionicLoading', '$ionicModal', '$scope', 'user', 'ionicDatePicker', 'ClientesService', 'toastr', '$sessionStorage'];
 
-    function PedidosController(ionicMaterialInk, $ionicPopup, Restangular, $ionicLoading, $ionicModal, $scope, user, ionicDatePicker, ClientesService, toastr) {
+    function PedidosController(ionicMaterialInk, $ionicPopup, Restangular, $ionicLoading, $ionicModal, $scope, user, ionicDatePicker, ClientesService, toastr, $sessionStorage) {
         Restangular.setDefaultRequestParams({ token: user.get().token });
 
         var vm = this;
@@ -347,6 +347,25 @@
                         //Si el cliente no había sido registrado, se registra en memoria
                         ClientesService.add(data.result.cliente);
                         vm.clientes.push(data.result.cliente);
+                    }
+                    for (var index = 0; index < vm.pedido.productos.length; index++) {
+                        //Se recorren los productos para saber si ya estaban guardados.
+                        var producto = vm.pedido.productos[index];
+                        //El elemento (producto) tendrá id si había sido guardado antes.
+                        if (!producto.id) {
+                            //Si no estaban guardados, se guarda en memoria.
+                            $sessionStorage.productos.push(data.result.productos[index]);
+                        } else {
+                            //Si ya estaba guardado, se modifica.
+                            /*var result = $sessionStorage.productos.filter(function (obj) {
+                                return obj.id == producto.id;
+                            })[0];*/
+                            var indiceProducto = $sessionStorage.productos
+                                .findIndex(function (element) {
+                                    return element.id == producto.id;
+                                });
+                            $sessionStorage.productos[indiceProducto] = data.result.productos[index];
+                        }
                     }
                     activate();
                     toastr.success(data.mensaje, {

@@ -51,8 +51,12 @@
         }
 
         function cargarProductos() {
+            var toast = toastr.info('Por favor espere.', 'Cargando productos...', { timeOut: 0 });
             Restangular.one('vendedores', user.get().vendedor.id).one('establecimientos', user.get().vendedor.sede.establecimiento.id).getList('productos')
                 .then(function (data) {
+                    toastr.success('Productos cargados correctamente.', {
+                        onShown: function () { toastr.clear(toast); }
+                    });
                     vm.$sStorage.productos = data;
                 })
                 .catch(function (error) {

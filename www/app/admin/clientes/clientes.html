@@ -2,7 +2,6 @@
 	<button id="fab-oferta" title="Ofertar" class="button button-balanced button-fab button-fab-bottom-right" ng-click="vm.escribirOferta()">
         <i class="icon ion-speakerphone"></i>
     </button>
-	<!--<ion-content overflow-scroll="true">-->
 	<ion-content>
 		<div class="bar bar-subheader bar-stable static text-center">
 			<strong class="title">Clientes</strong>
@@ -16,59 +15,20 @@
 							ng-change="vm.cargarClientes()">
                         </select>
 					</div>
-					<!--<div class="item item-input item-stacked-label col col-25">
-                        <span class="input-label">Filtro</span>
-                        <input id="filtro" type="text" placeholder="Nombre, Celular, Teléfono, Dirección, etc." ng-change="vm.pagina = 1" ng-model="vm.filtro"
-                        />
-                    </div>-->
-					<div class="item item-input item-stacked-label col col-33">
+					<div class="item item-input item-stacked-label col col-20">
+						<span class="input-label">Mensajes restantes</span>
+						<input id="mensajes-restantes" type="number" value="{{vm.establecimientoSeleccionado.sms_restantes}}" disabled />
+					</div>
+					<div class="item item-input item-stacked-label col col-20">
 						<span class="input-label">Clientes registrados</span>
 						<input id="clientes-pantalla" type="number" value="{{vm.clientes.length}}" disabled />
 					</div>
 					<div class="item item-input col col-33 col-bottom">
-						<ion-checkbox class="checkbox-balanced" ng-change="vm.alternarSeleccionarTodo(filtrados)" ng-model="vm.seleccionarTodoChecked">Seleccionar todo
-							<!--<span ng-show="!!vm.filtro"> lo filtrado</span>-->
+						<ion-checkbox class="checkbox-balanced" ng-change="vm.alternarSeleccionarTodo()" ng-model="vm.seleccionarTodoChecked">Seleccionar todo ({{vm.seleccionados.length}} seleccionados)
 						</ion-checkbox>
 					</div>
 				</div>
 			</div>
-			<!--<div class="table-bordered">
-                <div class="row responsive-sm">
-                    <pre class="col col-10">Nombre completo</pre>
-                    <pre class="col col-10">Celular<br/>Teléfono</pre>
-                    <pre class="col col-30">Direcciones</pre>
-                    <pre class="col col-10">Género</pre>
-                    <pre class="col col-10">Email</pre>
-                    <pre class="col col-10">Fecha de<br/>nacimiento</pre>
-                    <pre class="col col-10"># de pedidos</pre>
-                    <div class="col col-10 centered-text">Seleccionado</div>
-                </div>
-                <div class="row responsive-sm" ng-repeat="cliente in vm.clientes | filter:vm.filtro | limitTo : vm.limit : vm.getInicioTabla() as filtrados track by cliente.id"
-                    ng-click="vm.itemClicked(cliente)">
-                    <pre class="col col-10">{{cliente.nombre_completo}}</pre>
-                    <pre class="col col-10">{{cliente.celular}}<br/>{{cliente.telefono}}</pre>
-                    <pre class="col col-30">{{cliente.direccion_casa}}<br/>{{cliente.direccion_oficina}}<br/>{{cliente.direccion_otra}}</pre>
-                    <pre class="col col-10 capitalize">{{cliente.genero}}</pre>
-                    <pre class="col col-10">{{cliente.email}}</pre>
-                    <pre class="col col-10">{{cliente.fecha_nacimiento}}</pre>
-                    <pre class="col col-10">{{cliente.total_pedidos}}</pre>
-                    <div class="col col-10 centered-text">
-                        <button title="Seleccionar" class="button-icon ink" ng-show="cliente.selected">
-                            <i class="ion-checkmark-round icon"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>-->
-			<!-- fin tabla -->
-			<!--<div class="row center-block centered-text">
-                <button title="Anterior" class="button-icon ink" ng-click="vm.anterior()" ng-hide="vm.pagina <= 1">
-                    <i class="ion-chevron-left icon"></i>
-                </button>
-                <span>{{vm.pagina}}</span>
-                <button title="Siguiente" class="button-icon ink" ng-click="vm.siguiente(filtrados)" ng-hide="vm.esUltimaPagina(filtrados)">
-                    <i class="ion-chevron-right icon"></i>
-                </button>
-            </div>-->
 			<div>
 				<style scoped>
 					@import url('lib/bootstrap-paper/bootstrap-paper.min.css');
@@ -79,7 +39,8 @@
 							{{item.nombre_completo}}
 						</td>
 						<td title="'Contacto'" filter="vm.contactoFilterDef" sortable="'celular'">
-							{{item.celular}}<br/>{{item.telefono}}
+							<span ng-if="item.celular">{{item.celular}}<br/></span>
+							<span ng-if="item.telefono">{{item.telefono}}</span>
 						</td>
 						<td title="'Direcciones'" filter="vm.direccionesFilterDef" sortable="'direccion_casa'">
 							<span ng-if="item.direccion_casa">{{item.direccion_casa}}.<br/></span>

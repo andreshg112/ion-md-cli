@@ -52,12 +52,18 @@
 
         function alternarSeleccionarTodo() {
             if (vm.seleccionarTodoChecked) {
-                vm.clientes.forEach(function (element) {
-                    if (!element.selected && element.celular) {
-                        element.selected = true; //Selecciona si tiene celular.
-                        vm.seleccionados.push(element);
+                for (var index = 0; index < vm.clientes.length; index++) {
+                    if (vm.seleccionados.length >= vm.establecimientoSeleccionado.sms_restantes) {
+                        toastr.error(String.format('Solamente puedes seleccionar {0} clientes porque esos son tus mensajes restantes.', vm.establecimientoSeleccionado.sms_restantes));
+                        index = vm.clientes.length;
+                    } else {
+                        var element = vm.clientes[index];
+                        if (!element.selected && element.celular) {
+                            element.selected = true; //Selecciona si tiene celular.
+                            vm.seleccionados.push(element);
+                        }
                     }
-                }, this);
+                }
             } else {
                 limpiarSeleccionados();
             }
@@ -180,8 +186,12 @@
                         vm.seleccionados.splice(index, 1);
                         member.selected = false;
                     } else {
-                        vm.seleccionados.push(member);
-                        member.selected = true;
+                        if (vm.seleccionados.length >= vm.establecimientoSeleccionado.sms_restantes) {
+                            toastr.error(String.format('Solamente puedes seleccionar {0} clientes porque esos son tus mensajes restantes.', vm.establecimientoSeleccionado.sms_restantes));
+                        } else {
+                            vm.seleccionados.push(member);
+                            member.selected = true;
+                        }
                     }
                 }
             } else {

@@ -60,10 +60,8 @@
 							{{item.total_pedidos}}
 						</td>
 						<td title="'Seleccionado'">
-							<!--<button title="Seleccionar" class="button-icon ink" ng-show="item.selected">
-                                <i class="ion-checkmark-round icon"></i>
-                            </button>-->
-							<input class="form-control" type="checkbox" ng-if="!!item.celular" ng-model="item.selected" />
+							<input class="form-control" type="checkbox" ng-if="!!item.celular" ng-model="item.selected" ng-disabled="vm.seleccionados.length >= vm.establecimientoSeleccionado.sms_restantes && !item.selected"
+							/>
 						</td>
 					</tr>
 				</table>

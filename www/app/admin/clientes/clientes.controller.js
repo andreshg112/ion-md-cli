@@ -72,6 +72,7 @@
         //function anterior() { if (vm.pagina > 1) { vm.pagina--; } }
 
         function cargarClientes() {
+            vm.seleccionarTodoChecked = false;
             $ionicLoading.show(loading);
             vm.clientes = [];
             var establecimientoId = (!vm.establecimientoSeleccionado) ? null : vm.establecimientoSeleccionado.id;

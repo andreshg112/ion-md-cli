@@ -116,7 +116,8 @@
                             .findIndex(function (element) {
                                 return element.id == vm.establecimientoSeleccionado.id;
                             });
-                        $sessionStorage.user.administrador.establecimientos[establecimientoIndex].sms_restantes = data.result.sms_restantes
+                        $sessionStorage.user.administrador.establecimientos[establecimientoIndex].sms_restantes = data.sms_restantes;
+                        vm.establecimientoSeleccionado.sms_restantes = data.sms_restantes;
                         var alertPopup = $ionicPopup.alert({
                             title: 'Oferta enviada',
                             template: 'Informe del mensaje: ' + data.notificacion

@@ -7,164 +7,162 @@
 		</div>
 	</ion-header-bar>
 	<ion-content class="padding">
-		<div class="im-wrapper">
-			<form id="formPedido" name="vm.formPedido" ng-submit="vm.confirmar()">
-				<div class="list">
-					<div id="fila-0" class="row responsive-sm" ng-if="app.user.vendedor.sede.establecimiento.tiene_pedido_mesa">
-						<div class="item item-input item-select col col-50">
-							<div class="input-label">Tipo de pedido</div>
-							<select ng-init="vm.pedido.tipo_pedido = 'mesa'" ng-model="vm.pedido.tipo_pedido">
+		<form id="formPedido" name="vm.formPedido" ng-submit="vm.confirmar()">
+			<div class="list">
+				<div id="fila-0" class="row responsive-sm" ng-if="app.user.vendedor.sede.establecimiento.tiene_pedido_mesa">
+					<div class="item item-input item-select col col-50">
+						<div class="input-label">Tipo de pedido</div>
+						<select ng-init="vm.pedido.tipo_pedido = 'mesa'" ng-model="vm.pedido.tipo_pedido">
                                 <option value="mesa" ng-selected="true">De mesa</option>
                                 <option value="domicilio">Domicilio</option>
                             </select>
-						</div>
 					</div>
-					<div id="fila-1" class="row responsive-md">
-						<div class="item item-input col col-50">
-							<span class="input-label">Buscar producto</span>
-							<angucomplete-alt id="busqueda-producto" description-field="valor" input-class="capitalize fd-input" local-data="app.$sStorage.productos"
-								match-class="highlight" minlength="1" placeholder="Escriba aquí para buscar el producto" search-fields="nombre" selected-object="vm.agregarProducto"
-								text-no-results="No está registrado. Haga clic en + para registrarlo." text-searching="Buscando producto..." title-field="nombre"
-								clear-selected="true" />
-						</div>
-						<div class="col col-bottom" ng-if="vm.hayProductoEscrito()">
-							<i class="icon ion-plus button-icon ink tooltip" title="Agregar producto" ng-click="vm.agregarProductoNuevo()"></i>
-						</div>
+				</div>
+				<div id="fila-1" class="row responsive-md">
+					<div class="item item-input col col-50">
+						<span class="input-label">Buscar producto</span>
+						<angucomplete-alt id="busqueda-producto" description-field="valor" input-class="capitalize fd-input" local-data="app.$sStorage.productos"
+							match-class="highlight" minlength="1" placeholder="Escriba aquí para buscar el producto" search-fields="nombre" selected-object="vm.agregarProducto"
+							text-no-results="No está registrado. Haga clic en + para registrarlo." text-searching="Buscando producto..." title-field="nombre"
+							clear-selected="true" />
 					</div>
-					<div id="fila-2" class="row responsive-md hide-responsive" ng-if="vm.pedido.productos.length > 0">
-						<div class="col col-20">
-							<span class="input-label">Producto</span>
-						</div>
-						<div class="col col-20">
-							<span class="input-label">Comentario</span>
-						</div>
-						<div class="col col-20">
-							<span class="input-label">Valor</span>
-						</div>
-						<div class="col col-10">
-							<span class="input-label">Cantidad</span>
-						</div>
-						<div class="col col-20">
-							<span class="input-label">Total producto</span>
-						</div>
-						<div class="col col-10">
-							<span class="input-label">Quitar</span>
-						</div>
+					<div class="col col-bottom" ng-if="vm.hayProductoEscrito()">
+						<i class="icon ion-plus button-icon ink tooltip" title="Agregar producto" ng-click="vm.agregarProductoNuevo()"></i>
 					</div>
-					<div id="fila-3" class="row responsive-md" ng-repeat="item in vm.pedido.productos track by $index">
-						<div class="item item-input col col-20">
-							<input type="text" id="p-nombre-{{$index}}" class="fd-input" placeholder="Producto" ng-model="item.nombre" required />
-						</div>
-						<div class="item item-input col col-20">
-							<input type="text" id="p-comentario-{{$index}}" class="fd-input tooltip" placeholder="Comentario" title="Por ejemplo: Sin azúcar, con salsa, etc."
-								ng-model="item.comentario" />
-						</div>
-						<div class="item item-input col col-20">
-							<input type="text" id="p-valor-{{$index}}" class="fd-input" min="0" onkeypress="return isNumberKey(event)" placeholder="Valor"
-								ng-currency fraction="0" ng-model="item.valor" required />
-						</div>
-						<div class="item item-input col col-10">
-							<input type="number" id="p-cantidad-{{$index}}" class="fd-input" min="1" onkeypress="return isNumberKey(event)" placeholder="Cantidad"
-								ng-init="item.cantidad = 1" ng-model="item.cantidad" required />
-						</div>
-						<div class="item item-input col col-20">
-							<input type="text" id="p-totalproducto-{{$index}}" class="fd-input" placeholder="Total producto" value="{{vm.getTotalProducto(item) | currency : '$ ' : 0}}"
-								ng-required="true" disabled/>
-						</div>
-						<div class="col col-10 text-center">
-							<i id="p-quitar-{{$index}}" class="icon ion-close-round button-icon ink tooltip" title="Quitar producto" ng-click="vm.quitarProducto($index)"></i>
-						</div>
+				</div>
+				<div id="fila-2" class="row responsive-md hide-responsive" ng-if="vm.pedido.productos.length > 0">
+					<div class="col col-20">
+						<span class="input-label">Producto</span>
 					</div>
-					<div id="fila-4" class="row responsive-sm">
-						<div class="item item-input item-stacked-label col">
-							<span class="input-label">Subtotal</span>
-							<input type="text" id="subtotal" class="fd-input" placeholder="Subtotal" value="{{vm.getSubtotal() | currency : '$ ' : 0}}"
-								ng-required="true" disabled/>
-						</div>
-						<div class="item item-input item-stacked-label col" ng-if="vm.pedido.tipo_pedido == 'domicilio'">
-							<span class="input-label">Valor del domicilio</span>
-							<input type="text" id="valor_domicilio" class="fd-input" fraction="0" min="0" onkeypress="return isNumberKey(event)" placeholder="Valor del domicilio"
-								ng-currency ng-model="vm.pedido.valor_domicilio" />
-						</div>
-						<div class="item item-input item-stacked-label col" ng-if="vm.pedido.tipo_pedido == 'domicilio'">
-							<span class="input-label">Total a pagar</span>
-							<input type="text" id="total" class="fd-input" placeholder="Total a pagar" value="{{vm.getTotal() | currency : '$ ' : 0}}"
-								ng-required="true" disabled/>
-						</div>
+					<div class="col col-20">
+						<span class="input-label">Comentario</span>
 					</div>
-					<div id="fila-5" class="row responsive-md">
-						<div class="item item-input item-stacked-label col">
-							<span class="input-label">Nombre completo</span>
-							<angucomplete-alt id="nombre_completo" description-field="direccion_casa" input-changed="vm.cambioNombre" input-class="capitalize fd-input"
-								local-data="vm.clientes" local-search="vm.localSearch" match-class="highlight" minlength="1" placeholder="Nombre completo"
-								selected-object="vm.setCliente" search-fields="nombre_completo" text-no-results="No existen clientes que coincidan con el criterio de búsqueda."
-								text-searching="Buscando cliente..." title-field="nombre_completo" />
-						</div>
-						<div class="item item-input item-select col col-bottom">
-							<div class="input-label">Número</div>
-							<select ng-model="vm.tipo_numero" ng-init="vm.tipo_numero = 'Celular'">
+					<div class="col col-20">
+						<span class="input-label">Valor</span>
+					</div>
+					<div class="col col-10">
+						<span class="input-label">Cantidad</span>
+					</div>
+					<div class="col col-20">
+						<span class="input-label">Total producto</span>
+					</div>
+					<div class="col col-10">
+						<span class="input-label">Quitar</span>
+					</div>
+				</div>
+				<div id="fila-3" class="row responsive-md" ng-repeat="item in vm.pedido.productos track by $index">
+					<div class="item item-input col col-20">
+						<input type="text" id="p-nombre-{{$index}}" class="fd-input" placeholder="Producto" ng-model="item.nombre" required />
+					</div>
+					<div class="item item-input col col-20">
+						<textarea id="p-comentario-{{$index}}" class="fd-input tooltip" placeholder="Comentario" rows="2" title="Por ejemplo: Sin azúcar, con salsa, etc."
+							ng-model="item.comentario"></textarea>
+					</div>
+					<div class="item item-input col col-20">
+						<input type="text" id="p-valor-{{$index}}" class="fd-input" min="0" onkeypress="return isNumberKey(event)" placeholder="Valor"
+							ng-currency fraction="0" ng-model="item.valor" required />
+					</div>
+					<div class="item item-input col col-10">
+						<input type="number" id="p-cantidad-{{$index}}" class="fd-input" min="1" onkeypress="return isNumberKey(event)" placeholder="Cantidad"
+							ng-init="item.cantidad = 1" ng-model="item.cantidad" required />
+					</div>
+					<div class="item item-input col col-20">
+						<input type="text" id="p-totalproducto-{{$index}}" class="fd-input" placeholder="Total producto" value="{{vm.getTotalProducto(item) | currency : '$ ' : 0}}"
+							ng-required="true" disabled/>
+					</div>
+					<div class="col col-10 text-center">
+						<i id="p-quitar-{{$index}}" class="icon ion-close-round button-icon ink tooltip" title="Quitar producto" ng-click="vm.quitarProducto($index)"></i>
+					</div>
+				</div>
+				<div id="fila-4" class="row responsive-sm">
+					<div class="item item-input item-stacked-label col">
+						<span class="input-label">Subtotal</span>
+						<input type="text" id="subtotal" class="fd-input" placeholder="Subtotal" value="{{vm.getSubtotal() | currency : '$ ' : 0}}"
+							ng-required="true" disabled/>
+					</div>
+					<div class="item item-input item-stacked-label col" ng-if="vm.pedido.tipo_pedido == 'domicilio'">
+						<span class="input-label">Valor del domicilio</span>
+						<input type="text" id="valor_domicilio" class="fd-input" fraction="0" min="0" onkeypress="return isNumberKey(event)" placeholder="Valor del domicilio"
+							ng-currency ng-model="vm.pedido.valor_domicilio" />
+					</div>
+					<div class="item item-input item-stacked-label col" ng-if="vm.pedido.tipo_pedido == 'domicilio'">
+						<span class="input-label">Total a pagar</span>
+						<input type="text" id="total" class="fd-input" placeholder="Total a pagar" value="{{vm.getTotal() | currency : '$ ' : 0}}"
+							ng-required="true" disabled/>
+					</div>
+				</div>
+				<div id="fila-5" class="row responsive-md">
+					<div class="item item-input item-stacked-label col">
+						<span class="input-label">Nombre completo</span>
+						<angucomplete-alt id="nombre_completo" description-field="direccion_casa" input-changed="vm.cambioNombre" input-class="capitalize fd-input"
+							local-data="vm.clientes" local-search="vm.localSearch" match-class="highlight" minlength="1" placeholder="Nombre completo"
+							selected-object="vm.setCliente" search-fields="nombre_completo" text-no-results="No existen clientes que coincidan con el criterio de búsqueda."
+							text-searching="Buscando cliente..." title-field="nombre_completo" />
+					</div>
+					<div class="item item-input item-select col col-bottom">
+						<div class="input-label">Número</div>
+						<select ng-model="vm.tipo_numero" ng-init="vm.tipo_numero = 'Celular'">
                                 <option selected>Celular</option>
                                 <option>Teléfono</option>
                                 <!--<option ng-selected="!vm.pedido.cliente.celular && !!vm.pedido.cliente.telefono">Teléfono</option>-->
                             </select>
-						</div>
-						<div class="item item-input col col-bottom" ng-if="vm.tipo_numero == 'Celular'">
-							<input type="number" id="celular" class="fd-input" min="3000000000" minlength="10" max="3999999999" maxlength="10" onkeypress="return isNumberKey(event)"
-								placeholder="Celular" ng-model="vm.pedido.cliente.celular" ng-required="vm.tipo_numero == 'Celular'" />
-						</div>
-						<div class="item item-input col col-bottom" ng-if="vm.tipo_numero == 'Teléfono'">
-							<input type="number" id="telefono" class="fd-input" min="1000000" minlength="7" max="9999999" maxlength="7" onkeypress="return isNumberKey(event)"
-								placeholder="Teléfono" ng-model="vm.pedido.cliente.telefono" ng-required="vm.tipo_numero == 'Teléfono'" />
-						</div>
 					</div>
-					<div id="fila-6" class="row responsive-sm" ng-if="vm.pedido.tipo_pedido == 'domicilio'">
-						<div class="item item-input item-select col col-50">
-							<div class="input-label">Dirección</div>
-							<select ng-init="vm.tipo_direccion = 'Casa'" ng-model="vm.tipo_direccion">
+					<div class="item item-input col col-bottom" ng-if="vm.tipo_numero == 'Celular'">
+						<input type="number" id="celular" class="fd-input" min="3000000000" minlength="10" max="3999999999" maxlength="10" onkeypress="return isNumberKey(event)"
+							placeholder="Celular" ng-model="vm.pedido.cliente.celular" ng-required="vm.tipo_numero == 'Celular'" />
+					</div>
+					<div class="item item-input col col-bottom" ng-if="vm.tipo_numero == 'Teléfono'">
+						<input type="number" id="telefono" class="fd-input" min="1000000" minlength="7" max="9999999" maxlength="7" onkeypress="return isNumberKey(event)"
+							placeholder="Teléfono" ng-model="vm.pedido.cliente.telefono" ng-required="vm.tipo_numero == 'Teléfono'" />
+					</div>
+				</div>
+				<div id="fila-6" class="row responsive-sm" ng-if="vm.pedido.tipo_pedido == 'domicilio'">
+					<div class="item item-input item-select col col-50">
+						<div class="input-label">Dirección</div>
+						<select ng-init="vm.tipo_direccion = 'Casa'" ng-model="vm.tipo_direccion">
                                 <option selected>Casa</option>
                                 <option>Oficina</option>
                                 <option>Otra</option>
                             </select>
-						</div>
-						<div class="item item-input col col-50" ng-if="vm.tipo_direccion == 'Casa'">
-							<input type="text" id="direccion_casa" class="capitalize fd-input" placeholder="Dirección de la casa" ng-model="vm.pedido.cliente.direccion_casa"
-								ng-required="vm.tipo_direccion == 'Casa'" />
-						</div>
-						<div class="item item-input col col-50" ng-if="vm.tipo_direccion == 'Oficina'">
-							<input type="text" id="direccion_oficina" class="capitalize fd-input" placeholder="Dirección de la oficina" ng-model="vm.pedido.cliente.direccion_oficina"
-								ng-required="vm.tipo_direccion == 'Oficina'" />
-						</div>
-						<div class="item item-input col col-50" ng-if="vm.tipo_direccion == 'Otra'">
-							<input type="text" id="direccion_otra" class="capitalize fd-input" placeholder="Otra dirección" ng-model="vm.pedido.cliente.direccion_otra"
-								ng-required="vm.tipo_direccion == 'Otra'" />
-						</div>
 					</div>
-					<div id="fila-7" class="row responsive-sm">
-						<div class="item item-input item-select col col-50 col-bottom">
-							<div class="input-label">Género</div>
-							<select ng-model="vm.pedido.cliente.genero" required>
+					<div class="item item-input col col-50" ng-if="vm.tipo_direccion == 'Casa'">
+						<input type="text" id="direccion_casa" class="capitalize fd-input" placeholder="Dirección de la casa" ng-model="vm.pedido.cliente.direccion_casa"
+							ng-required="vm.tipo_direccion == 'Casa'" />
+					</div>
+					<div class="item item-input col col-50" ng-if="vm.tipo_direccion == 'Oficina'">
+						<input type="text" id="direccion_oficina" class="capitalize fd-input" placeholder="Dirección de la oficina" ng-model="vm.pedido.cliente.direccion_oficina"
+							ng-required="vm.tipo_direccion == 'Oficina'" />
+					</div>
+					<div class="item item-input col col-50" ng-if="vm.tipo_direccion == 'Otra'">
+						<input type="text" id="direccion_otra" class="capitalize fd-input" placeholder="Otra dirección" ng-model="vm.pedido.cliente.direccion_otra"
+							ng-required="vm.tipo_direccion == 'Otra'" />
+					</div>
+				</div>
+				<div id="fila-7" class="row responsive-sm">
+					<div class="item item-input item-select col col-50 col-bottom">
+						<div class="input-label">Género</div>
+						<select ng-model="vm.pedido.cliente.genero" required>
                                 <option selected value>Seleccionar</option>
                                 <option value="femenino">Femenino</option>
                                 <option value="masculino">Masculino</option>
                             </select>
-						</div>
-						<div class="item item-input item-stacked-label col col-20">
-							<span class="input-label">Email</span>
-							<input type="email" id="email" class="fd-input" placeholder="usuario@ejemplo.com" ng-model="vm.pedido.cliente.email" />
-						</div>
-						<div class="item item-input item-stacked-label col col-20 col-offset-10">
-							<span class="input-label">Fecha de cumpleaños</span>
-							<input type="text" class="fd-input" placeholder="YYYY-MM-DD" ng-click="vm.seleccionarFechaNacimiento()" ng-model="vm.pedido.cliente.fecha_nacimiento"
-							/>
-						</div>
 					</div>
-					<div ng-if="!!vm.pedido.cliente.id">
-						<a href="javascript:;" class="balanced icon ion-navicon-round" ng-click="vm.verPedidosAnteriores(vm.pedido.cliente)">Ver pedidos anteriores</a>
+					<div class="item item-input item-stacked-label col col-20">
+						<span class="input-label">Email</span>
+						<input type="email" id="email" class="fd-input" placeholder="usuario@ejemplo.com" ng-model="vm.pedido.cliente.email" />
 					</div>
-					<br />
-					<button class="button button-block button-calm ink" data-ink-color="#9DEAFF" data-ink-opacity="1" ng-disabled="vm.formPedido.$invalid || vm.pedido.productos.length == 0">Confirmar</button>
+					<div class="item item-input item-stacked-label col col-20 col-offset-10">
+						<span class="input-label">Fecha de cumpleaños</span>
+						<input type="text" class="fd-input" placeholder="YYYY-MM-DD" ng-click="vm.seleccionarFechaNacimiento()" ng-model="vm.pedido.cliente.fecha_nacimiento"
+						/>
+					</div>
 				</div>
-			</form>
-		</div>
+				<div ng-if="!!vm.pedido.cliente.id">
+					<a href="javascript:;" class="balanced icon ion-navicon-round" ng-click="vm.verPedidosAnteriores(vm.pedido.cliente)">Ver pedidos anteriores</a>
+				</div>
+				<br />
+				<button class="button button-block button-calm ink" data-ink-color="#9DEAFF" data-ink-opacity="1" ng-disabled="vm.formPedido.$invalid || vm.pedido.productos.length == 0">Confirmar</button>
+			</div>
+		</form>
 	</ion-content>
 </ion-modal-view>

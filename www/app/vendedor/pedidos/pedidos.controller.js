@@ -1,4 +1,4 @@
-﻿(function() {
+﻿(function () {
     'use strict';
 
     angular
@@ -11,14 +11,11 @@
         Restangular.setDefaultRequestParams({ token: user.get().token });
 
         var vm = this;
-        vm.mostrar = function(algo) {
-            console.log(algo);
-        }
         var loading = {
             template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>'
         };
         var fechaNacimiento = {
-            callback: function(val) {
+            callback: function (val) {
                 vm.pedido.cliente.fecha_nacimiento = fechaYYYYMMDD(new Date(val))
             }
         };
@@ -85,7 +82,7 @@
         function cancelarPedido(pedido) {
             var toast = toastr.info('Cancelando pedido...', { timeOut: 0 });
             pedido.remove()
-                .then(function(data) {
+                .then(function (data) {
                     if (data.result) {
                         vm.pedidos.splice(vm.pedidos.indexOf(pedido), 1);
                         toastr.success(data.mensaje);
@@ -93,12 +90,12 @@
                         toastr.error(data.mensaje, 'Error', { timeOut: 0 });
                     }
                 })
-                .catch(function(error) {
+                .catch(function (error) {
                     var mensaje = (!error.status) ? error :
                         String.format('{0} {1}', error.status, error.statusText);
                     toastr.error(mensaje, 'Error', { timeOut: 0 });
                 })
-                .finally(function() {
+                .finally(function () {
                     toastr.clear(toast);
                 });
         }
@@ -106,16 +103,16 @@
         function cargarClientesEstablecimiento() {
             var toast = toastr.info('Por favor espere.', 'Cargando clientes...', { timeOut: 0 });
             ClientesService.all(user.get().vendedor.sede.establecimiento_id)
-                .then(function(data) {
+                .then(function (data) {
                     //Es necesario reestructurar la carga de clientes.
                     //Basándose en un servicio o usando puramente $sessionStorage.
                     vm.clientes = data;
                     $sessionStorage.clientes = data;
                     toastr.success('Clientes cargados correctamente.', {
-                        onShown: function() { toastr.clear(toast); }
+                        onShown: function () { toastr.clear(toast); }
                     });
                 })
-                .catch(function(error) {
+                .catch(function (error) {
                     var mensaje = (!error.status) ? error :
                         String.format('{0} {1}', error.status, error.statusText);
                     toastr.error(mensaje, 'Error', { timeOut: 0 });
@@ -128,13 +125,13 @@
             Restangular.one('clientes', cliente.id).getList('pedidos', {
                 establecimiento_id: user.get().vendedor.sede.establecimiento_id,
                 enviado: 1
-            }).then(function(data) {
+            }).then(function (data) {
                 vm.pedidosCliente = data;
-            }).catch(function(error) {
+            }).catch(function (error) {
                 var mensaje = (!error.status) ? error :
                     String.format('{0} {1}', error.status, error.statusText);
                 toastr.error(mensaje, 'Error', { timeOut: 0 });
-            }).finally(function() {
+            }).finally(function () {
                 $ionicLoading.hide();
             });
         }
@@ -143,7 +140,7 @@
             $ionicLoading.show(loading);
             vm.pedidos = [];
             pedidos.getList({ enviado: 0, sede_id: user.get().vendedor.sede_id })
-                .then(function(data) {
+                .then(function (data) {
                     if (data.length > 0) {
                         vm.pedidos = data;
                     } else {
@@ -151,12 +148,12 @@
                             { timeOut: 10000 });
                     }
                 })
-                .catch(function(error) {
+                .catch(function (error) {
                     var mensaje = (!error.status) ? error :
                         String.format('{0} {1}', error.status, error.statusText);
                     toastr.error(mensaje, 'Error', { timeOut: 0 });
                 })
-                .finally(function() {
+                .finally(function () {
                     $ionicLoading.hide();
                 });
         }
@@ -167,7 +164,7 @@
 
         function confirmar() {
             var detalles = '';
-            vm.pedido.productos.forEach(function(element) {
+            vm.pedido.productos.forEach(function (element) {
                 detalles += element.nombre + ' '
                     + (element.comentario ? element.comentario + ' ' : '')
                     + element.valor + "\n";
@@ -198,7 +195,7 @@
                 scope: $scope,
                 cancelText: 'Cancelar'
             });
-            confirmarPedido.then(function(res) {
+            confirmarPedido.then(function (res) {
                 if (res) {
                     registrarPedido();
                     imprimirResumenPedido('popup-resumen-pedido');
@@ -216,7 +213,7 @@
                         cancelText: 'Cancelar',
                         scope: $scope
                     });
-                    confirmarDespacho.then(function(res) {
+                    confirmarDespacho.then(function (res) {
                         if (res) {
                             pedido.tipo_mensajero = vm.tipo_mensajero;
                             registrarDespacho(pedido);
@@ -245,7 +242,7 @@
                 scope: $scope,
                 cancelText: 'Cancelar'
             });
-            confirmarPedido.then(function(res) {
+            confirmarPedido.then(function (res) {
                 if (res) {
                     imprimirResumenPedido('popup-resumen-pedido');
                 }
@@ -319,7 +316,7 @@
             pedido.enviado = 1;
             pedido.establecimiento = user.get().vendedor.sede.establecimiento;
             pedido.put()
-                .then(function(data) {
+                .then(function (data) {
                     if (data.result) {
                         vm.pedidos.splice(vm.pedidos.indexOf(pedido), 1);
                         var titulo = 'Se ha despachado el pedido.';
@@ -332,12 +329,12 @@
                         toastr.error(mensaje, data.mensaje, { timeOut: 0 });
                     }
                 })
-                .catch(function(error) {
+                .catch(function (error) {
                     var mensaje = (!error.status) ? error :
                         String.format('{0} {1}', error.status, error.statusText);
                     toastr.error(mensaje, 'Error', { timeOut: 0 });
                 })
-                .finally(function() {
+                .finally(function () {
                     toastr.clear(toast);
                 });
         }
@@ -347,7 +344,7 @@
             var toast = toastr.info(info, { timeOut: 0 });
             var promesa = (!vm.pedido.id) ?
                 pedidos.post(vm.pedido) : vm.pedido.put();
-            promesa.then(function(data) {
+            promesa.then(function (data) {
                 if (data.result) {
                     if (!vm.pedido.cliente.id) {
                         //Si el cliente no había sido registrado, se registra en memoria
@@ -356,7 +353,7 @@
                     } else {
                         //Si ya estaba guardado, se modifica.
                         var indiceCliente = $sessionStorage.clientes
-                            .findIndex(function(element) {
+                            .findIndex(function (element) {
                                 return element.id == vm.pedido.cliente.id;
                             });
                         if (indiceCliente >= 0) {
@@ -374,7 +371,7 @@
                         } else {
                             //Si ya estaba guardado, se modifica.
                             var indiceProducto = $sessionStorage.productos
-                                .findIndex(function(element) {
+                                .findIndex(function (element) {
                                     return element.id == producto.id;
                                 });
                             $sessionStorage.productos[indiceProducto] = data.result.productos[index];
@@ -382,21 +379,21 @@
                     }
                     activate();
                     toastr.success(data.mensaje, {
-                        onShown: function() { toastr.clear(toast); }
+                        onShown: function () { toastr.clear(toast); }
                     });
                 } else {
                     var mensaje = (data.validator) ?
                         data.validator.join('<br />') : '';
                     toastr.error(mensaje, data.mensaje, {
                         timeOut: 0,
-                        onShown: function() { toastr.clear(toast); }
+                        onShown: function () { toastr.clear(toast); }
                     });
                 }
-            }).catch(function(error) {
+            }).catch(function (error) {
                 var mensaje = (!error.status) ? error :
                     String.format('{0} {1}', error.status, error.statusText);
                 toastr.error(mensaje, 'Error', { timeOut: 0 });
-            }).finally(function() {
+            }).finally(function () {
                 //toastr.clear(toast);
             });
         }
@@ -414,7 +411,7 @@
 
         function getSubtotal() {
             var subtotal = 0;
-            vm.pedido.productos.forEach(function(element) {
+            vm.pedido.productos.forEach(function (element) {
                 var totalProducto = getTotalProducto(element) || 0;
                 subtotal += parseInt(totalProducto);
             }, this);
@@ -451,16 +448,16 @@
         $ionicModal.fromTemplateUrl('app/vendedor/pedidos/nuevo-pedido.html', {
             scope: $scope,
             focusFirstInput: true
-        }).then(function(modal) {
+        }).then(function (modal) {
             vm.modalNuevo = modal;
         });
 
         // Cleanup the modal when we're done with it
-        $scope.$on('$destroy', function() {
+        $scope.$on('$destroy', function () {
             vm.modalNuevo.remove();
         });
 
-        $scope.$on('modal.hidden', function() {
+        $scope.$on('modal.hidden', function () {
             limpiar();
         });
 

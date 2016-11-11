@@ -5,16 +5,19 @@
         .module('app')
         .controller('ClientesController', ClientesController);
 
-    ClientesController.$inject = ['ionicMaterialInk', 'Restangular', '$ionicLoading', '$ionicModal', 'user', '$ionicPopup', '$scope', 'NgTableParams', 'toastr'];
+    ClientesController.$inject = ['ionicMaterialInk', 'Restangular', '$ionicLoading', '$ionicModal', 'user', '$ionicPopup', '$scope', 'NgTableParams', 'toastr', '$sessionStorage'];
 
-    function ClientesController(ionicMaterialInk, Restangular, $ionicLoading, $ionicModal, user, $ionicPopup, $scope, NgTableParams, toastr) {
+    function ClientesController(ionicMaterialInk, Restangular, $ionicLoading, $ionicModal, user, $ionicPopup, $scope, NgTableParams, toastr, $sessionStorage) {
         Restangular.setDefaultRequestParams({ token: user.get().token });
+
+        //Variables privadas
         var vm = this;
+        var clientes = Restangular.all('clientes');
         var loading = {
             template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>'
         };
-        var clientes = Restangular.all('clientes');
-        //
+
+        //Variables y funciones públicas
         vm.alternarSeleccionarTodo = alternarSeleccionarTodo;
         vm.cargarClientes = cargarClientes;
         vm.clientes = [];
@@ -102,9 +105,18 @@
             $ionicLoading.show(loading);
             var destinatarios = vm.seleccionados.map(function (cliente) { return cliente.celular; });
             Restangular.one('administradores', user.get().administrador.id)
-                .customPOST({ clientes: vm.seleccionados, mensaje: normalize(mensaje) }, 'ofertas')
+                .customPOST({
+                    clientes: vm.seleccionados,
+                    mensaje: normalize(mensaje),
+                    establecimiento_id: vm.establecimientoSeleccionado.id
+                }, 'ofertas')
                 .then(function (data) {
                     if (data.result) {
+                        var establecimientoIndex = $sessionStorage.user.administrador.establecimientos
+                            .findIndex(function (element) {
+                                return element.id == vm.establecimientoSeleccionado.id;
+                            });
+                        $sessionStorage.user.administrador.establecimientos[establecimientoIndex].sms_restantes = data.result.sms_restantes
                         var alertPopup = $ionicPopup.alert({
                             title: 'Oferta enviada',
                             template: 'Informe del mensaje: ' + data.notificacion

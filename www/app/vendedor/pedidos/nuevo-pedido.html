@@ -55,8 +55,8 @@
 						<input type="text" id="p-nombre-{{$index}}" class="fd-input" placeholder="Producto" ng-model="item.nombre" required />
 					</div>
 					<div class="item item-input col col-20">
-						<textarea id="p-comentario-{{$index}}" class="fd-input tooltip" placeholder="Comentario" rows="2" title="Por ejemplo: Sin azúcar, con salsa, etc."
-							ng-model="item.comentario"></textarea>
+						<input type="text" id="p-comentario-{{$index}}" class="fd-input tooltip" placeholder="Comentario" title="Por ejemplo: Sin azúcar, con salsa, etc."
+							ng-model="item.comentario" />
 					</div>
 					<div class="item item-input col col-20">
 						<input type="text" id="p-valor-{{$index}}" class="fd-input" min="0" onkeypress="return isNumberKey(event)" placeholder="Valor"

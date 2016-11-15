@@ -59,6 +59,7 @@
                 vm.pedido.direccion = vm.pedido.cliente.direccion_otra;
             }
             vm.pedido.vendedor_id = user.get().vendedor.id;
+            vm.pedido.sede_id = user.get().vendedor.sede_id;
             vm.pedido.cliente.establecimiento_id = user.get().vendedor.sede.establecimiento_id;
             vm.pedido.enviado = 1;
             pedidos.post(vm.pedido)

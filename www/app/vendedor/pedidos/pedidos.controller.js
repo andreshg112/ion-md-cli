@@ -183,6 +183,7 @@
                 vm.pedido.direccion = vm.pedido.cliente.direccion_otra;
             }
             vm.pedido.vendedor_id = user.get().vendedor.id;
+            vm.pedido.sede_id = user.get().vendedor.sede_id;
             vm.pedido.cliente.establecimiento_id = user.get().vendedor.sede.establecimiento_id;
             vm.pedido.cliente.nombre_completo = vm.pedido.cliente.nombre_completo.capitalize();
             var tituloPopup = (!vm.pedido.id) ?

@@ -24,7 +24,7 @@
             }
         }
 
-        function all(establecimiento_id) {
+        function all(administradorId) {
             return new Promise(
                 // La función de resolución se llama con la capacidad de  
                 // resolver o rechzar la promesa
@@ -32,7 +32,7 @@
                     var listaClientes = basil.get('clientes');
                     if (!listaClientes) {
                         clientes.getList({
-                            establecimiento_id: establecimiento_id
+                            administrador_id: administradorId
                         }).then(function (data) {
                             basil.set('clientes', data);
                             resolve(data);

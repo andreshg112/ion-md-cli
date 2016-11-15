@@ -102,7 +102,7 @@
 
         function cargarClientesEstablecimiento() {
             var toast = toastr.info('Por favor espere.', 'Cargando clientes...', { timeOut: 0 });
-            ClientesService.all(user.get().vendedor.sede.establecimiento_id)
+            ClientesService.all(user.get().vendedor.sede.establecimiento.administrador_id)
                 .then(function (data) {
                     //Es necesario reestructurar la carga de clientes.
                     //Basándose en un servicio o usando puramente $sessionStorage.
@@ -185,6 +185,7 @@
             vm.pedido.vendedor_id = user.get().vendedor.id;
             vm.pedido.sede_id = user.get().vendedor.sede_id;
             vm.pedido.cliente.establecimiento_id = user.get().vendedor.sede.establecimiento_id;
+            vm.pedido.cliente.administrador_id = user.get().vendedor.sede.establecimiento.administrador_id;
             vm.pedido.cliente.nombre_completo = vm.pedido.cliente.nombre_completo.capitalize();
             var tituloPopup = (!vm.pedido.id) ?
                 'Estás a punto de registrar el siguiente pedido.' :

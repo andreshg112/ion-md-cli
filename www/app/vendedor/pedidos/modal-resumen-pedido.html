@@ -11,10 +11,13 @@
 			</td>
 		</tr>
 		<tr>
-			<td>Pedido</td>
-			<td>
-				<pre>{{vm.pedido.detalles}}</pre>
-			</td>
+			<pre>
+				<td>Pedido</td>
+				<td>
+					{{vm.pedido.detalles}}
+				</td>
+			</pre>
+
 		</tr>
 		<tr ng-show="vm.pedido.tipo_pedido == 'domicilio'">
 			<td>Subtotal</td>

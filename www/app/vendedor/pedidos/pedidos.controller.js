@@ -167,7 +167,7 @@
             vm.pedido.productos.forEach(function (element) {
                 detalles += element.nombre + ' '
                     + (element.comentario ? element.comentario + ' ' : '')
-                    + element.valor + "\n";
+                    + ".\n";
             }, this);
             detalles = detalles.trim();
             vm.pedido.detalles = detalles;
@@ -253,7 +253,7 @@
         }
 
         function imprimirResumenPedido(muestra) {
-            var divResumenPedido = document.getElementById(muestra).innerHTML;
+            /*var divResumenPedido = document.getElementById(muestra).innerHTML;
             var popupWin = window.open('', '_blank');
             popupWin.document.open();
             var inicio = '<html><head>'
@@ -261,7 +261,23 @@
                 + '</head><body onload="window.print()">';
             var final = '</body></html>';
             popupWin.document.write(inicio + divResumenPedido + final);
-            popupWin.document.close();
+            popupWin.document.close();*/
+
+            var data = jQuery('#' + muestra).html();
+            var mywindow = window.open('', 'Ticket', 'height=600,width=600');
+            mywindow.document.write('<html><head><title>Ticket</title>');
+            mywindow.document.write("<link href='https://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>");
+            mywindow.document.write('<link rel="stylesheet" href="css/style.css" />');
+            mywindow.document.write('<style type="text/css">');
+            mywindow.document.write('@media print {  @page { margin-top: 0mm;margin-left: 1mm;margin-right: 5mm;margin-bottom: 7mm; padding-bottom: 5px;}}');
+            mywindow.document.write("body{font-family: 'Arial';font-size: large;};");
+            mywindow.document.write('</style></head><body>');
+            mywindow.document.write(data);
+            mywindow.document.write('</body></html>');
+            setTimeout(function () {
+                mywindow.print();
+                mywindow.close();
+            }, 250);
         }
 
         function limpiar() {

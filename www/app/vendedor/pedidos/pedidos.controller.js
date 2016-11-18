@@ -166,7 +166,7 @@
             var detalles = '';
             vm.pedido.productos.forEach(function (element) {
                 detalles += element.nombre + ' '
-                    + (element.comentario ? element.comentario + ' ' : '')
+                    + (element.pivot.comentario ? element.pivot.comentario + ' ' : '')
                     + ".\n";
             }, this);
             detalles = detalles.trim();
@@ -444,7 +444,7 @@
 
         function getTotalProducto(item) {
             var valor = item.valor || 0;
-            var cantidad = item.cantidad || 1;
+            var cantidad = item.pivot.cantidad || 1;
             return valor * cantidad;
         }
 

@@ -10,6 +10,8 @@
     function CumpleanosController(ionicMaterialInk, $ionicPopup, Restangular, $ionicLoading, ionicToast, $scope, user) {
         Restangular.setDefaultRequestParams({ token: user.get().token });
         var vm = this;
+        var administradorId = user.get().rol == 'ADMIN' ?
+            user.get().administrador.id : user.get().vendedor.sede.establecimiento.administrador_id;
         var loading = {
             template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>'
         };
@@ -55,7 +57,7 @@
 
         function felicitar(cliente, mensaje) {
             $ionicLoading.show(loading);
-            Restangular.one('administradores', user.get().administrador.id)
+            Restangular.one('administradores', administradorId)
                 .customPOST({ cliente: cliente, mensaje: normalize(mensaje) }, 'felicitaciones')
                 .then(function (data) {
                     if (data.result) {

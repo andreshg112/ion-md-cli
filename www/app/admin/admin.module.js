@@ -33,7 +33,7 @@
                 },
                 data: {
                     permissions: {
-                        only: ['ADMIN'],
+                        only: ['ADMIN', 'VENDEDOR'],
                         redirectTo: 'login'
                     }
                 }

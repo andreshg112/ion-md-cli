@@ -27,18 +27,27 @@
 
         function activate() {
             if (user.get().rol == 'ADMIN') {
-                cargarClientesCumpliendo();
+                cargarClientesCumpliendo(user.get().administrador.id);
             } else if (user.get().rol == 'VENDEDOR') {
+                cargarClientesCumpliendo(user.get().vendedor.sede.establecimiento.administrador_id);
                 cargarProductos();
             }
         }
 
-        function cargarClientesCumpliendo() {
-            Restangular.one('administradores', user.get().administrador.id)
+        function cargarClientesCumpliendo(administradorId) {
+            Restangular.one('administradores', administradorId)
                 .customGET('clientes', { cumpleanos: true })
                 .then(function (data) {
                     if (data.length > 0) {
                         vm.clientesCumpliendo = data;
+                        toastr.success(String.format('Tienes {0} cliente(s) cumpliendo años hoy. ' +
+                            'Haz clic aquí para felicitarlo(s).', data.length), {
+                                timeOut: 10000,
+                                onTap: function () {
+                                    $ionicHistory.nextViewOptions({ disableBack: true });
+                                    $state.go('app.cumpleanos');
+                                }
+                            });
                     }
                 })
                 .catch(function (error) {

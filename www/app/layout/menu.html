@@ -38,16 +38,18 @@
 					<ion-item nav-clear menu-close href="#/app/reporte-tablas"><i class="ion-stats-bars icon"></i> Reporte general en tablas</ion-item>
 					<ion-item nav-clear menu-close href="#/app/reporte-graficas"><i class="ion-stats-bars icon"></i> Reporte general en gráficas</ion-item>
 					<ion-item nav-clear menu-close href="#/app/clientes"><i class="ion-person-stalker icon"></i> Ver clientes</ion-item>
-					<ion-item nav-clear menu-close href="#/app/cumpleanos"><i class="ion-happy-outline icon"></i> Cumpleaños ({{app.clientesCumpliendo.length}})</ion-item>
 				</div>
 
 				<!-- VENDEDOR -->
 				<div permission permission-only="['VENDEDOR']">
 					<ion-item nav-clear menu-close href="#/app/pedidos"><i class="ion-compose icon"></i> Pedidos</ion-item>
-					<ion-item nav-clear menu-close href="#/app/pedidos-anteriores"><i class="ion-clipboard icon"></i> Registro de pedidos anteriores</ion-item>
+					<!--<ion-item nav-clear menu-close href="#/app/pedidos-anteriores"><i class="ion-clipboard icon"></i> Registro de pedidos anteriores</ion-item>-->
 					<ion-item nav-clear menu-close href="#/app/registrar-clientes"><i class="ion-person-stalker icon"></i> Registro de clientes</ion-item>
 					<ion-item nav-clear menu-close href="#/app/resumen-dia"><i class="ion-document-text icon"></i> Resumen del día</ion-item>
 				</div>
+
+				<!--Compartido-->
+				<ion-item nav-clear menu-close href="#/app/cumpleanos"><i class="ion-happy-outline icon"></i> Cumpleaños ({{app.clientesCumpliendo.length}})</ion-item>
 			</ion-list>
 		</ion-content>
 	</ion-side-menu>

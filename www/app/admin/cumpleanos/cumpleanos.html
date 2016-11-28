@@ -24,9 +24,10 @@
 					<pre class="col col-10">{{cliente.establecimiento.nombre}}</pre>
 					<pre class="col col-10">{{cliente.total_pedidos}}</pre>
 					<div class="col col-10 centered-text">
-						<button title="Despachar" class="button-icon ink" ng-click="vm.escribirMensaje(cliente)">
+						<button title="Despachar" class="button-icon ink" ng-click="vm.escribirMensaje(cliente)" ng-if="cliente.celular">
                             <i class="ion-android-textsms icon"></i>
                         </button>
+						<pre ng-if="!cliente.celular">No tiene celular registrado</pre>
 					</div>
 				</div>
 			</div>

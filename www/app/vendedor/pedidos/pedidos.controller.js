@@ -264,7 +264,8 @@
             popupWin.document.close();*/
 
             var data = jQuery('#' + muestra).html();
-            var mywindow = window.open('', 'Ticket', 'height=600,width=600');
+            // var mywindow = window.open('', 'Ticket', 'height=600,width=600');
+            var mywindow = window.open('', '_blank');
             mywindow.document.write('<html><head><title>Ticket</title>');
             mywindow.document.write("<link href='https://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>");
             mywindow.document.write('<link rel="stylesheet" href="css/style.css" />');
@@ -277,7 +278,7 @@
             setTimeout(function () {
                 mywindow.print();
                 mywindow.close();
-            }, 250);
+            }, 125);
         }
 
         function limpiar() {
@@ -382,6 +383,10 @@
                     for (var index = 0; index < vm.pedido.productos.length; index++) {
                         //Se recorren los productos para saber si ya estaban guardados.
                         var producto = vm.pedido.productos[index];
+
+                        //Se borran los comentarios y cantidades del producto antes de almacenar en el array.
+                        delete data.result.productos[index].pivot;
+
                         //El producto tendrá id si había sido guardado antes.
                         if (!producto.id) {
                             //Si no estaban guardados, se guarda en memoria.

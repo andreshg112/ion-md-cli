@@ -49,7 +49,7 @@
 				</div>
 
 				<!--Compartido-->
-				<ion-item nav-clear menu-close href="#/app/cumpleanos"><i class="ion-happy-outline icon"></i> Cumpleaños ({{app.clientesCumpliendo.length}})</ion-item>
+				<ion-item nav-clear menu-close href="#/app/cumpleanos" permission permission-only="['ADMIN', 'VENDEDOR']"><i class="ion-happy-outline icon"></i> Cumpleaños ({{app.clientesCumpliendo.length}})</ion-item>
 			</ion-list>
 		</ion-content>
 	</ion-side-menu>

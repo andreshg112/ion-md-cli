@@ -29,7 +29,9 @@
 
         function escribirMensaje(cliente) {
             var primerNombre = cliente.nombre_completo.split(' ')[0];
-            vm.mensaje = String.format('{0}, {1} quiere felicitarte en tu cumpleaños y desearte muchos éxitos. Ven y disfruta de nuestra promoción especial para ti.', primerNombre, cliente.establecimiento.nombre);
+            var nombreEstablecimiento = user.get().rol == 'VENDEDOR' ?
+                user.get().vendedor.sede.establecimiento.nombre : cliente.establecimiento.nombre;
+            vm.mensaje = String.format('{0}, {1} quiere felicitarte en tu cumpleaños y desearte muchos éxitos. Ven y disfruta de nuestra promoción especial para ti.', primerNombre, nombreEstablecimiento);
             var popupMensaje = $ionicPopup.show({
                 template: '<textarea rows="4" maxlength="155" ng-model="vm.mensaje"></textarea>',
                 cssClass: 'felicitacion',
